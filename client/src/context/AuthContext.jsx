@@ -82,7 +82,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = () => {
-    window.location.href = "https://dsasheet-koey.onrender.com/auth/google";
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    window.location.href = `${apiUrl}/auth/google`;
   };
 
   const logout = async () => {

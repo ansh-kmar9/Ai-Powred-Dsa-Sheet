@@ -53,7 +53,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === "production",
+      secure: false, // Changed to false for testing
+      httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     },
   })
@@ -71,6 +72,15 @@ app.use("/api/progress", progressRoutes);
 // Health check route
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "OK", message: "Server is running" });
+});
+
+// Test route
+app.get("/test", (req, res) => {
+  res.status(200).json({ 
+    message: "Test successful",
+    client_url: process.env.CLIENT_URL,
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Error handling middleware

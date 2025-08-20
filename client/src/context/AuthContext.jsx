@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = () => {
-    window.location.href = "http://localhost:5000/auth/google";
+    window.location.href = "https://dsasheet-koey.onrender.com/auth/google";
   };
 
   const logout = async () => {

@@ -37,8 +37,14 @@ if (process.env.NODE_ENV === "production") {
 // CORS configuration
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: [
+      process.env.CLIENT_URL,
+      "https://dsasheet.site",
+      "https://www.dsasheet.site",
+    ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -46,14 +52,14 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session configuration
+// Session configuration - simplified for JWT-based auth
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // Changed to false for testing
+      secure: false, // Keep simple since we're using JWT tokens
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     },

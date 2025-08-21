@@ -111,15 +111,16 @@ const LandingPage = () => {
                   </Button>
                 </Link>
               )}
-
-              <Button
-                variant="outline"
-                size="lg"
-                className="min-w-32 border-zinc-800 hover:bg-zinc-900 hover:text-white"
-              >
-                <BookOpen className="mr-2 h-4 w-4" />
-                Explore Features
-              </Button>
+              <Link to="/sheets">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="min-w-32 border-zinc-800 hover:bg-zinc-900 hover:text-white"
+                >
+                  <BookOpen className="mr-2 h-4 w-4" />
+                  Explore Sheets
+                </Button>
+              </Link>
             </div>
 
             {/* Stats */}

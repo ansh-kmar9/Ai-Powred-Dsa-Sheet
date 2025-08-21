@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useReducer, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useEffect,
+  useRef,
+} from "react";
+import { toast } from "react-toastify";
 import { authAPI } from "../utils/api";
 
 const AuthContext = createContext();
@@ -39,6 +46,8 @@ const initialState = {
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+  const loginToastShown = useRef(false);
+  const logoutToastShown = useRef(false);
 
   useEffect(() => {
     checkAuthStatus();
@@ -64,6 +73,14 @@ export const AuthProvider = ({ children }) => {
           document.title,
           window.location.pathname
         );
+
+        // Show login success toast after token is found (only once)
+        if (!loginToastShown.current) {
+          setTimeout(() => {
+            toast.success("Welcome! Sign in Successful");
+            loginToastShown.current = true;
+          }, 500);
+        }
       }
 
       // Check stored token or session
@@ -121,15 +138,31 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
+    if (logoutToastShown.current) return; // Prevent multiple logout calls
+
     try {
+      logoutToastShown.current = true;
       await authAPI.logout();
       localStorage.removeItem("token");
       dispatch({ type: "LOGOUT" });
+      toast.success("Successfully logged out");
+
+      // Reset login toast flag for next login
+      loginToastShown.current = false;
     } catch (error) {
       console.error("Logout error:", error);
       // Force logout even if API call fails
       localStorage.removeItem("token");
       dispatch({ type: "LOGOUT" });
+      toast.success("Successfully logged out");
+
+      // Reset login toast flag for next login
+      loginToastShown.current = false;
+    } finally {
+      // Reset logout toast flag after a delay
+      setTimeout(() => {
+        logoutToastShown.current = false;
+      }, 1000);
     }
   };
 

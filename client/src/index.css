@@ -182,3 +182,14 @@ body {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
+
+/* Custom toast container positioning to appear below navbar */
+.custom-toast-container {
+  top: 80px !important; /* Position below navbar (64px) + 16px spacing */
+  right: 16px !important;
+}
+
+/* Override default react-toastify positioning */
+.Toastify__toast-container--top-right {
+  top: 80px !important;
+}

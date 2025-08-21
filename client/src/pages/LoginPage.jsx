@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import useAuthToasts from "../hooks/useAuthToasts";
 import { Button } from "../components/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
 import { Loader2, Chrome } from "lucide-react";
@@ -9,6 +10,9 @@ import { LoginSkeleton } from "../components/SkeletonLoader";
 
 const LoginPage = () => {
   const { isAuthenticated, loading, login } = useAuth();
+
+  // Use the custom hook for auth toasts
+  useAuthToasts();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);

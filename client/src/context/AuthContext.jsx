@@ -68,12 +68,18 @@ export const AuthProvider = ({ children }) => {
 
       // Check stored token or session
       const storedToken = localStorage.getItem("token");
-      console.log("AuthContext - Stored token:", storedToken ? "exists" : "none");
-      
+      console.log(
+        "AuthContext - Stored token:",
+        storedToken ? "exists" : "none"
+      );
+
       if (storedToken) {
         console.log("AuthContext - Verifying stored token...");
         const response = await authAPI.verifyToken(storedToken);
-        console.log("AuthContext - Token verification response:", response.data);
+        console.log(
+          "AuthContext - Token verification response:",
+          response.data
+        );
         dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
       } else {
         // Try session-based auth

@@ -1,6 +1,25 @@
 import express from "express";
 import cors from "cors";
-import helmet from "helmet";
+import helmet from// Test route
+app.get("/test", (req, res) => {
+  res.status(200).json({ 
+    message: "Test successful",
+    client_url: process.env.CLIENT_URL,
+    node_env: process.env.NODE_ENV,
+    port: process.env.PORT,
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Debug environment route
+app.get("/debug-env", (req, res) => {
+  res.status(200).json({
+    CLIENT_URL: process.env.CLIENT_URL || "NOT SET",
+    NODE_ENV: process.env.NODE_ENV || "NOT SET",
+    GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL || "NOT SET",
+    timestamp: new Date().toISOString()
+  });
+});
 import rateLimit from "express-rate-limit";
 import session from "express-session";
 import passport from "passport";
@@ -76,9 +95,21 @@ app.get("/health", (req, res) => {
 
 // Test route
 app.get("/test", (req, res) => {
-  res.status(200).json({ 
+  res.status(200).json({
     message: "Test successful",
     client_url: process.env.CLIENT_URL,
+    node_env: process.env.NODE_ENV,
+    port: process.env.PORT,
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Debug environment route
+app.get("/debug-env", (req, res) => {
+  res.status(200).json({
+    CLIENT_URL: process.env.CLIENT_URL || "NOT SET",
+    NODE_ENV: process.env.NODE_ENV || "NOT SET",
+    GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL || "NOT SET",
     timestamp: new Date().toISOString()
   });
 });

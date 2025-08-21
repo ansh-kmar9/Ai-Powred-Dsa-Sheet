@@ -36,15 +36,6 @@ class AuthController {
           { expiresIn: "7d" }
         );
 
-        // Log for debugging
-        console.log(
-          "Redirecting to:",
-          `${process.env.CLIENT_URL}/dashboard?token=${token.substring(
-            0,
-            20
-          )}...`
-        );
-
         // Redirect to frontend with token
         return res.redirect(
           `${process.env.CLIENT_URL}/dashboard?token=${token}`

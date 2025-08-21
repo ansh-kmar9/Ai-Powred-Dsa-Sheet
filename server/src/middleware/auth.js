@@ -37,12 +37,12 @@ export const requireAuth = (req, res, next) => {
 export const requireHybridAuth = async (req, res, next) => {
   // Try JWT first
   const token = req.headers.authorization?.split(" ")[1];
-  
+
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await User.findById(decoded.userId).select("-__v");
-      
+
       if (user) {
         req.user = user;
         return next();
@@ -51,12 +51,12 @@ export const requireHybridAuth = async (req, res, next) => {
       console.error("JWT Auth failed, trying session:", error.message);
     }
   }
-  
+
   // Fallback to session auth
   if (req.isAuthenticated()) {
     return next();
   }
-  
+
   return res.status(401).json({ message: "Authentication required" });
 };
 

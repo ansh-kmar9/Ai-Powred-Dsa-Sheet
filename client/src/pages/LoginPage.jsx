@@ -52,17 +52,23 @@ const LoginPage = () => {
               className="w-full bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border-zinc-700"
               size="default"
             >
-               <FcGoogle size={20} className="mr-3" />
-               Continue with Google
+              <FcGoogle size={20} className="mr-3" />
+              Continue with Google
             </Button>
 
             <p className="mt-4 text-center text-xs text-zinc-500">
               By continuing, you agree to our{" "}
-              <a href="#" className="underline underline-offset-4 hover:text-zinc-400">
+              <a
+                href="#"
+                className="underline underline-offset-4 hover:text-zinc-400"
+              >
                 Terms
               </a>{" "}
               and{" "}
-              <a href="#" className="underline underline-offset-4 hover:text-zinc-400">
+              <a
+                href="#"
+                className="underline underline-offset-4 hover:text-zinc-400"
+              >
                 Privacy Policy
               </a>
             </p>

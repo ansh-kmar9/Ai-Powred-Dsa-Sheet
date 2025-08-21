@@ -193,3 +193,17 @@ body {
 .Toastify__toast-container--top-right {
   top: 80px !important;
 }
+
+/* Auto-height expansion for sheet topics */
+.topic-content {
+  transition: max-height 0.5s ease-in-out;
+}
+
+.topic-content.expanded {
+  max-height: none !important;
+}
+
+.topic-content.collapsed {
+  max-height: 0 !important;
+  overflow: hidden;
+}

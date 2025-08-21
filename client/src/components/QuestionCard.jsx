@@ -100,8 +100,10 @@ const QuestionCard = ({
             target="_blank"
             rel="noopener noreferrer"
             className="group/link relative flex min-w-0 flex-1 items-center space-x-2 text-sm font-medium text-white transition-all duration-300 hover:text-zinc-300"
+            title={question.title} // Add full title as tooltip
           >
             <span className="truncate">{question.title}</span>
+            <ExternalLink className="h-3 w-3 text-zinc-500 group-hover/link:text-zinc-300 transition-colors duration-300 flex-shrink-0" />
           </a>
 
           {/* AI Bot Icon */}

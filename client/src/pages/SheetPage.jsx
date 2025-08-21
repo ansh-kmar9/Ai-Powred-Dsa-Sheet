@@ -105,12 +105,24 @@ const SheetPage = () => {
   };
 
   const getFilteredQuestions = (questions) => {
+    if (!questions || !Array.isArray(questions)) {
+      console.warn("Invalid questions array:", questions);
+      return [];
+    }
+
     return questions.filter((question) => {
+      // Ensure question has required properties
+      if (!question || typeof question !== "object") {
+        console.warn("Invalid question object:", question);
+        return false;
+      }
+
       const matchesDifficulty =
         difficultyFilter === "All" || question.difficulty === difficultyFilter;
       const matchesSearch =
         searchQuery === "" ||
-        question.title.toLowerCase().includes(searchQuery.toLowerCase());
+        (question.title &&
+          question.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
       let matchesStatus = true;
       if (statusFilter === "Solved") {
@@ -124,12 +136,23 @@ const SheetPage = () => {
   };
 
   const getTopicProgress = (topic) => {
+    if (!topic || !topic.questions || !Array.isArray(topic.questions)) {
+      console.warn("Invalid topic or questions array:", topic);
+      return { solved: 0, total: 0 };
+    }
+
     if (!isAuthenticated || !sheetProgress[sheetName]) {
       return { solved: 0, total: topic.questions.length };
     }
-    const solved = topic.questions.filter((question) =>
-      isQuestionSolved(question._id)
-    ).length;
+
+    const solved = topic.questions.filter((question) => {
+      if (!question || !question._id) {
+        console.warn("Question missing _id:", question);
+        return false;
+      }
+      return isQuestionSolved(question._id);
+    }).length;
+
     return { solved, total: topic.questions.length };
   };
 
@@ -361,26 +384,21 @@ const SheetPage = () => {
 
                   <div
                     className={cn(
-                      "overflow-hidden transition-all duration-300 ease-in-out",
+                      "topic-content transition-all duration-500 ease-in-out",
                       isExpanded
-                        ? "max-h-[2000px] opacity-100"
-                        : "max-h-0 opacity-0"
+                        ? "expanded opacity-100"
+                        : "collapsed opacity-0"
                     )}
                   >
-                    <CardContent className="border-t border-slate-800/50 p-0">
+                    <CardContent className="border-t border-zinc-800/50 p-0">
                       {filteredQuestions.length > 0 ? (
-                        <div className="divide-y divide-slate-800/50">
+                        <div className="divide-y divide-zinc-800/50">
                           {filteredQuestions.map((question, questionIndex) => (
                             <div
                               key={question._id}
                               className={cn(
-                                "p-4 transition-all duration-200 hover:bg-slate-800/20",
-                                isExpanded &&
-                                  "animate-in fade-in-50 slide-in-from-left-4 duration-300"
+                                "p-4 transition-all duration-200 hover:bg-zinc-800/20"
                               )}
-                              style={{
-                                animationDelay: `${questionIndex * 50}ms`,
-                              }}
                             >
                               <QuestionCard
                                 question={question}

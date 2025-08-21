@@ -1,11 +1,11 @@
 import express from "express";
 import ProgressController from "../controllers/progressController.js";
-import { requireAuth } from "../middleware/auth.js";
+import { requireHybridAuth } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// All progress routes require authentication
-router.use(requireAuth);
+// All progress routes require authentication (JWT or Session)
+router.use(requireHybridAuth);
 
 // Progress routes
 router.get("/overview", ProgressController.getOverallProgress);

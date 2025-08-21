@@ -104,7 +104,10 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("token");
       dispatch({
         type: "LOGIN_ERROR",
-        payload: error.response?.data?.message || error.message || "Authentication failed",
+        payload:
+          error.response?.data?.message ||
+          error.message ||
+          "Authentication failed",
       });
     } finally {
       // Ensure loading is always set to false

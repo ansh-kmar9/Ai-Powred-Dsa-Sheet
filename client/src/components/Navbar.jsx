@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "./Button";
@@ -24,6 +24,25 @@ const Navbar = () => {
   const location = useLocation();
   const [exploreOpen, setExploreOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const exploreRef = useRef(null);
+  const profileRef = useRef(null);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (exploreRef.current && !exploreRef.current.contains(event.target)) {
+        setExploreOpen(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -72,10 +91,9 @@ const Navbar = () => {
             </Link>
 
             {/* Explore Dropdown */}
-            <div className="relative">
+            <div className="relative" ref={exploreRef}>
               <button
                 onClick={() => setExploreOpen(!exploreOpen)}
-                onBlur={() => setTimeout(() => setExploreOpen(false), 150)}
                 className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
               >
                 <span>Explore</span>
@@ -105,10 +123,9 @@ const Navbar = () => {
 
             {/* Profile/Login Section */}
             {isAuthenticated ? (
-              <div className="relative">
+              <div className="relative" ref={profileRef}>
                 <button
                   onClick={() => setProfileOpen(!profileOpen)}
-                  onBlur={() => setTimeout(() => setProfileOpen(false), 150)}
                   className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-zinc-900 transition-colors"
                 >
                   <div className="flex items-center space-x-2">

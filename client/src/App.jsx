@@ -17,6 +17,7 @@ import ObjectOrientedProgramming from "./pages/ObjectOrientedProgramming";
 import MockTests from "./pages/MockTests";
 import MockTest from "./pages/MockTest";
 import AiDoubtSolver from "./pages/AiDoubtSolver";
+import Roadmap from "./pages/Roadmap";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/oops" element={<ObjectOrientedProgramming />} />
                 <Route path="/ai-doubt-solver" element={<AiDoubtSolver />} />
                 <Route path="/mock-test" element={<MockTests />} />
+                <Route path="/roadmap" element={<Roadmap />} />
                 <Route
                   path="/mock-test/:testId/:setNumber"
                   element={<MockTest />}

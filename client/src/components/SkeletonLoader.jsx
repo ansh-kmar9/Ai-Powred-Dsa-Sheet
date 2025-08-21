@@ -79,7 +79,7 @@ export const DashboardSkeleton = () => {
                 <Skeleton className="h-6 w-56 mb-2" />
                 <Skeleton className="h-4 w-80" />
               </div>
-              
+
               {/* Progress bars for sheets - matching structure */}
               <div className="space-y-4 mb-6">
                 {[1, 2, 3, 4, 5].map((i) => (
@@ -147,10 +147,10 @@ export const DashboardSkeleton = () => {
                       </div>
                     </div>
                   ))}
-                  
+
                   {/* Separator - matching exact structure */}
                   <div className="my-4 h-px bg-zinc-800" />
-                  
+
                   {/* Last active - matching exact structure */}
                   <div className="flex items-center justify-between text-sm">
                     <Skeleton className="h-4 w-20" />
@@ -265,7 +265,10 @@ export const SheetSkeleton = () => {
                     <div className="border-t border-slate-800/50 p-0">
                       <div className="divide-y divide-slate-800/50">
                         {[1, 2, 3].map((questionIndex) => (
-                          <div key={questionIndex} className="p-4 transition-all duration-200 hover:bg-slate-800/20">
+                          <div
+                            key={questionIndex}
+                            className="p-4 transition-all duration-200 hover:bg-slate-800/20"
+                          >
                             <div className="flex items-center justify-between">
                               <div className="flex items-center space-x-4">
                                 <Skeleton className="h-6 w-16 rounded-full" />

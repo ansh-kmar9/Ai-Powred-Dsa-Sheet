@@ -52,7 +52,11 @@ export const AuthProvider = ({ children }) => {
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get("token");
 
+      console.log("AuthContext - URL token:", token);
+      console.log("AuthContext - Current URL:", window.location.href);
+
       if (token) {
+        console.log("AuthContext - Setting token in localStorage:", token);
         localStorage.setItem("token", token);
         // Clean up URL
         window.history.replaceState(
@@ -64,15 +68,22 @@ export const AuthProvider = ({ children }) => {
 
       // Check stored token or session
       const storedToken = localStorage.getItem("token");
+      console.log("AuthContext - Stored token:", storedToken ? "exists" : "none");
+      
       if (storedToken) {
+        console.log("AuthContext - Verifying stored token...");
         const response = await authAPI.verifyToken(storedToken);
+        console.log("AuthContext - Token verification response:", response.data);
         dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
       } else {
         // Try session-based auth
+        console.log("AuthContext - Trying session-based auth...");
         const response = await authAPI.getCurrentUser();
+        console.log("AuthContext - Session auth response:", response.data);
         dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
       }
     } catch (error) {
+      console.error("AuthContext - Auth error:", error);
       localStorage.removeItem("token");
       dispatch({
         type: "LOGIN_ERROR",

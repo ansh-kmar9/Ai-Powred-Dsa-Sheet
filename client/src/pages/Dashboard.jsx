@@ -48,6 +48,13 @@ const Dashboard = () => {
   } = useProgress();
   const [loading, setLoading] = useState(true);
 
+  // Add debug logging
+  useEffect(() => {
+    console.log("Dashboard - Auth State:", { isAuthenticated, authLoading, user });
+    console.log("Dashboard - URL:", window.location.href);
+    console.log("Dashboard - Token in localStorage:", localStorage.getItem("token"));
+  }, [isAuthenticated, authLoading, user]);
+
   useEffect(() => {
     if (isAuthenticated) {
       loadData();

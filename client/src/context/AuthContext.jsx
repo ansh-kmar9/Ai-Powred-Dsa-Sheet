@@ -63,6 +63,7 @@ export const AuthProvider = ({ children }) => {
 
       console.log("AuthContext - URL token:", token);
       console.log("AuthContext - Current URL:", window.location.href);
+      console.log("AuthContext - API Base URL:", import.meta.env.VITE_API_URL || "http://localhost:5000");
 
       if (token) {
         console.log("AuthContext - Setting token in localStorage:", token);
@@ -74,12 +75,24 @@ export const AuthProvider = ({ children }) => {
           window.location.pathname
         );
 
-        // Show login success toast after token is found (only once)
-        if (!loginToastShown.current) {
-          setTimeout(() => {
-            toast.success("Welcome! Sign in Successful");
-            loginToastShown.current = true;
-          }, 500);
+        // Immediately verify the token and set user
+        try {
+          const response = await authAPI.verifyToken();
+          console.log("AuthContext - Token verification response:", response.data);
+          dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
+          
+          // Show login success toast after successful verification
+          if (!loginToastShown.current) {
+            setTimeout(() => {
+              toast.success("Welcome! Sign in Successful");
+              loginToastShown.current = true;
+            }, 500);
+          }
+          return; // Exit early since we're authenticated
+        } catch (tokenError) {
+          console.error("AuthContext - Token verification failed:", tokenError);
+          localStorage.removeItem("token");
+          // Continue to fallback authentication methods
         }
       }
 
@@ -90,42 +103,56 @@ export const AuthProvider = ({ children }) => {
         storedToken ? "exists" : "none"
       );
 
-      // Add timeout to prevent infinite loading
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Authentication timeout")), 10000)
-      );
-
       if (storedToken) {
         console.log("AuthContext - Verifying stored token...");
-        const response = await Promise.race([
-          authAPI.verifyToken(),
-          timeoutPromise,
-        ]);
-        console.log(
-          "AuthContext - Token verification response:",
-          response.data
-        );
-        dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
-      } else {
-        // Try session-based auth
-        console.log("AuthContext - Trying session-based auth...");
-        const response = await Promise.race([
-          authAPI.getCurrentUser(),
-          timeoutPromise,
-        ]);
+        try {
+          const response = await authAPI.verifyToken();
+          console.log(
+            "AuthContext - Token verification response:",
+            response.data
+          );
+          dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
+          return; // Exit early on success
+        } catch (tokenError) {
+          console.error("AuthContext - Token verification failed:", tokenError);
+          localStorage.removeItem("token");
+          // Try session-based auth as fallback
+        }
+      }
+
+      // Try session-based auth as fallback
+      console.log("AuthContext - Trying session-based auth...");
+      try {
+        const response = await authAPI.getCurrentUser();
         console.log("AuthContext - Session auth response:", response.data);
         dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
+      } catch (sessionError) {
+        console.error("AuthContext - Session auth failed:", sessionError);
+        // Only dispatch error if we're not on login page already
+        if (!window.location.pathname.includes('/login')) {
+          dispatch({
+            type: "LOGIN_ERROR",
+            payload: "Authentication failed",
+          });
+        } else {
+          // Just set loading to false if we're already on login page
+          dispatch({ type: "SET_LOADING", payload: false });
+        }
       }
     } catch (error) {
-      console.error("AuthContext - Auth error:", error);
-      localStorage.removeItem("token");
-      dispatch({
-        type: "LOGIN_ERROR",
-        payload:
-          error.response?.data?.message ||
-          error.message ||
-          "Authentication failed",
-      });
+      console.error("AuthContext - Unexpected auth error:", error);
+      if (!window.location.pathname.includes('/login')) {
+        localStorage.removeItem("token");
+        dispatch({
+          type: "LOGIN_ERROR",
+          payload:
+            error.response?.data?.message ||
+            error.message ||
+            "Authentication failed",
+        });
+      } else {
+        dispatch({ type: "SET_LOADING", payload: false });
+      }
     } finally {
       // Ensure loading is always set to false
       dispatch({ type: "SET_LOADING", payload: false });

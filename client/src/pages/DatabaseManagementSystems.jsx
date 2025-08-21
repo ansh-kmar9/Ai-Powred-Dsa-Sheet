@@ -142,9 +142,9 @@ const DatabaseManagementSystems = () => {
   return (
     <div className="min-h-screen bg-black text-white flex">
       {/* Left Navigation - Fixed Sidebar */}
-      <div className="w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col h-screen sticky top-0">
+      <div className="w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col h-screen sticky top-0 shrink-0">
         {/* Header */}
-        <div className="p-4 border-b border-zinc-800">
+        <div className="p-4 border-b border-zinc-800 shrink-0">
           <div className="flex items-center space-x-2 mb-2">
             <Database className="h-5 w-5 text-zinc-100" />
             <h1 className="text-lg font-bold text-white">
@@ -156,8 +156,8 @@ const DatabaseManagementSystems = () => {
           </p>
         </div>
 
-        {/* Navigation Content */}
-        <div className="flex-1 overflow-y-auto p-3">
+        {/* Navigation Content - Scrollable */}
+        <div className="flex-1 overflow-y-auto p-3 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-900">
           <div className="space-y-2">
             {Object.entries(dbmsData).map(([sectionKey, section]) => (
               <div key={sectionKey} className="space-y-1">
@@ -210,8 +210,8 @@ const DatabaseManagementSystems = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 min-h-screen">
+      {/* Main Content Area */}
+      <div className="flex-1 min-h-screen overflow-y-auto">
         <div className="p-8">
           {currentContent ? (
             <Card className="bg-zinc-900 border-zinc-800">

@@ -30,9 +30,16 @@ class ProgressController {
       const { sheetName, questionId } = req.params;
       const userId = req.user._id;
 
+      console.log("ProgressController: Toggle request received", {
+        sheetName,
+        questionId,
+        userId: userId.toString(),
+      });
+
       // Verify sheet exists
       const sheet = await Sheet.findOne({ name: sheetName });
       if (!sheet) {
+        console.log("ProgressController: Sheet not found", sheetName);
         return res.status(404).json({ message: "Sheet not found" });
       }
 
@@ -47,6 +54,10 @@ class ProgressController {
       });
 
       if (!questionExists) {
+        console.log("ProgressController: Question not found", {
+          sheetName,
+          questionId,
+        });
         return res.status(404).json({ message: "Question not found" });
       }
 
@@ -99,6 +110,13 @@ class ProgressController {
 
       await user.save();
 
+      console.log("ProgressController: Question status toggled successfully", {
+        sheetName,
+        questionId,
+        isSolved,
+        solvedCount: sheetProgress.solvedCount,
+      });
+
       res.json({
         message: `Question ${
           isSolved ? "marked as solved" : "marked as unsolved"
@@ -107,6 +125,10 @@ class ProgressController {
         solvedCount: sheetProgress.solvedCount,
       });
     } catch (error) {
+      console.error(
+        "ProgressController: Error toggling question status:",
+        error
+      );
       res.status(500).json({ message: "Server error", error: error.message });
     }
   };

@@ -16,13 +16,29 @@ const QuestionCard = ({
   const navigate = useNavigate();
 
   const handleToggle = async () => {
-    if (!isAuthenticated || !onToggle) return;
+    if (!isAuthenticated || !onToggle) {
+      console.log(
+        "QuestionCard: Cannot toggle - not authenticated or no onToggle handler",
+        {
+          isAuthenticated,
+          hasOnToggle: !!onToggle,
+        }
+      );
+      return;
+    }
+
+    console.log("QuestionCard: Starting toggle for question", {
+      questionId: question._id,
+      questionTitle: question.title,
+      currentSolvedState: isSolved,
+    });
 
     setLoading(true);
     try {
       await onToggle(question._id);
+      console.log("QuestionCard: Toggle completed successfully");
     } catch (error) {
-      console.error("Error toggling question:", error);
+      console.error("QuestionCard: Error toggling question:", error);
     } finally {
       setLoading(false);
     }

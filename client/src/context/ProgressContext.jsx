@@ -118,10 +118,15 @@ export const ProgressProvider = ({ children }) => {
 
   const toggleQuestionStatus = async (sheetName, questionId) => {
     try {
+      console.log("ProgressContext: Toggling question status", {
+        sheetName,
+        questionId,
+      });
       const response = await progressAPI.toggleQuestionStatus(
         sheetName,
         questionId
       );
+      console.log("ProgressContext: Toggle response received", response.data);
       dispatch({
         type: "UPDATE_QUESTION_STATUS",
         payload: {
@@ -133,7 +138,8 @@ export const ProgressProvider = ({ children }) => {
       });
       return response.data;
     } catch (error) {
-      console.error("Error toggling question status:", error);
+      console.error("ProgressContext: Error toggling question status:", error);
+      console.error("ProgressContext: Error details:", error.response?.data);
       throw error;
     }
   };

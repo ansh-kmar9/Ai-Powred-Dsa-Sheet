@@ -210,7 +210,7 @@ Please provide a helpful and educational response using proper markdown formatti
                       onClick={clearChat}
                       variant="outline"
                       size="sm"
-                      className="border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                      className="border-zinc-700 text-black-300 hover:bg-zinc-800 hover:text-white"
                     >
                       Clear Chat
                     </Button>

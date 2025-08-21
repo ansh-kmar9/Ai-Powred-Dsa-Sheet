@@ -66,8 +66,8 @@ const LandingPage = () => {
       {/* Content */}
       <div className="relative z-10">
         {/* Hero Section */}
-        <section className="container mx-auto px-4 py-20 md:py-32">
-          <div className="max-w-4xl mx-auto text-center">
+        <section className="hero-section container mx-auto px-4 py-20 md:py-32">
+          <div className="landing-strokes max-w-4xl mx-auto text-center">
             {/* Badge */}
             <div className="inline-flex items-center rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-1 text-sm font-medium mb-8">
               <div className="h-2 w-2 bg-green-500 rounded-full mr-2 animate-pulse" />
@@ -75,7 +75,7 @@ const LandingPage = () => {
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+            <h1 className="main-heading text-4xl md:text-6xl font-bold tracking-tight mb-6">
               Master DSA with
               <br />
               <span className="text-zinc-400">Smart Learning</span>

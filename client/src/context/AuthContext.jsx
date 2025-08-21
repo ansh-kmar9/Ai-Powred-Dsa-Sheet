@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
 
       if (storedToken) {
         console.log("AuthContext - Verifying stored token...");
-        const response = await authAPI.verifyToken(storedToken);
+        const response = await authAPI.verifyToken();
         console.log(
           "AuthContext - Token verification response:",
           response.data
@@ -95,6 +95,9 @@ export const AuthProvider = ({ children }) => {
         type: "LOGIN_ERROR",
         payload: error.response?.data?.message || "Authentication failed",
       });
+    } finally {
+      // Ensure loading is always set to false
+      dispatch({ type: "SET_LOADING", payload: false });
     }
   };
 

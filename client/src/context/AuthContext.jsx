@@ -73,9 +73,17 @@ export const AuthProvider = ({ children }) => {
         storedToken ? "exists" : "none"
       );
 
+      // Add timeout to prevent infinite loading
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Authentication timeout")), 10000)
+      );
+
       if (storedToken) {
         console.log("AuthContext - Verifying stored token...");
-        const response = await authAPI.verifyToken();
+        const response = await Promise.race([
+          authAPI.verifyToken(),
+          timeoutPromise,
+        ]);
         console.log(
           "AuthContext - Token verification response:",
           response.data
@@ -84,7 +92,10 @@ export const AuthProvider = ({ children }) => {
       } else {
         // Try session-based auth
         console.log("AuthContext - Trying session-based auth...");
-        const response = await authAPI.getCurrentUser();
+        const response = await Promise.race([
+          authAPI.getCurrentUser(),
+          timeoutPromise,
+        ]);
         console.log("AuthContext - Session auth response:", response.data);
         dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
       }
@@ -93,7 +104,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("token");
       dispatch({
         type: "LOGIN_ERROR",
-        payload: error.response?.data?.message || "Authentication failed",
+        payload: error.response?.data?.message || error.message || "Authentication failed",
       });
     } finally {
       // Ensure loading is always set to false

@@ -5,6 +5,7 @@ import { Button } from "../components/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
 import { Loader2, Chrome } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
+import { LoginSkeleton } from "../components/SkeletonLoader";
 
 const LoginPage = () => {
   const { isAuthenticated, loading, login } = useAuth();
@@ -18,14 +19,7 @@ const LoginPage = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-zinc-950">
-        <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-zinc-400 mx-auto mb-4" />
-          <p className="text-zinc-500">Loading...</p>
-        </div>
-      </div>
-    );
+    return <LoginSkeleton />;
   }
 
   if (isAuthenticated) {

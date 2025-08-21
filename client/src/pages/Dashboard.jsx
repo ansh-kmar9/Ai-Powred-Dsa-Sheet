@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useProgress } from "../context/ProgressContext";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
 import { Button } from "../components/Button";
+import { DashboardSkeleton } from "../components/SkeletonLoader";
 import {
   PieChart,
   Pie,
@@ -80,14 +81,7 @@ const Dashboard = () => {
   };
 
   if (authLoading || loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-950">
-        <div className="flex flex-col items-center space-y-4">
-          <Loader2 className="h-8 w-8 animate-spin text-zinc-100" />
-          <p className="text-sm text-gray-400">Loading your dashboard...</p>
-        </div>
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   if (!isAuthenticated) {

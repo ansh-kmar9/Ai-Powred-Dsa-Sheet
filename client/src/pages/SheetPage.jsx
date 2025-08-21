@@ -7,6 +7,7 @@ import QuestionCard from "../components/QuestionCard";
 import { Progress } from "../components/Progress";
 import { Button } from "../components/Button";
 import { Card, CardContent } from "../components/Card";
+import { SheetSkeleton } from "../components/SkeletonLoader";
 import {
   ArrowLeft,
   BookOpen,
@@ -149,14 +150,7 @@ const SheetPage = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center bg-black">
-        <div className="flex flex-col items-center space-y-4">
-          <Loader2 className="h-10 w-10 animate-spin text-white" />
-          <p className="text-sm text-zinc-400">Loading sheet...</p>
-        </div>
-      </div>
-    );
+    return <SheetSkeleton />;
   }
 
   if (!sheet) {

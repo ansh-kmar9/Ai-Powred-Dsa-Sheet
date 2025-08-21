@@ -4,7 +4,7 @@ import React from "react";
 export const Skeleton = ({ className = "", ...props }) => {
   return (
     <div
-      className={`animate-pulse bg-zinc-800 rounded ${className}`}
+      className={`animate-pulse bg-gradient-to-r from-zinc-800 via-zinc-700 to-zinc-800 bg-[length:200%_100%] animate-shimmer rounded ${className}`}
       {...props}
     />
   );

@@ -63,7 +63,10 @@ export const AuthProvider = ({ children }) => {
 
       console.log("AuthContext - URL token:", token);
       console.log("AuthContext - Current URL:", window.location.href);
-      console.log("AuthContext - API Base URL:", import.meta.env.VITE_API_URL || "http://localhost:5000");
+      console.log(
+        "AuthContext - API Base URL:",
+        import.meta.env.VITE_API_URL || "http://localhost:5000"
+      );
 
       if (token) {
         console.log("AuthContext - Setting token in localStorage:", token);
@@ -78,9 +81,12 @@ export const AuthProvider = ({ children }) => {
         // Immediately verify the token and set user
         try {
           const response = await authAPI.verifyToken();
-          console.log("AuthContext - Token verification response:", response.data);
+          console.log(
+            "AuthContext - Token verification response:",
+            response.data
+          );
           dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
-          
+
           // Show login success toast after successful verification
           if (!loginToastShown.current) {
             setTimeout(() => {
@@ -129,7 +135,7 @@ export const AuthProvider = ({ children }) => {
       } catch (sessionError) {
         console.error("AuthContext - Session auth failed:", sessionError);
         // Only dispatch error if we're not on login page already
-        if (!window.location.pathname.includes('/login')) {
+        if (!window.location.pathname.includes("/login")) {
           dispatch({
             type: "LOGIN_ERROR",
             payload: "Authentication failed",
@@ -141,7 +147,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("AuthContext - Unexpected auth error:", error);
-      if (!window.location.pathname.includes('/login')) {
+      if (!window.location.pathname.includes("/login")) {
         localStorage.removeItem("token");
         dispatch({
           type: "LOGIN_ERROR",

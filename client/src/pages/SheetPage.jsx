@@ -17,6 +17,7 @@ import {
   RotateCcw,
   Search,
   Filter,
+  X,
 } from "lucide-react";
 import { cn } from "../utils/cn";
 
@@ -37,6 +38,7 @@ const SheetPage = () => {
   const [difficultyFilter, setDifficultyFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showResetModal, setShowResetModal] = useState(false);
 
   useEffect(() => {
     if (sheetName) {
@@ -76,18 +78,30 @@ const SheetPage = () => {
   };
 
   const handleResetProgress = async () => {
-    if (
-      !isAuthenticated ||
-      !confirm("Are you sure you want to reset all progress for this sheet?")
-    ) {
-      return;
-    }
+    if (!isAuthenticated) return;
+    setShowResetModal(true);
+  };
+
+  const confirmResetProgress = async () => {
     try {
       await resetSheetProgress(sheetName);
+      setShowResetModal(false);
     } catch (error) {
       console.error("Error resetting progress:", error);
     }
   };
+
+  // Handle escape key to close modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showResetModal) {
+        setShowResetModal(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [showResetModal]);
 
   const toggleTopic = (topicName) => {
     setExpandedTopics((prev) => ({
@@ -424,6 +438,49 @@ const SheetPage = () => {
           })}
         </div>
       </div>
+
+      {/* Reset Progress Confirmation Modal */}
+      {showResetModal && (
+        <div 
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200"
+          onClick={() => setShowResetModal(false)}
+        >
+          <div 
+            className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 max-w-md w-full mx-4 animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg font-semibold text-white">
+                Reset Progress
+              </h3>
+              <button
+                onClick={() => setShowResetModal(false)}
+                className="text-zinc-400 hover:text-white p-1"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <p className="text-zinc-400 mb-6">
+              Are you sure you want to reset your progress for this sheet? This action cannot be undone.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <Button
+                variant="outline"
+                onClick={() => setShowResetModal(false)}
+                className="border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={confirmResetProgress}
+                className="bg-red-600 hover:bg-red-700 text-white"
+              >
+                Reset Progress
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

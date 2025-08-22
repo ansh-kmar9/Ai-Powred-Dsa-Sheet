@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 // Custom hook to handle auth-related toasts with duplicate prevention
 export const useAuthToasts = () => {

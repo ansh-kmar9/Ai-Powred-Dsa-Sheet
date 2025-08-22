@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext";
 import { ProgressProvider } from "./context/ProgressContext";
 import Navbar from "./components/Navbar";
@@ -75,22 +74,36 @@ function App() {
               </Routes>
             </main>
             <Footer />
-            <ToastContainer
+            <Toaster
               position="top-right"
-              autoClose={4000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="dark"
-              className="custom-toast-container"
-              toastStyle={{
-                backgroundColor: "#18181b",
-                color: "#ffffff",
-                border: "1px solid #3f3f46",
+              reverseOrder={false}
+              gutter={8}
+              containerClassName=""
+              containerStyle={{
+                top: 80,
+                right: 16,
+              }}
+              toastOptions={{
+                duration: 4000,
+                style: {
+                  background: "#18181b",
+                  color: "#ffffff",
+                  border: "1px solid #3f3f46",
+                },
+                success: {
+                  style: {
+                    background: "#16a34a",
+                    color: "#ffffff",
+                    border: "1px solid #22c55e",
+                  },
+                },
+                error: {
+                  style: {
+                    background: "#dc2626",
+                    color: "#ffffff",
+                    border: "1px solid #ef4444",
+                  },
+                },
               }}
             />
           </div>

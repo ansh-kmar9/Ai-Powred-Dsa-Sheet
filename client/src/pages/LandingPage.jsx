@@ -399,7 +399,7 @@ const LandingPage = () => {
                       <TrendingUp className="h-10 w-10 text-white" />
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-4">
-                      Join 10,000+ Developers
+                      Join 100+ Developers
                     </h3>
                     <p className="text-zinc-400 mb-6">
                       Already mastering DSA with our platform

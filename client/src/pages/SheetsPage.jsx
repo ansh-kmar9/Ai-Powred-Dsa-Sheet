@@ -21,45 +21,47 @@ const SheetsPage = () => {
     {
       name: "DSA360",
       description:
-        "Complete DSA preparation covering all essential topics from basics to advanced level.",
-      totalQuestions: 450,
+        "180 DSA problems organized pattern-wise for interview prep.",
+      totalQuestions: 180,
       icon: Brain,
-      difficulty: "Beginner to Advanced",
+      difficulty: "Pattern Wise",
     },
     {
       name: "SDE",
       description:
-        "Software Development Engineer interview preparation with curated problems from top tech companies.",
-      totalQuestions: 200,
+        "Covers all variations of DSA with 389 curated problems for SDE interview prep.",
+      totalQuestions: 389,
       icon: Code,
-      difficulty: "Intermediate",
+      difficulty: "Mixed Variations",
     },
     {
       name: "Blind75",
       description:
-        "75 must-solve coding problems that cover the most important patterns for technical interviews.",
+        "75 essential coding problems covering key patterns for technical interviews.",
       totalQuestions: 75,
       icon: Target,
-      difficulty: "Intermediate",
+      difficulty: "Core Level",
     },
+
     {
       name: "Interview",
       description:
-        "Essential coding interview questions with detailed solutions and explanations for better understanding.",
-      totalQuestions: 150,
+        "Company-wise coding interview question sheet covering top tech companies.",
+      totalQuestions: 3444,
       icon: Zap,
       color: "from-orange-500 to-orange-600",
-      difficulty: "Beginner to Intermediate",
+      difficulty: "Company Wise",
     },
+
     {
       name: "Supreme",
-      description:
-        "Advanced level problems for competitive programming and senior developer positions preparation.",
-      totalQuestions: 300,
+      description: "DSA problems from scratch to advanced level for complete preparation.",
+      totalQuestions: 478,
       icon: Star,
       color: "from-red-500 to-red-600",
-      difficulty: "Advanced",
-    },
+      difficulty: "Scratch to Advance"
+}
+
   ];
 
   return (

@@ -94,13 +94,13 @@ const SheetPage = () => {
   // Handle escape key to close modal
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape' && showResetModal) {
+      if (e.key === "Escape" && showResetModal) {
         setShowResetModal(false);
       }
     };
 
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
   }, [showResetModal]);
 
   const toggleTopic = (topicName) => {
@@ -441,11 +441,11 @@ const SheetPage = () => {
 
       {/* Reset Progress Confirmation Modal */}
       {showResetModal && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200"
           onClick={() => setShowResetModal(false)}
         >
-          <div 
+          <div
             className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 max-w-md w-full mx-4 animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
@@ -461,13 +461,14 @@ const SheetPage = () => {
               </button>
             </div>
             <p className="text-zinc-400 mb-6">
-              Are you sure you want to reset your progress for this sheet? This action cannot be undone.
+              Are you sure you want to reset your progress for this sheet? This
+              action cannot be undone.
             </p>
             <div className="flex gap-3 justify-end">
               <Button
                 variant="outline"
                 onClick={() => setShowResetModal(false)}
-                className="border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                className="border-zinc-700 text-black-300 hover:bg-zinc-800"
               >
                 Cancel
               </Button>

@@ -60,7 +60,7 @@ const Navbar = () => {
     { name: "Operating Systems", icon: Server, href: "/operating-systems" },
     { name: "OOPs", icon: Layers, href: "/oops" },
     { name: "DBMS", icon: Database, href: "/database-management-systems" },
-    { name: "Roadmap", icon: Map, href: "/roadmap" },
+    // { name: "Roadmap", icon: Map, href: "/roadmap" },
   ];
 
   return (

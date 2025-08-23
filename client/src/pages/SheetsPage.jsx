@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Card } from "../components/Card";
 import { Button } from "../components/Button";
@@ -11,10 +11,13 @@ import {
   Target,
   ArrowRight,
   ArrowLeft,
+  Lightbulb,
+  X,
 } from "lucide-react";
 
 const SheetsPage = () => {
   const navigate = useNavigate();
+  const [showTipsModal, setShowTipsModal] = useState(false);
 
   // Static sheet data
   const sheets = [
@@ -60,12 +63,88 @@ const SheetsPage = () => {
       icon: Star,
       color: "from-red-500 to-red-600",
       difficulty: "Scratch to Advance"
-}
-
+    }
   ];
+
+  const tips = [
+    "1. DSA360: If you want to practice pattern wise questions.",
+    "2. SDE: If you are preparing for SDE and want to practice good variation of questions on each topic.",
+    "3. Blind 75: If you want to do a quick recap for major topics.",
+    "4. Interview: If you want to practice company wise questions.",
+    "5. Supreme: If you want to start DSA from scratch to advance."
+  ];
+
+  // Function to parse and highlight sheet names
+  const parseAndHighlightTip = (tip) => {
+    const sheetNames = ["DSA360", "SDE", "Blind 75", "Interview", "Supreme"];
+    let highlightedTip = tip;
+    
+    sheetNames.forEach(sheetName => {
+      const regex = new RegExp(`\\b${sheetName}\\b`, 'g');
+      highlightedTip = highlightedTip.replace(regex, `<span class="text-yellow-400 font-semibold">${sheetName}</span>`);
+    });
+    
+    return highlightedTip;
+  };
 
   return (
     <div className="min-h-screen bg-black text-white">
+      {/* Tips Icon */}
+      <div className="fixed top-20 right-10 z-50">
+        <Button
+          onClick={() => setShowTipsModal(true)}
+          className="w-10 h-10 rounded-full bg-yellow-500 hover:bg-yellow-600 text-black p-2"
+          title="Tips"
+        >
+          <Lightbulb className="h-5 w-5" />
+        </Button>
+      </div>
+
+      {/* Tips Modal */}
+      {showTipsModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 max-w-md w-full relative">
+            {/* Close Button */}
+            <Button
+              onClick={() => setShowTipsModal(false)}
+              variant="ghost"
+              className="absolute top-4 right-4 p-1 hover:bg-zinc-800"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+
+            {/* Modal Header */}
+            <div className="flex items-center mb-4">
+              <Lightbulb className="h-6 w-6 text-yellow-500 mr-2" />
+              <h3 className="text-xl font-semibold text-white">Sheet Choosing Tips</h3>
+            </div>
+
+            {/* Tips List */}
+            <div className="space-y-3">
+              {tips.map((tip, index) => (
+                <div key={index} className="flex items-start">
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <p 
+                    className="text-zinc-300 text-sm leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: parseAndHighlightTip(tip) }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Close Button at Bottom */}
+            <div className="mt-6 flex justify-end">
+              <Button
+                onClick={() => setShowTipsModal(false)}
+                className="bg-white text-black hover:bg-zinc-200"
+              >
+                Got it!
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Go Back Button */}
       <div className="container mx-auto px-10 pt-8">
         <Button

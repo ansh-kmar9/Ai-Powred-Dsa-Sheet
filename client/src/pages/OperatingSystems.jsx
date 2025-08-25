@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { operatingSystemsData } from "../data/operatingSystems";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
 import {
@@ -9,15 +9,19 @@ import {
   FileText,
   Image as ImageIcon,
   Circle,
+  Menu,
+  X,
+  ChevronLeft,
 } from "lucide-react";
 
 const OperatingSystems = () => {
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [selectedSubtopic, setSelectedSubtopic] = useState(null);
   const [expandedSections, setExpandedSections] = useState({});
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Initialize with first topic and subtopic
-  React.useEffect(() => {
+  useEffect(() => {
     const firstSection = Object.keys(operatingSystemsData)[0];
     const firstTopic = operatingSystemsData[firstSection].topics[0];
 
@@ -25,6 +29,27 @@ const OperatingSystems = () => {
     setSelectedSubtopic(firstTopic.id);
     setExpandedSections({ [firstSection]: true });
   }, []);
+
+  // Close sidebar when clicking outside on mobile
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isSidebarOpen && !event.target.closest('.mobile-sidebar') && !event.target.closest('.mobile-toggle')) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    if (isSidebarOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isSidebarOpen]);
 
   const toggleSection = (sectionKey) => {
     setExpandedSections((prev) => ({
@@ -36,6 +61,7 @@ const OperatingSystems = () => {
   const handleTopicSelect = (sectionKey, topicId) => {
     setSelectedTopic(sectionKey);
     setSelectedSubtopic(topicId);
+    setIsSidebarOpen(false); // Close sidebar on mobile after selection
 
     // Expand the section if not already expanded
     if (!expandedSections[sectionKey]) {
@@ -103,89 +129,143 @@ const OperatingSystems = () => {
     (diagram) => diagram.link && diagram.link.trim() !== ""
   );
 
-  return (
-    <div className="min-h-screen bg-black text-white flex">
-      {/* Left Navigation - Fixed Sidebar */}
-      <div className="w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col h-screen sticky top-0 shrink-0">
-        {/* Header */}
-        <div className="p-4 border-b border-zinc-800 shrink-0">
-          <div className="flex items-center space-x-2 mb-2">
+  const SidebarContent = () => (
+    <>
+      {/* Header */}
+      <div className="p-4 border-b border-zinc-800 shrink-0">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center space-x-2">
             <Monitor className="h-5 w-5 text-zinc-100" />
             <h1 className="text-lg font-bold text-white">Operating Systems</h1>
           </div>
-          <p className="text-zinc-400 text-xs">
-            Learning materials for operating system concepts
-          </p>
+          {/* Close button for mobile */}
+          <button
+            onClick={() => setIsSidebarOpen(false)}
+            className="lg:hidden p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
-
-        {/* Navigation Content - Scrollable */}
-        <div className="flex-1 overflow-y-auto p-3 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-900">
-          <div className="space-y-2">
-            {Object.entries(operatingSystemsData).map(
-              ([sectionKey, section]) => (
-                <div key={sectionKey} className="space-y-1">
-                  {/* Section Header */}
-                  <button
-                    onClick={() => toggleSection(sectionKey)}
-                    className="w-full flex items-center justify-between p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-colors text-left"
-                  >
-                    <span className="font-medium text-white text-xs">
-                      {sectionKey}
-                    </span>
-                    {expandedSections[sectionKey] ? (
-                      <ChevronDown className="h-3 w-3 text-zinc-400 flex-shrink-0" />
-                    ) : (
-                      <ChevronRight className="h-3 w-3 text-zinc-400 flex-shrink-0" />
-                    )}
-                  </button>
-
-                  {/* Section Topics */}
-                  {expandedSections[sectionKey] && (
-                    <div className="ml-1 space-y-1">
-                      {section.topics.map((topic) => (
-                        <button
-                          key={topic.id}
-                          onClick={() =>
-                            handleTopicSelect(sectionKey, topic.id)
-                          }
-                          className={`w-full text-left p-1.5 rounded-lg text-xs transition-colors flex items-center group ${
-                            selectedTopic === sectionKey &&
-                            selectedSubtopic === topic.id
-                              ? "bg-zinc-500 text-white"
-                              : "text-zinc-400 hover:text-white hover:bg-zinc-800"
-                          }`}
-                        >
-                          {/* Active Marker */}
-                          <div
-                            className={`w-1.5 h-1.5 rounded-full mr-2 flex-shrink-0 transition-colors ${
-                              selectedTopic === sectionKey &&
-                              selectedSubtopic === topic.id
-                                ? "bg-white"
-                                : "bg-zinc-600 group-hover:bg-zinc-400"
-                            }`}
-                          />
-                          <span className="truncate">{topic.title}</span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )
-            )}
-          </div>
-        </div>
+        <p className="text-zinc-400 text-xs">
+          Learning materials for operating system concepts
+        </p>
       </div>
 
-      {/* Main Content */}
+      {/* Navigation Content - Scrollable */}
+      <div className="flex-1 overflow-y-auto p-3 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-900">
+        <div className="space-y-2">
+          {Object.entries(operatingSystemsData).map(
+            ([sectionKey, section]) => (
+              <div key={sectionKey} className="space-y-1">
+                {/* Section Header */}
+                <button
+                  onClick={() => toggleSection(sectionKey)}
+                  className="w-full flex items-center justify-between p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-colors text-left"
+                >
+                  <span className="font-medium text-white text-xs">
+                    {sectionKey}
+                  </span>
+                  {expandedSections[sectionKey] ? (
+                    <ChevronDown className="h-3 w-3 text-zinc-400 flex-shrink-0" />
+                  ) : (
+                    <ChevronRight className="h-3 w-3 text-zinc-400 flex-shrink-0" />
+                  )}
+                </button>
+
+                {/* Section Topics */}
+                {expandedSections[sectionKey] && (
+                  <div className="ml-1 space-y-1">
+                    {section.topics.map((topic) => (
+                      <button
+                        key={topic.id}
+                        onClick={() =>
+                          handleTopicSelect(sectionKey, topic.id)
+                        }
+                        className={`w-full text-left p-1.5 rounded-lg text-xs transition-colors flex items-center group ${
+                          selectedTopic === sectionKey &&
+                          selectedSubtopic === topic.id
+                            ? "bg-zinc-500 text-white"
+                            : "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                        }`}
+                      >
+                        {/* Active Marker */}
+                        <div
+                          className={`w-1.5 h-1.5 rounded-full mr-2 flex-shrink-0 transition-colors ${
+                            selectedTopic === sectionKey &&
+                            selectedSubtopic === topic.id
+                              ? "bg-white"
+                              : "bg-zinc-600 group-hover:bg-zinc-400"
+                          }`}
+                        />
+                        <span className="truncate">{topic.title}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )
+          )}
+        </div>
+      </div>
+    </>
+  );
+
+  return (
+    <div className="min-h-screen bg-black text-white flex relative">
+      {/* Mobile Toggle Button */}
+      <button
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className="mobile-toggle lg:hidden fixed top-20 left-4 z-50 p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-colors border border-zinc-700 shadow-lg"
+      >
+        {isSidebarOpen ? (
+          <ChevronLeft className="h-5 w-5 text-zinc-300" />
+        ) : (
+          <ChevronRight className="h-5 w-5 text-zinc-300" />
+        )}
+      </button>
+
+      {/* Desktop Sidebar - Hidden on mobile */}
+      <div className="hidden lg:flex w-64 bg-zinc-900 border-r border-zinc-800 flex-col h-screen sticky top-0 shrink-0">
+        <SidebarContent />
+      </div>
+
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40" />
+      )}
+
+      {/* Mobile Sidebar */}
+      <div
+        className={`mobile-sidebar lg:hidden fixed top-0 left-0 z-50 w-80 max-w-[85vw] bg-zinc-900 border-r border-zinc-800 h-full transform transition-transform duration-300 ease-in-out ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } flex flex-col`}
+      >
+        <SidebarContent />
+      </div>
+
       {/* Main Content Area */}
       <div className="flex-1 min-h-screen overflow-y-auto">
-        <div className="p-8">
+        <div className="p-4 sm:p-6 lg:p-8">
+          {/* Mobile breadcrumb */}
+          <div className="lg:hidden mb-4 flex items-center text-sm text-zinc-400">
+            <Monitor className="h-4 w-4 mr-2" />
+            <span>Operating Systems</span>
+            {currentContent && (
+              <>
+                <ChevronRight className="h-4 w-4 mx-2" />
+                <span className="text-zinc-300 truncate">{currentContent.title}</span>
+              </>
+            )}
+          </div>
+
           {currentContent ? (
             <Card className="bg-zinc-900 border-zinc-800">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <FileText className="mr-2 h-5 w-5 text-zinc-100" />
-                  {currentContent.title}
+              <CardHeader className="pb-4">
+                <CardTitle className="text-white flex items-start sm:items-center flex-col sm:flex-row gap-2">
+                  <div className="flex items-center">
+                    <FileText className="mr-2 h-5 w-5 text-zinc-100 flex-shrink-0" />
+                    <span className="text-lg sm:text-xl">{currentContent.title}</span>
+                  </div>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -218,7 +298,7 @@ const OperatingSystems = () => {
                               <img
                                 src={diagram.link}
                                 alt={diagram.title}
-                                className="w-full h-auto"
+                                className="w-full h-auto max-w-full"
                                 onError={(e) => {
                                   e.target.style.display = "none";
                                   e.target.nextSibling.style.display = "block";
@@ -243,13 +323,13 @@ const OperatingSystems = () => {
             </Card>
           ) : (
             <Card className="bg-zinc-900 border-zinc-800">
-              <CardContent className="p-12 text-center">
-                <Monitor className="h-16 w-16 text-zinc-600 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">
+              <CardContent className="p-8 sm:p-12 text-center">
+                <Monitor className="h-12 w-12 sm:h-16 sm:w-16 text-zinc-600 mx-auto mb-4" />
+                <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
                   Select a Topic
                 </h3>
-                <p className="text-zinc-400">
-                  Choose a topic from the left navigation to start learning
+                <p className="text-zinc-400 text-sm sm:text-base">
+                  Choose a topic from the navigation to start learning
                 </p>
               </CardContent>
             </Card>

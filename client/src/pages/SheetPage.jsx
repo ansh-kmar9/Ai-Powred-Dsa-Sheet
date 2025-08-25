@@ -103,6 +103,19 @@ const SheetPage = () => {
     return () => document.removeEventListener("keydown", handleEscape);
   }, [showResetModal]);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (showResetModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showResetModal]);
+
   const toggleTopic = (topicName) => {
     setExpandedTopics((prev) => ({
       ...prev,
@@ -192,12 +205,12 @@ const SheetPage = () => {
 
   if (!sheet) {
     return (
-      <div className="flex h-screen items-center justify-center bg-black">
-        <div className="text-center space-y-4">
+      <div className="flex min-h-screen items-center justify-center bg-black px-4">
+        <div className="text-center space-y-4 max-w-md w-full">
           <p className="text-zinc-400">Sheet not found</p>
           <Button
             onClick={() => navigate("/sheets")}
-            className="bg-white text-black hover:bg-zinc-200"
+            className="w-full sm:w-auto bg-white text-black hover:bg-zinc-200"
           >
             Back to Sheets
           </Button>
@@ -214,11 +227,11 @@ const SheetPage = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-6xl">
         {/* Header */}
-        <header className="mb-12">
+        <header className="mb-8 sm:mb-12">
           {/* Go Back Button */}
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-6">
             <Button
               onClick={() => navigate(-1)}
               variant="ghost"
@@ -229,30 +242,32 @@ const SheetPage = () => {
             </Button>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center">
-                <BookOpen className="h-6 w-6 text-white" />
+          {/* Header Content */}
+          <div className="flex flex-col space-y-6 lg:flex-row lg:items-start lg:justify-between lg:space-y-0">
+            {/* Sheet Info */}
+            <div className="flex items-start space-x-3 sm:space-x-4 min-w-0 flex-1">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-zinc-800 rounded-lg flex items-center justify-center flex-shrink-0">
+                <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
-              <div>
-                <h1 className="text-3xl font-bold tracking-tight">
+              <div className="min-w-0 flex-1">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight break-words">
                   {sheet.name}
                 </h1>
-                <p className="text-zinc-400 mt-1">
-                  {sheet.topics.length} topics • {overallProgress.total}{" "}
-                  questions
+                <p className="text-zinc-400 mt-1 text-sm sm:text-base">
+                  {sheet.topics.length} topic{sheet.topics.length !== 1 ? 's' : ''} • {overallProgress.total}{" "}
+                  question{overallProgress.total !== 1 ? 's' : ''}
                 </p>
               </div>
             </div>
 
             {/* Progress Section */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
-              <div className="flex items-center space-x-4">
-                <span className="text-sm font-medium text-zinc-300">
-                  Progress
+            <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 w-full lg:w-auto lg:min-w-[300px]">
+              <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
+                <span className="text-sm font-medium text-zinc-300 flex-shrink-0">
+                  Overall Progress
                 </span>
                 <div className="flex items-center space-x-3 flex-1">
-                  <div className="flex-1 max-w-xs">
+                  <div className="flex-1">
                     <Progress
                       value={progressPercentage}
                       className="h-2 bg-zinc-700"
@@ -271,9 +286,10 @@ const SheetPage = () => {
         </header>
 
         {/* Controls */}
-        <div className="mb-8">
-          <div className="flex flex-col space-y-4 lg:flex-row lg:items-center lg:justify-between lg:space-y-0">
-            <div className="relative max-w-md flex-1">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col space-y-4">
+            {/* Search Bar */}
+            <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
               <input
                 type="text"
@@ -284,63 +300,69 @@ const SheetPage = () => {
               />
             </div>
 
-            <div className="flex items-center space-x-3">
+            {/* Filters */}
+            <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
               <div className="flex items-center space-x-2 text-zinc-400">
                 <Filter className="h-4 w-4" />
                 <span className="text-sm">Filters</span>
               </div>
 
-              <select
-                value={difficultyFilter}
-                onChange={(e) => setDifficultyFilter(e.target.value)}
-                className="h-10 px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:border-zinc-600"
-              >
-                {["All", "Easy", "Medium", "Hard"].map((option) => (
-                  <option
-                    key={option}
-                    value={option}
-                    className="bg-zinc-900 text-white"
-                  >
-                    {option === "All" ? "All Levels" : option}
-                  </option>
-                ))}
-              </select>
+              <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-3">
+                {/* Difficulty Filter */}
+                <select
+                  value={difficultyFilter}
+                  onChange={(e) => setDifficultyFilter(e.target.value)}
+                  className="h-10 px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:border-zinc-600 w-full sm:w-auto"
+                >
+                  {["All", "Easy", "Medium", "Hard"].map((option) => (
+                    <option
+                      key={option}
+                      value={option}
+                      className="bg-zinc-900 text-white"
+                    >
+                      {option === "All" ? "All Levels" : option}
+                    </option>
+                  ))}
+                </select>
 
-              {isAuthenticated && (
-                <>
-                  <select
-                    value={statusFilter}
-                    onChange={(e) => setStatusFilter(e.target.value)}
-                    className="h-10 px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:border-zinc-600"
-                  >
-                    {["All", "Solved", "Unsolved"].map((option) => (
-                      <option
-                        key={option}
-                        value={option}
-                        className="bg-zinc-900 text-white"
-                      >
-                        {option}
-                      </option>
-                    ))}
-                  </select>
+                {isAuthenticated && (
+                  <>
+                    {/* Status Filter */}
+                    <select
+                      value={statusFilter}
+                      onChange={(e) => setStatusFilter(e.target.value)}
+                      className="h-10 px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:border-zinc-600 w-full sm:w-auto"
+                    >
+                      {["All", "Solved", "Unsolved"].map((option) => (
+                        <option
+                          key={option}
+                          value={option}
+                          className="bg-zinc-900 text-white"
+                        >
+                          {option}
+                        </option>
+                      ))}
+                    </select>
 
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleResetProgress}
-                    className="shrink-0 border-zinc-800 text-zinc-300 bg-zinc-800 hover:text-black"
-                  >
-                    <RotateCcw className="h-4 w-4 mr-2" />
-                    Reset Progress
-                  </Button>
-                </>
-              )}
+                    {/* Reset Button */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleResetProgress}
+                      className="w-full sm:w-auto border-zinc-800 text-zinc-300 bg-zinc-800 hover:text-black h-10"
+                    >
+                      <RotateCcw className="h-4 w-4 mr-2" />
+                      <span className="sm:inline">Reset Progress</span>
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Animated Topics */}
-        <div className="space-y-3">
+        {/* Topics */}
+        <div className="space-y-3 sm:space-y-4">
           {sheet.topics.map((topic, topicIndex) => {
             const topicProgress = getTopicProgress(topic);
             const filteredQuestions = getFilteredQuestions(topic.questions);
@@ -349,53 +371,78 @@ const SheetPage = () => {
             return (
               <div key={topic.name}>
                 <Card className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800/50 transition-colors">
+                  {/* Topic Header */}
                   <div
-                    className="flex cursor-pointer items-center justify-between p-6"
+                    className="flex cursor-pointer items-center justify-between p-4 sm:p-6"
                     onClick={() => toggleTopic(topic.name)}
                   >
-                    <div className="flex min-w-0 flex-1 items-center space-x-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="transition-transform duration-200">
+                    <div className="flex min-w-0 flex-1 items-start sm:items-center space-x-3 sm:space-x-4">
+                      {/* Expand/Collapse Icon & Title */}
+                      <div className="flex items-center space-x-2 sm:space-x-3 min-w-0">
+                        <div className="transition-transform duration-200 flex-shrink-0">
                           {isExpanded ? (
-                            <ChevronDown className="h-5 w-5 text-zinc-400" />
+                            <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-zinc-400" />
                           ) : (
-                            <ChevronRight className="h-5 w-5 text-zinc-400" />
+                            <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-zinc-400" />
                           )}
                         </div>
-                        <h3 className="font-semibold text-white text-lg">
+                        <h3 className="font-semibold text-white text-base sm:text-lg break-words min-w-0">
                           {topic.name}
                         </h3>
                       </div>
 
-                      <div className="flex min-w-0 flex-1 items-center space-x-4">
-                        <div className="flex items-center space-x-3 flex-1">
-                          <div className="flex-1 max-w-xs">
-                            <Progress
-                              value={
-                                topicProgress.total > 0
-                                  ? Math.round(
-                                      (topicProgress.solved /
-                                        topicProgress.total) *
-                                        100
-                                    )
-                                  : 0
-                              }
-                              className="h-2 bg-zinc-700"
-                            />
-                          </div>
-                          <span className="text-sm text-zinc-400 whitespace-nowrap">
-                            {topicProgress.solved}/{topicProgress.total}
-                          </span>
+                      {/* Progress Bar - Hidden on mobile when title is long */}
+                      <div className="hidden sm:flex min-w-0 flex-1 items-center space-x-3 lg:space-x-4 max-w-xs lg:max-w-sm">
+                        <div className="flex-1">
+                          <Progress
+                            value={
+                              topicProgress.total > 0
+                                ? Math.round(
+                                    (topicProgress.solved /
+                                      topicProgress.total) *
+                                      100
+                                  )
+                                : 0
+                            }
+                            className="h-2 bg-zinc-700"
+                          />
                         </div>
+                        <span className="text-sm text-zinc-400 whitespace-nowrap">
+                          {topicProgress.solved}/{topicProgress.total}
+                        </span>
                       </div>
                     </div>
 
-                    <div className="text-sm text-zinc-500">
-                      {filteredQuestions.length} question
-                      {filteredQuestions.length !== 1 ? "s" : ""}
+                    {/* Question Count */}
+                    <div className="text-xs sm:text-sm text-zinc-500 flex-shrink-0 ml-2">
+                      {filteredQuestions.length} question{filteredQuestions.length !== 1 ? "s" : ""}
                     </div>
                   </div>
 
+                  {/* Mobile Progress Bar */}
+                  <div className="sm:hidden px-4 pb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex-1">
+                        <Progress
+                          value={
+                            topicProgress.total > 0
+                              ? Math.round(
+                                  (topicProgress.solved /
+                                    topicProgress.total) *
+                                    100
+                                )
+                              : 0
+                          }
+                          className="h-2 bg-zinc-700"
+                        />
+                      </div>
+                      <span className="text-sm text-zinc-400 whitespace-nowrap">
+                        {topicProgress.solved}/{topicProgress.total}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Expandable Content */}
                   <div
                     className={cn(
                       "topic-content transition-all duration-500 ease-in-out",
@@ -411,7 +458,7 @@ const SheetPage = () => {
                             <div
                               key={question._id}
                               className={cn(
-                                "p-4 transition-all duration-200 hover:bg-zinc-800/20"
+                                "p-3 sm:p-4 transition-all duration-200 hover:bg-zinc-800/20"
                               )}
                             >
                               <QuestionCard
@@ -424,8 +471,8 @@ const SheetPage = () => {
                           ))}
                         </div>
                       ) : (
-                        <div className="flex h-24 items-center justify-center text-zinc-500">
-                          <p className="text-sm">
+                        <div className="flex h-20 sm:h-24 items-center justify-center text-zinc-500 px-4">
+                          <p className="text-sm text-center">
                             No questions match the current filters.
                           </p>
                         </div>
@@ -442,39 +489,39 @@ const SheetPage = () => {
       {/* Reset Progress Confirmation Modal */}
       {showResetModal && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200"
           onClick={() => setShowResetModal(false)}
         >
           <div
-            className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 max-w-md w-full mx-4 animate-in zoom-in-95 duration-200"
+            className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 sm:p-6 w-full max-w-md animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
               <h3 className="text-lg font-semibold text-white">
                 Reset Progress
               </h3>
               <button
                 onClick={() => setShowResetModal(false)}
-                className="text-zinc-400 hover:text-white p-1"
+                className="text-zinc-400 hover:text-white p-1 -mr-1"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
-            <p className="text-zinc-400 mb-6">
+            <p className="text-zinc-400 mb-6 text-sm sm:text-base">
               Are you sure you want to reset your progress for this sheet? This
               action cannot be undone.
             </p>
-            <div className="flex gap-3 justify-end">
+            <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
               <Button
-                variant="outline"
+                               variant="outline"
                 onClick={() => setShowResetModal(false)}
-                className="border-zinc-700 text-black-300 hover:bg-zinc-800"
+                className="w-full sm:w-auto border-zinc-700 text-zinc-300 hover:bg-zinc-800"
               >
                 Cancel
               </Button>
               <Button
                 onClick={confirmResetProgress}
-                className="bg-red-600 hover:bg-red-700 text-white"
+                className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white"
               >
                 Reset Progress
               </Button>

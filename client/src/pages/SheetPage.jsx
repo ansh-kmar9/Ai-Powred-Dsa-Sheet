@@ -39,6 +39,18 @@ const SheetPage = () => {
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [showResetModal, setShowResetModal] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (sheetName) {
@@ -227,11 +239,11 @@ const SheetPage = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 max-w-6xl">
         {/* Header */}
-        <header className="mb-8 sm:mb-12">
+        <header className="mb-6 sm:mb-12">
           {/* Go Back Button */}
-          <div className="mb-4 sm:mb-6">
+          <div className="mb-3 sm:mb-6">
             <Button
               onClick={() => navigate(-1)}
               variant="ghost"
@@ -243,7 +255,7 @@ const SheetPage = () => {
           </div>
 
           {/* Header Content */}
-          <div className="flex flex-col space-y-6 lg:flex-row lg:items-start lg:justify-between lg:space-y-0">
+          <div className="flex flex-col space-y-4 lg:flex-row lg:items-start lg:justify-between lg:space-y-0">
             {/* Sheet Info */}
             <div className="flex items-start space-x-3 sm:space-x-4 min-w-0 flex-1">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-zinc-800 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -261,8 +273,8 @@ const SheetPage = () => {
             </div>
 
             {/* Progress Section */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 w-full lg:w-auto lg:min-w-[300px]">
-              <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
+            <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 sm:p-4 w-full lg:w-auto lg:min-w-[300px]">
+              <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
                 <span className="text-sm font-medium text-zinc-300 flex-shrink-0">
                   Overall Progress
                 </span>
@@ -286,8 +298,8 @@ const SheetPage = () => {
         </header>
 
         {/* Controls */}
-        <div className="mb-6 sm:mb-8">
-          <div className="flex flex-col space-y-4">
+        <div className="mb-4 sm:mb-8">
+          <div className="flex flex-col space-y-3">
             {/* Search Bar */}
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
@@ -312,7 +324,7 @@ const SheetPage = () => {
                 <select
                   value={difficultyFilter}
                   onChange={(e) => setDifficultyFilter(e.target.value)}
-                  className="h-10 px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:border-zinc-600 w-full sm:w-auto"
+                  className="h-9 sm:h-10 px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:border-zinc-600 w-full sm:w-auto"
                 >
                   {["All", "Easy", "Medium", "Hard"].map((option) => (
                     <option
@@ -331,7 +343,7 @@ const SheetPage = () => {
                     <select
                       value={statusFilter}
                       onChange={(e) => setStatusFilter(e.target.value)}
-                      className="h-10 px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:border-zinc-600 w-full sm:w-auto"
+                      className="h-9 sm:h-10 px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:border-zinc-600 w-full sm:w-auto"
                     >
                       {["All", "Solved", "Unsolved"].map((option) => (
                         <option
@@ -349,7 +361,7 @@ const SheetPage = () => {
                       variant="outline"
                       size="sm"
                       onClick={handleResetProgress}
-                      className="w-full sm:w-auto border-zinc-800 text-zinc-300 bg-zinc-800 hover:text-black h-10"
+                      className="w-full sm:w-auto border-zinc-800 text-zinc-300 bg-zinc-800 hover:text-black h-9 sm:h-10"
                     >
                       <RotateCcw className="h-4 w-4 mr-2" />
                       <span className="sm:inline">Reset Progress</span>
@@ -362,7 +374,7 @@ const SheetPage = () => {
         </div>
 
         {/* Topics */}
-        <div className="space-y-3 sm:space-y-4">
+        <div className="space-y-2 sm:space-y-4">
           {sheet.topics.map((topic, topicIndex) => {
             const topicProgress = getTopicProgress(topic);
             const filteredQuestions = getFilteredQuestions(topic.questions);
@@ -373,12 +385,12 @@ const SheetPage = () => {
                 <Card className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800/50 transition-colors">
                   {/* Topic Header */}
                   <div
-                    className="flex cursor-pointer items-center justify-between p-4 sm:p-6"
+                    className="flex cursor-pointer items-center justify-between p-3 sm:p-6"
                     onClick={() => toggleTopic(topic.name)}
                   >
-                    <div className="flex min-w-0 flex-1 items-start sm:items-center space-x-3 sm:space-x-4">
+                    <div className="flex min-w-0 flex-1 items-start sm:items-center space-x-2 sm:space-x-4">
                       {/* Expand/Collapse Icon & Title */}
-                      <div className="flex items-center space-x-2 sm:space-x-3 min-w-0">
+                      <div className="flex items-center space-x-2 min-w-0">
                         <div className="transition-transform duration-200 flex-shrink-0">
                           {isExpanded ? (
                             <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-zinc-400" />
@@ -386,7 +398,7 @@ const SheetPage = () => {
                             <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-zinc-400" />
                           )}
                         </div>
-                        <h3 className="font-semibold text-white text-base sm:text-lg break-words min-w-0">
+                        <h3 className="font-semibold text-white text-sm sm:text-lg break-words min-w-0">
                           {topic.name}
                         </h3>
                       </div>
@@ -420,7 +432,7 @@ const SheetPage = () => {
                   </div>
 
                   {/* Mobile Progress Bar */}
-                  <div className="sm:hidden px-4 pb-4">
+                  <div className="sm:hidden px-3 pb-3">
                     <div className="flex items-center space-x-3">
                       <div className="flex-1">
                         <Progress
@@ -453,25 +465,49 @@ const SheetPage = () => {
                   >
                     <CardContent className="border-t border-zinc-800/50 p-0">
                       {filteredQuestions.length > 0 ? (
-                        <div className="divide-y divide-zinc-800/50">
-                          {filteredQuestions.map((question, questionIndex) => (
-                            <div
-                              key={question._id}
-                              className={cn(
-                                "p-3 sm:p-4 transition-all duration-200 hover:bg-zinc-800/20"
-                              )}
-                            >
-                              <QuestionCard
-                                question={question}
-                                isAuthenticated={isAuthenticated}
-                                isSolved={isQuestionSolved(question._id)}
-                                onToggle={handleQuestionToggle}
-                              />
+                        <>
+                          {/* Mobile Horizontal Scroll */}
+                          {isMobile ? (
+                            <div className="overflow-x-auto">
+                              <div className="flex gap-3 p-3 min-w-max">
+                                {filteredQuestions.map((question, questionIndex) => (
+                                  <div
+                                    key={question._id}
+                                    className="flex-shrink-0 w-80 bg-zinc-800/30 rounded-lg p-3 border border-zinc-800/50"
+                                  >
+                                    <QuestionCard
+                                      question={question}
+                                      isAuthenticated={isAuthenticated}
+                                      isSolved={isQuestionSolved(question._id)}
+                                      onToggle={handleQuestionToggle}
+                                    />
+                                  </div>
+                                ))}
+                              </div>
                             </div>
-                          ))}
-                        </div>
+                          ) : (
+                            /* Desktop Vertical Layout */
+                            <div className="divide-y divide-zinc-800/50">
+                              {filteredQuestions.map((question, questionIndex) => (
+                                <div
+                                  key={question._id}
+                                  className={cn(
+                                    "p-4 transition-all duration-200 hover:bg-zinc-800/20"
+                                  )}
+                                >
+                                  <QuestionCard
+                                    question={question}
+                                    isAuthenticated={isAuthenticated}
+                                    isSolved={isQuestionSolved(question._id)}
+                                    onToggle={handleQuestionToggle}
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </>
                       ) : (
-                        <div className="flex h-20 sm:h-24 items-center justify-center text-zinc-500 px-4">
+                        <div className="flex h-16 sm:h-24 items-center justify-center text-zinc-500 px-4">
                           <p className="text-sm text-center">
                             No questions match the current filters.
                           </p>
@@ -513,7 +549,7 @@ const SheetPage = () => {
             </p>
             <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
               <Button
-                               variant="outline"
+                variant="outline"
                 onClick={() => setShowResetModal(false)}
                 className="w-full sm:w-auto border-zinc-700 text-zinc-300 hover:bg-zinc-800"
               >

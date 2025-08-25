@@ -109,14 +109,14 @@ const Navbar = () => {
             {/* Logo */}
             <Link 
               to="/" 
-              className="flex items-center space-x-2 group transition-transform "
+              className="flex items-center space-x-2 group transition-transform"
             >
               <img
                 src="/logo2.png"
                 alt="Logo"
                 className="h-7 w-7 sm:h-8 sm:w-8 object-contain"
               />
-              <span className="text-lg sm:text-xl font-bold text-white ">
+              <span className="text-lg sm:text-xl font-bold text-white">
                 DSA Sheet
               </span>
             </Link>
@@ -128,12 +128,13 @@ const Navbar = () => {
                 to="/ai-doubt-solver"
                 className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActiveRoute("/ai-doubt-solver")
-                    ? "bg-zinc-300 text-black shadow-lg"
+                    ? "bg-zinc-700 text-white shadow-lg border border-zinc-600"
                     : "text-zinc-400 hover:text-white hover:bg-zinc-800"
                 }`}
                 title="AI Doubt Solver"
               >
-                <Bot className="h-4 w-7" />
+                <Bot className="h-4 w-4" />
+                <span className="hidden xl:inline">AI Solver</span>
               </Link>
 
               {/* Explore Dropdown */}
@@ -163,7 +164,7 @@ const Navbar = () => {
                         to={item.href}
                         className={`flex items-center space-x-3 px-4 py-3 text-sm transition-all duration-200 ${
                           isActiveRoute(item.href)
-                            ? "bg-blue-600/20 text-blue-400 border-r-2 border-blue-500"
+                            ? "bg-zinc-700 text-white border-r-2 border-zinc-400"
                             : "text-zinc-300 hover:text-white hover:bg-zinc-800/50"
                         }`}
                       >
@@ -175,28 +176,13 @@ const Navbar = () => {
                 )}
               </div>
 
-              {/* Dashboard Link (for authenticated users) */}
-              {isAuthenticated && (
-                <Link
-                  to="/dashboard"
-                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    isActiveRoute("/dashboard")
-                      ? "bg-green-600 text-white shadow-lg"
-                      : "text-zinc-400 hover:text-white hover:bg-zinc-800"
-                  }`}
-                >
-                  <Home className="h-4 w-4" />
-                  <span className="hidden xl:inline">Dashboard</span>
-                </Link>
-              )}
-
               {/* Profile/Login Section */}
               {isAuthenticated ? (
                 <div className="relative" ref={profileRef}>
                   <button
                     onClick={() => setProfileOpen(!profileOpen)}
                     className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-                      profileOpen
+                      profileOpen || isActiveRoute("/dashboard")
                         ? "bg-zinc-800 text-white"
                         : "text-zinc-400 hover:text-white hover:bg-zinc-800"
                     }`}
@@ -208,7 +194,7 @@ const Navbar = () => {
                         className="h-8 w-8 rounded-full border-2 border-zinc-600"
                       />
                     ) : (
-                      <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                      <div className="h-8 w-8 rounded-full bg-gradient-to-br from-zinc-600 to-zinc-800 flex items-center justify-center">
                         <User className="h-4 w-4 text-white" />
                       </div>
                     )}
@@ -236,7 +222,11 @@ const Navbar = () => {
                       <div className="py-2">
                         <Link
                           to="/dashboard"
-                          className="flex items-center space-x-3 px-4 py-3 text-sm text-zinc-300 hover:text-white hover:bg-zinc-800/50 transition-colors"
+                          className={`flex items-center space-x-3 px-4 py-3 text-sm transition-colors ${
+                            isActiveRoute("/dashboard")
+                              ? "bg-zinc-700 text-white border-r-2 border-zinc-400"
+                              : "text-zinc-300 hover:text-white hover:bg-zinc-800/50"
+                          }`}
                         >
                           <Home className="h-4 w-4" />
                           <span>Dashboard</span>
@@ -258,7 +248,7 @@ const Navbar = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-zinc-600 text-black-300 hover:text-white bg-zinc-100 hover:bg-zinc-800 hover:border-zinc-500 transition-all duration-200"
+                    className="border-zinc-600 text-zinc-300 hover:text-white bg-zinc-100 hover:bg-zinc-800 hover:border-zinc-500 transition-all duration-200"
                   >
                     <User className="h-4 w-4 mr-2" />
                     Login
@@ -293,7 +283,7 @@ const Navbar = () => {
                 to="/ai-doubt-solver"
                 className={`flex items-center space-x-3 px-4 py-3 rounded-lg mb-2 transition-all duration-200 ${
                   isActiveRoute("/ai-doubt-solver")
-                    ? "bg-blue-600 text-white"
+                    ? "bg-zinc-700 text-white border border-zinc-600"
                     : "text-zinc-300 hover:text-white hover:bg-zinc-800"
                 }`}
               >
@@ -330,7 +320,7 @@ const Navbar = () => {
                         to={item.href}
                         className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                           isActiveRoute(item.href)
-                            ? "bg-blue-600/20 text-blue-400 border-l-2 border-blue-500"
+                            ? "bg-zinc-700 text-white border-l-2 border-zinc-400"
                             : "text-zinc-400 hover:text-white hover:bg-zinc-800/50"
                         }`}
                       >
@@ -341,21 +331,6 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
-
-              {/* Dashboard (for authenticated users) */}
-              {isAuthenticated && (
-                <Link
-                  to="/dashboard"
-                  className={`flex items-center space-x-3 px-4 py-3 rounded-lg mb-2 transition-all duration-200 ${
-                    isActiveRoute("/dashboard")
-                      ? "bg-green-600 text-white"
-                      : "text-zinc-300 hover:text-white hover:bg-zinc-800"
-                  }`}
-                >
-                  <Home className="h-5 w-5" />
-                  <span>Dashboard</span>
-                </Link>
-              )}
 
               {/* Profile/Login Section */}
               {isAuthenticated ? (
@@ -368,7 +343,7 @@ const Navbar = () => {
                         className="h-10 w-10 rounded-full border-2 border-zinc-600"
                       />
                     ) : (
-                      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-zinc-600 to-zinc-800 flex items-center justify-center">
                         <User className="h-5 w-5 text-white" />
                       </div>
                     )}
@@ -381,6 +356,20 @@ const Navbar = () => {
                       </p>
                     </div>
                   </div>
+                  
+                  {/* Dashboard Link in Mobile Profile Section */}
+                  <Link
+                    to="/dashboard"
+                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg mb-2 transition-all duration-200 ${
+                      isActiveRoute("/dashboard")
+                        ? "bg-zinc-700 text-white border border-zinc-600"
+                        : "text-zinc-300 hover:text-white hover:bg-zinc-800"
+                    }`}
+                  >
+                    <Home className="h-5 w-5" />
+                    <span>Dashboard</span>
+                  </Link>
+
                   <button
                     onClick={handleLogout}
                     className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-900/20 transition-colors"

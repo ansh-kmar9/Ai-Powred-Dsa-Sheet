@@ -465,47 +465,24 @@ const SheetPage = () => {
                   >
                     <CardContent className="border-t border-zinc-800/50 p-0">
                       {filteredQuestions.length > 0 ? (
-                        <>
-                          {/* Mobile Horizontal Scroll */}
-                          {isMobile ? (
-                            <div className="overflow-x-auto">
-                              <div className="flex gap-3 p-3 min-w-max">
-                                {filteredQuestions.map((question, questionIndex) => (
-                                  <div
-                                    key={question._id}
-                                    className="flex-shrink-0 w-80 bg-zinc-800/30 rounded-lg p-3 border border-zinc-800/50"
-                                  >
-                                    <QuestionCard
-                                      question={question}
-                                      isAuthenticated={isAuthenticated}
-                                      isSolved={isQuestionSolved(question._id)}
-                                      onToggle={handleQuestionToggle}
-                                    />
-                                  </div>
-                                ))}
-                              </div>
+                        <div className="divide-y divide-zinc-800/50">
+                          {filteredQuestions.map((question, questionIndex) => (
+                            <div
+                              key={question._id}
+                              className={cn(
+                                "p-2 sm:p-4 transition-all duration-200 hover:bg-zinc-800/20"
+                              )}
+                            >
+                              <QuestionCard
+                                question={question}
+                                isAuthenticated={isAuthenticated}
+                                isSolved={isQuestionSolved(question._id)}
+                                onToggle={handleQuestionToggle}
+                                isMobile={isMobile}
+                              />
                             </div>
-                          ) : (
-                            /* Desktop Vertical Layout */
-                            <div className="divide-y divide-zinc-800/50">
-                              {filteredQuestions.map((question, questionIndex) => (
-                                <div
-                                  key={question._id}
-                                  className={cn(
-                                    "p-4 transition-all duration-200 hover:bg-zinc-800/20"
-                                  )}
-                                >
-                                  <QuestionCard
-                                    question={question}
-                                    isAuthenticated={isAuthenticated}
-                                    isSolved={isQuestionSolved(question._id)}
-                                    onToggle={handleQuestionToggle}
-                                  />
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </>
+                          ))}
+                        </div>
                       ) : (
                         <div className="flex h-16 sm:h-24 items-center justify-center text-zinc-500 px-4">
                           <p className="text-sm text-center">

@@ -105,7 +105,6 @@ const Dashboard = () => {
   const totalSheets = Object.keys(overallProgress).length;
 
   // Chart data
-  // Chart data
   const progressData = Object.entries(overallProgress).map(([name, data]) => ({
     name: name.length > 15 ? name.substring(0, 15) + "..." : name,
     solved: data.solved,
@@ -143,18 +142,18 @@ const Dashboard = () => {
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-black text-white">
-      <div className="flex flex-1 flex-col space-y-6 p-4 md:p-8">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+      <div className="flex flex-1 flex-col space-y-4 sm:space-y-6 p-3 sm:p-4 md:p-6 lg:p-8">
+        {/* Header - Responsive */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold tracking-tight md:text-3xl text-white">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white">
               {getGreeting()}, {user?.name?.split(" ")[0]}!
             </h2>
-            <p className="text-zinc-400">{getMotivationalMessage()}</p>
+            <p className="text-zinc-400 text-sm sm:text-base">{getMotivationalMessage()}</p>
           </div>
           <div className="flex items-center space-x-2">
             {/* Avatar */}
-            <div className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+            <div className="relative flex h-8 w-8 sm:h-10 sm:w-10 shrink-0 overflow-hidden rounded-full">
               {user?.picture ? (
                 <img
                   className="aspect-square h-full w-full"
@@ -170,8 +169,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {/* Stats Cards - Enhanced responsive grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {/* Overall Progress Card */}
           <Card className="bg-zinc-900 border-zinc-800">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -181,7 +180,7 @@ const Dashboard = () => {
               <TrendingUp className="h-4 w-4 text-zinc-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-xl sm:text-2xl font-bold text-white">
                 {overallPercentage}%
               </div>
               <p className="text-xs text-zinc-400">
@@ -199,7 +198,7 @@ const Dashboard = () => {
               <Target className="h-4 w-4 text-zinc-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">{totalSolved}</div>
+              <div className="text-xl sm:text-2xl font-bold text-white">{totalSolved}</div>
               <p className="text-xs text-zinc-400">
                 Keep solving more problems
               </p>
@@ -207,7 +206,7 @@ const Dashboard = () => {
           </Card>
 
           {/* Sheets Completed Card */}
-          <Card className="bg-zinc-900 border-zinc-800">
+          <Card className="bg-zinc-900 border-zinc-800 sm:col-span-2 lg:col-span-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-zinc-300">
                 Sheets Completed
@@ -215,7 +214,7 @@ const Dashboard = () => {
               <Trophy className="h-4 w-4 text-zinc-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-xl sm:text-2xl font-bold text-white">
                 {completedSheets}
               </div>
               <p className="text-xs text-zinc-400">
@@ -225,11 +224,11 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Achievements */}
+        {/* Achievements - Responsive */}
         {(completedSheets > 0 || totalSolved >= 10) && (
           <Card className="bg-zinc-900 border-zinc-800">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-white">
+              <CardTitle className="text-base sm:text-lg font-semibold text-white">
                 Recent Achievements
               </CardTitle>
               <p className="text-sm text-zinc-400">
@@ -263,11 +262,12 @@ const Dashboard = () => {
           </Card>
         )}
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          {/* Progress Chart */}
-          <Card className="col-span-4 bg-zinc-900 border-zinc-800">
+        {/* Main Content Grid - Enhanced responsive layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-7 gap-4 sm:gap-6">
+          {/* Progress Chart - Takes full width on mobile, 4 columns on large screens */}
+          <Card className="col-span-1 lg:col-span-4 bg-zinc-900 border-zinc-800">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-white">
+              <CardTitle className="text-base sm:text-lg font-semibold text-white">
                 Sheet Progress Overview
               </CardTitle>
               <p className="text-sm text-zinc-400">
@@ -277,15 +277,15 @@ const Dashboard = () => {
             <CardContent>
               {Object.keys(overallProgress).length > 0 ? (
                 <>
-                  <div className="space-y-4 mb-6">
+                  <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                     {Object.entries(overallProgress).map(
                       ([sheetName, progress]) => (
                         <div key={sheetName} className="space-y-2">
                           <div className="flex items-center justify-between text-sm">
-                            <span className="font-medium text-zinc-200">
+                            <span className="font-medium text-zinc-200 truncate pr-2">
                               {sheetName}
                             </span>
-                            <span className="text-zinc-400">
+                            <span className="text-zinc-400 whitespace-nowrap">
                               {progress.solved}/{progress.total}
                             </span>
                           </div>
@@ -306,9 +306,9 @@ const Dashboard = () => {
                   </div>
 
                   {progressData.length > 0 && (
-                    <div className="h-80">
+                    <div className="h-64 sm:h-80">
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={progressData}>
+                        <BarChart data={progressData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
                           <CartesianGrid
                             strokeDasharray="3 3"
                             stroke="#374151"
@@ -318,6 +318,10 @@ const Dashboard = () => {
                             tick={{ fontSize: 12, fill: "#9ca3af" }}
                             tickLine={false}
                             axisLine={{ stroke: "#374151" }}
+                            interval={0}
+                            angle={-45}
+                            textAnchor="end"
+                            height={60}
                           />
                           <YAxis
                             tick={{ fontSize: 12, fill: "#9ca3af" }}
@@ -350,13 +354,13 @@ const Dashboard = () => {
                   )}
                 </>
               ) : (
-                <div className="flex flex-col items-center justify-center py-12">
-                  <Target className="h-12 w-12 text-gray-600 mb-4" />
-                  <p className="text-gray-400 mb-4">
+                <div className="flex flex-col items-center justify-center py-8 sm:py-12">
+                  <Target className="h-10 w-10 sm:h-12 sm:w-12 text-zinc-600 mb-4" />
+                  <p className="text-zinc-400 mb-4 text-center">
                     No progress data available
                   </p>
                   <Link to="/sheets">
-                    <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                    <Button className="bg-zinc-100 hover:bg-zinc-200 text-black">
                       <BookOpen className="mr-2 h-4 w-4" />
                       Browse Sheets
                     </Button>
@@ -366,26 +370,26 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Sidebar */}
-          <div className="col-span-3 space-y-4">
+          {/* Sidebar - Takes full width on mobile, 3 columns on large screens */}
+          <div className="col-span-1 lg:col-span-3 space-y-4">
             {/* Overall Progress Pie Chart */}
             {totalQuestions > 0 && (
               <Card className="bg-zinc-900 border-zinc-800">
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-white">
+                  <CardTitle className="text-base sm:text-lg font-semibold text-white">
                     Progress Distribution
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-48">
+                  <div className="h-36 sm:h-48">
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
                         <Pie
                           data={pieData}
                           cx="50%"
                           cy="50%"
-                          innerRadius={40}
-                          outerRadius={70}
+                          innerRadius={30}
+                          outerRadius={60}
                           paddingAngle={2}
                           dataKey="value"
                         >
@@ -404,16 +408,16 @@ const Dashboard = () => {
                       </PieChart>
                     </ResponsiveContainer>
                   </div>
-                  <div className="flex justify-center gap-4 text-sm mt-4">
+                  <div className="flex justify-center gap-3 sm:gap-4 text-sm mt-4">
                     <div className="flex items-center gap-2">
                       <div className="h-3 w-3 rounded-full bg-blue-500" />
-                      <span className="text-zinc-300">
+                      <span className="text-zinc-300 text-xs sm:text-sm">
                         Solved ({totalSolved})
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="h-3 w-3 rounded-full bg-zinc-700" />
-                      <span className="text-zinc-300">
+                      <span className="text-zinc-300 text-xs sm:text-sm">
                         Remaining ({totalQuestions - totalSolved})
                       </span>
                     </div>
@@ -425,7 +429,7 @@ const Dashboard = () => {
             {/* Quick Actions */}
             <Card className="bg-zinc-900 border-zinc-800">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold text-white">
+                <CardTitle className="text-base sm:text-lg font-semibold text-white">
                   Quick Actions
                 </CardTitle>
                 <p className="text-sm text-zinc-400">
@@ -436,13 +440,13 @@ const Dashboard = () => {
                 <Link to="/sheets" className="block">
                   <Button
                     variant="outline"
-                    className="w-full justify-between border-zinc-700 bg-zinc-800/50 hover:bg-zinc-800 hover:text-white text-zinc-200"
+                    className="w-full justify-between border-zinc-700 bg-zinc-800/50 hover:bg-zinc-800 hover:text-white text-zinc-200 text-sm"
                   >
                     <div className="flex items-center">
                       <BookOpen className="mr-2 h-4 w-4" />
-                      Browse All Sheets
+                      <span className="truncate">Browse All Sheets</span>
                     </div>
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4 flex-shrink-0" />
                   </Button>
                 </Link>
 
@@ -456,13 +460,13 @@ const Dashboard = () => {
                     >
                       <Button
                         variant="outline"
-                        className="w-full justify-between border-zinc-700 bg-zinc-800/50 hover:bg-zinc-800 hover:text-white text-zinc-200"
+                        className="w-full justify-between border-zinc-700 bg-zinc-800/50 hover:bg-zinc-800 hover:text-white text-zinc-200 text-sm"
                       >
-                        <div className="flex items-center">
-                          <Code className="mr-2 h-4 w-4" />
-                          Continue {sheetName}
+                        <div className="flex items-center min-w-0">
+                          <Code className="mr-2 h-4 w-4 flex-shrink-0" />
+                          <span className="truncate">Continue {sheetName}</span>
                         </div>
-                        <ArrowRight className="h-4 w-4" />
+                        <ArrowRight className="h-4 w-4 flex-shrink-0" />
                       </Button>
                     </Link>
                   ))}

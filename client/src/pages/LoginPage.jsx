@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import useAuthToasts from "../hooks/useAuthToasts";
 import { Button } from "../components/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
-import { Loader2, Chrome } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { LoginSkeleton } from "../components/SkeletonLoader";
 
@@ -31,47 +31,54 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-8">
+    <div className="min-h-screen bg-black text-white flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
         {/* Header */}
-        <div className="text-center space-y-2">
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">
+        <div className="text-center space-y-2 sm:space-y-3">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
             Welcome back
           </h1>
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm sm:text-base text-zinc-400">
             Sign in to track your DSA progress
           </p>
         </div>
 
         {/* Login Card */}
-        <Card className="border-zinc-800 bg-zinc-900/50 backdrop-blur">
-          <CardHeader className="space-y-1 pb-4">
-            <CardTitle className="text-lg font-medium text-center text-zinc-100">
+        <Card className="border-zinc-800 bg-zinc-900/50 backdrop-blur-sm">
+          <CardHeader className="space-y-1 pb-4 sm:pb-6">
+            <CardTitle className="text-lg sm:text-xl font-semibold text-center text-white">
               Sign in to your account
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          
+          <CardContent className="space-y-4 sm:space-y-6">
+            {/* Google Login Button */}
             <Button
               onClick={login}
-              className="w-full bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border-zinc-700"
-              size="default"
+              disabled={loading}
+              className="w-full h-11 sm:h-12 bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700 hover:border-zinc-600 transition-all duration-200 text-sm sm:text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <FcGoogle size={20} className="mr-3" />
-              Continue with Google
+              {loading ? (
+                <Loader2 className="h-5 w-5 animate-spin mr-3" />
+              ) : (
+                <FcGoogle size={20} className="mr-3 flex-shrink-0" />
+              )}
+              <span>Continue with Google</span>
             </Button>
 
-            <p className="mt-4 text-center text-xs text-zinc-500">
+            {/* Terms */}
+            <p className="text-center text-xs sm:text-sm text-zinc-500 leading-relaxed px-2">
               By continuing, you agree to our{" "}
               <a
                 href="#"
-                className="underline underline-offset-4 hover:text-zinc-400"
+                className="underline underline-offset-4 hover:text-zinc-400 transition-colors"
               >
                 Terms
               </a>{" "}
               and{" "}
               <a
                 href="#"
-                className="underline underline-offset-4 hover:text-zinc-400"
+                className="underline underline-offset-4 hover:text-zinc-400 transition-colors"
               >
                 Privacy Policy
               </a>
@@ -79,8 +86,8 @@ const LoginPage = () => {
           </CardContent>
         </Card>
 
-        {/* Footer text */}
-        <p className="text-center text-xs text-zinc-600">
+        {/* Footer */}
+        <p className="text-center text-xs sm:text-sm text-zinc-600">
           DSA Sheet — Built for developers
         </p>
       </div>

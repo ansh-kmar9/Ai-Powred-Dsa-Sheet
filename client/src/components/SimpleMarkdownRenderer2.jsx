@@ -187,7 +187,9 @@ const MarkdownRenderer = ({ content }) => {
     }
 
     return (
-      <div className="prose prose-invert prose-sm max-w-none">{elements}</div>
+      <div className="prose prose-invert prose-sm max-w-none overflow-hidden break-words">
+        {elements}
+      </div>
     );
   } catch (error) {
     console.error("Error rendering content:", error);

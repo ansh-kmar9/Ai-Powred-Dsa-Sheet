@@ -24,103 +24,6 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      {/* Lightning Animation Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <svg
-          className="absolute w-full h-full opacity-10"
-          viewBox="0 0 1920 1080"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          {/* Lightning Path 1 */}
-          <path
-            className="lightning-stroke"
-            d="M 100 0 L 150 200 L 120 220 L 180 400 L 160 420 L 200 600"
-            stroke="url(#lightning-gradient-1)"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-          />
-          
-          {/* Lightning Path 2 */}
-          <path
-            className="lightning-stroke"
-            d="M 1820 0 L 1780 180 L 1810 200 L 1750 380 L 1770 400 L 1720 580"
-            stroke="url(#lightning-gradient-2)"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-          />
-          
-          {/* Lightning Path 3 - Mobile visible */}
-          <path
-            className="lightning-stroke"
-            d="M 960 0 L 940 150 L 980 170 L 920 320 L 940 340 L 900 490"
-            stroke="url(#lightning-gradient-3)"
-            strokeWidth="1.5"
-            fill="none"
-            strokeLinecap="round"
-          />
-          
-          {/* Gradients */}
-          <defs>
-            <linearGradient id="lightning-gradient-1" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="lightning-gradient-2" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.6" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="lightning-gradient-3" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.7" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-
-      {/* White gradient at top */}
-      <div
-        className="absolute top-0 left-0 right-0 h-64 sm:h-80 md:h-96 opacity-10 z-0"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%)",
-        }}
-      />
-
-      {/* Squared Grid Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Square grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px)
-            `,
-            backgroundSize: "40px 40px",
-            animation: "slowFloat 30s ease-in-out infinite",
-          }}
-        />
-
-        {/* Floating orbs - Responsive sizes */}
-        <div
-          className="absolute top-10 sm:top-20 left-5 sm:left-10 w-32 sm:w-48 md:w-72 h-32 sm:h-48 md:h-72 bg-zinc-800/10 rounded-full blur-3xl animate-pulse"
-          style={{ animationDuration: "4s" }}
-        />
-        <div
-          className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-zinc-700/5 rounded-full blur-3xl animate-pulse"
-          style={{ animationDuration: "6s", animationDelay: "2s" }}
-        />
-        <div
-          className="absolute top-1/2 left-1/2 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-zinc-600/5 rounded-full blur-3xl animate-pulse"
-          style={{ animationDuration: "8s", animationDelay: "4s" }}
-        />
-      </div>
-
       {/* Content */}
       <div className="relative z-10">
         {/* Hero Section */}
@@ -184,19 +87,33 @@ const LandingPage = () => {
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 max-w-2xl mx-auto">
               <div className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-white">1000+</div>
-                <div className="text-xs sm:text-sm text-zinc-500">DSA Problems</div>
+                <div className="text-xl sm:text-2xl font-bold text-white">
+                  1000+
+                </div>
+                <div className="text-xs sm:text-sm text-zinc-500">
+                  DSA Problems
+                </div>
               </div>
               <div className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-white">50+</div>
-                <div className="text-xs sm:text-sm text-zinc-500">Mock Tests</div>
+                <div className="text-xl sm:text-2xl font-bold text-white">
+                  50+
+                </div>
+                <div className="text-xs sm:text-sm text-zinc-500">
+                  Mock Tests
+                </div>
               </div>
               <div className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-white">AI</div>
-                <div className="text-xs sm:text-sm text-zinc-500">Doubt Solver</div>
+                <div className="text-xl sm:text-2xl font-bold text-white">
+                  AI
+                </div>
+                <div className="text-xs sm:text-sm text-zinc-500">
+                  Doubt Solver
+                </div>
               </div>
               <div className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-white">24/7</div>
+                <div className="text-xl sm:text-2xl font-bold text-white">
+                  24/7
+                </div>
                 <div className="text-xs sm:text-sm text-zinc-500">Support</div>
               </div>
             </div>
@@ -235,7 +152,7 @@ const LandingPage = () => {
                 </CardContent>
               </Card>
 
-                            <Card className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800/50 transition-colors">
+              <Card className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800/50 transition-colors">
                 <CardHeader>
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-zinc-800 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
                     <Target className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
@@ -338,7 +255,9 @@ const LandingPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-8 md:gap-12">
               <div className="text-center px-4 sm:px-0">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 bg-zinc-800 rounded-lg flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <div className="text-xl sm:text-2xl font-bold text-white">1</div>
+                  <div className="text-xl sm:text-2xl font-bold text-white">
+                    1
+                  </div>
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">
                   Choose Your Path
@@ -351,7 +270,9 @@ const LandingPage = () => {
 
               <div className="text-center px-4 sm:px-0">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 bg-zinc-800 rounded-lg flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <div className="text-xl sm:text-2xl font-bold text-white">2</div>
+                  <div className="text-xl sm:text-2xl font-bold text-white">
+                    2
+                  </div>
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">
                   Practice & Learn
@@ -364,7 +285,9 @@ const LandingPage = () => {
 
               <div className="text-center px-4 sm:px-0">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 bg-zinc-800 rounded-lg flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <div className="text-xl sm:text-2xl font-bold text-white">3</div>
+                  <div className="text-xl sm:text-2xl font-bold text-white">
+                    3
+                  </div>
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">
                   Master & Excel
@@ -464,8 +387,10 @@ const LandingPage = () => {
                     </p>
                     <div className="grid grid-cols-2 gap-4 text-center">
                       <div>
-                        <div className="text-xl sm:text-2xl font-bold text-white">95%</div>
-                                                <div className="text-xs sm:text-sm text-zinc-500">
+                        <div className="text-xl sm:text-2xl font-bold text-white">
+                          95%
+                        </div>
+                        <div className="text-xs sm:text-sm text-zinc-500">
                           Success Rate
                         </div>
                       </div>
@@ -473,7 +398,9 @@ const LandingPage = () => {
                         <div className="text-xl sm:text-2xl font-bold text-white">
                           4.9★
                         </div>
-                        <div className="text-xs sm:text-sm text-zinc-500">User Rating</div>
+                        <div className="text-xs sm:text-sm text-zinc-500">
+                          User Rating
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -515,105 +442,12 @@ const LandingPage = () => {
         </section>
       </div>
 
-      {/* CSS Animation with Lightning */}
+      {/* CSS Styles */}
       <style jsx>{`
-        @keyframes slowFloat {
-          0%,
-          100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          50% {
-            transform: translateY(-20px) rotate(0.5deg);
-          }
-        }
-
-        @keyframes lightning-flash {
-          0%, 90% {
-            opacity: 0;
-          }
-          91% {
-            opacity: 0.8;
-          }
-          92% {
-            opacity: 0.2;
-          }
-          93% {
-            opacity: 0.9;
-          }
-          94% {
-            opacity: 0.1;
-          }
-          95% {
-            opacity: 0.7;
-          }
-          100% {
-            opacity: 0;
-          }
-        }
-
-        @keyframes lightning-glow {
-          0%, 90% {
-            filter: blur(0px) brightness(1);
-          }
-          91% {
-            filter: blur(2px) brightness(2);
-          }
-          93% {
-            filter: blur(3px) brightness(2.5);
-          }
-          95% {
-            filter: blur(2px) brightness(1.8);
-          }
-          100% {
-            filter: blur(0px) brightness(1);
-          }
-        }
-
-        .lightning-stroke {
-          stroke-dasharray: 1000;
-          stroke-dashoffset: 1000;
-          animation: 
-            lightning-draw 0.5s ease-out forwards,
-            lightning-flash 8s infinite,
-            lightning-glow 8s infinite;
-        }
-
-        .lightning-stroke:nth-child(1) {
-          animation-delay: 0s, 2s, 2s;
-        }
-
-        .lightning-stroke:nth-child(2) {
-          animation-delay: 0.2s, 5s, 5s;
-        }
-
-        .lightning-stroke:nth-child(3) {
-          animation-delay: 0.4s, 7s, 7s;
-        }
-
-        @keyframes lightning-draw {
-          to {
-            stroke-dashoffset: 0;
-          }
-        }
-
         /* Responsive adjustments for very small devices */
         @media (max-width: 360px) {
           .main-heading {
             font-size: 1.75rem;
-          }
-        }
-
-        /* Hide third lightning stroke on mobile for performance */
-        @media (max-width: 640px) {
-          .lightning-stroke:nth-child(3) {
-            display: none;
-          }
-        }
-
-        /* Adjust lightning position for tablets */
-        @media (min-width: 768px) and (max-width: 1024px) {
-          .lightning-stroke {
-            stroke-width: 1.5;
           }
         }
       `}</style>

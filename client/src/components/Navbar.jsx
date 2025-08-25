@@ -248,7 +248,7 @@ const Navbar = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-zinc-600 text-zinc-300 hover:text-white bg-zinc-100 hover:bg-zinc-800 hover:border-zinc-500 transition-all duration-200"
+                    className="border-zinc-600 text-black-300 hover:text-white bg-zinc-100 hover:bg-zinc-800 hover:border-zinc-500 transition-all duration-200"
                   >
                     <User className="h-4 w-4 mr-2" />
                     Login

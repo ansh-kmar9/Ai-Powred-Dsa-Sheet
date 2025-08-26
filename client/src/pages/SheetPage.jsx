@@ -385,7 +385,7 @@ const SheetPage = () => {
                       variant="outline"
                       size="sm"
                       onClick={handleResetProgress}
-                      className="w-full sm:w-auto border-zinc-800 text-zinc-300 bg-zinc-800 hover:text-black h-9 sm:h-10"
+                      className="w-full sm:w-auto border-zinc-800 text-black-300 bg-zinc-800 hover:text-black h-9 sm:h-10"
                     >
                       <RotateCcw className="h-4 w-4 mr-2" />
                       <span className="sm:inline">Reset Progress</span>

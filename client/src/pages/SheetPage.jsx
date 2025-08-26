@@ -44,6 +44,8 @@ const SheetPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showResetModal, setShowResetModal] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [toggleLoading, setToggleLoading] = useState({});
+  const [resetLoading, setResetLoading] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -86,10 +88,15 @@ const SheetPage = () => {
 
   const handleQuestionToggle = async (questionId) => {
     if (!isAuthenticated) return;
+
+    setToggleLoading((prev) => ({ ...prev, [questionId]: true }));
+
     try {
       await toggleQuestionStatus(sheetName, questionId);
     } catch (error) {
       console.error("Error toggling question:", error);
+    } finally {
+      setToggleLoading((prev) => ({ ...prev, [questionId]: false }));
     }
   };
 
@@ -99,13 +106,22 @@ const SheetPage = () => {
   };
 
   const confirmResetProgress = async () => {
+    setResetLoading(true);
     try {
+      console.log("Starting reset progress for sheet:", sheetName);
       await resetSheetProgress(sheetName);
+      console.log("Reset progress completed successfully");
       setShowResetModal(false);
+      console.log("Adding success toast...");
       addToast("Progress reset successfully!", "success");
+      console.log("Success toast added");
     } catch (error) {
       console.error("Error resetting progress:", error);
+      console.log("Adding error toast...");
       addToast("Failed to reset progress. Please try again.", "error");
+      console.log("Error toast added");
+    } finally {
+      setResetLoading(false);
     }
   };
 
@@ -496,14 +512,23 @@ const SheetPage = () => {
                                             onClick={() =>
                                               handleQuestionToggle(question._id)
                                             }
+                                            disabled={
+                                              toggleLoading[question._id]
+                                            }
                                             className={cn(
                                               "w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300",
                                               isQuestionSolved(question._id)
                                                 ? "bg-green-500/20 border-green-500/50 text-green-400"
-                                                : "border-zinc-600 hover:border-zinc-500 text-zinc-500 hover:text-zinc-400"
+                                                : "border-zinc-600 hover:border-zinc-500 text-zinc-500 hover:text-zinc-400",
+                                              toggleLoading[question._id] &&
+                                                "opacity-75 cursor-not-allowed"
                                             )}
                                           >
-                                            {isQuestionSolved(question._id) && (
+                                            {toggleLoading[question._id] ? (
+                                              <Loader2 className="w-4 h-4 animate-spin" />
+                                            ) : isQuestionSolved(
+                                                question._id
+                                              ) ? (
                                               <svg
                                                 className="w-4 h-4"
                                                 fill="currentColor"
@@ -515,7 +540,7 @@ const SheetPage = () => {
                                                   clipRule="evenodd"
                                                 />
                                               </svg>
-                                            )}
+                                            ) : null}
                                           </button>
                                         </div>
                                       )}
@@ -679,9 +704,17 @@ const SheetPage = () => {
               </Button>
               <Button
                 onClick={confirmResetProgress}
-                className="w-full sm:w-auto bg-red-600 hover:bg-red-800 text-white"
+                disabled={resetLoading}
+                className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Reset Progress
+                {resetLoading ? (
+                  <div className="flex items-center space-x-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Resetting...</span>
+                  </div>
+                ) : (
+                  "Reset Progress"
+                )}
               </Button>
             </div>
           </div>

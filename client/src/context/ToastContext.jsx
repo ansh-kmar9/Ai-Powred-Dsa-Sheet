@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import ToastContainer from "../components/Toast";
 
 const ToastContext = createContext();
 
@@ -18,7 +19,7 @@ export const ToastProvider = ({ children }) => {
     const existingToast = toasts.find(
       (toast) => toast.message === message && toast.type === type
     );
-    
+
     if (existingToast) {
       return existingToast.id; // Don't add duplicate toast
     }
@@ -74,6 +75,7 @@ export const ToastProvider = ({ children }) => {
   return (
     <ToastContext.Provider value={value}>
       {children}
+      <ToastContainer />
     </ToastContext.Provider>
   );
 };

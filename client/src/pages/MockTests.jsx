@@ -83,6 +83,9 @@ const MockTests = () => {
               Test your knowledge with our comprehensive mock tests designed for
               interviews and placements
             </p>
+            <p className="text-yellow-400 text-base sm:text-lg leading-relaxed px-4">
+              We are currently updating the mock test data to give you the latest experience. Hang tight — fresh questions and improved insights will be available shortly! 
+            </p>
           </div>
         </div>
       </div>

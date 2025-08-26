@@ -2,7 +2,7 @@
 
 ## Deployed URLs
 
-- **Frontend (Vercel)**: https://ai-powred-dsa-sheet.vercel.app/
+- **Frontend (Vercel)**: https://www.dsasheet.site/
 - **Backend (Render)**: https://dsasheet-koey.onrender.com
 
 ## Environment Variables Configuration

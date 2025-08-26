@@ -477,7 +477,7 @@ const SheetPage = () => {
                                 "transition-all duration-200 hover:bg-zinc-800/20",
                                 isMobile
                                   ? "px-2 py-1"
-                                  : "px-2 py-1 sm:px-4 sm:py-2"
+                                  : "px-2 py-0.5 sm:px-4 sm:py-1"
                               )}
                             >
                               {isMobile ? (

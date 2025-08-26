@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useProgress } from "../context/ProgressContext";
-import { useToast } from "../context/ToastContext";
+import toast from "react-hot-toast";
 import { sheetsAPI } from "../utils/api";
 import QuestionCard from "../components/QuestionCard";
 import { Progress } from "../components/Progress";
@@ -28,7 +28,6 @@ const SheetPage = () => {
   const { sheetName } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const { addToast } = useToast();
   const {
     sheetProgress,
     fetchSheetProgress,
@@ -108,18 +107,13 @@ const SheetPage = () => {
   const confirmResetProgress = async () => {
     setResetLoading(true);
     try {
-      console.log("Starting reset progress for sheet:", sheetName);
       await resetSheetProgress(sheetName);
-      console.log("Reset progress completed successfully");
       setShowResetModal(false);
-      console.log("Adding success toast...");
-      addToast("Progress reset successfully!", "success");
-      console.log("Success toast added");
+      // Use exact same pattern as AuthContext
+      toast.success("Progress reset successfully");
     } catch (error) {
       console.error("Error resetting progress:", error);
-      console.log("Adding error toast...");
-      addToast("Failed to reset progress. Please try again.", "error");
-      console.log("Error toast added");
+      toast.error("Failed to reset progress");
     } finally {
       setResetLoading(false);
     }

@@ -18,6 +18,8 @@ import {
   Search,
   Filter,
   X,
+  ExternalLink,
+  Bot,
 } from "lucide-react";
 import { cn } from "../utils/cn";
 
@@ -45,11 +47,11 @@ const SheetPage = () => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useEffect(() => {
@@ -118,13 +120,13 @@ const SheetPage = () => {
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (showResetModal) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [showResetModal]);
 
@@ -266,8 +268,10 @@ const SheetPage = () => {
                   {sheet.name}
                 </h1>
                 <p className="text-zinc-400 mt-1 text-sm sm:text-base">
-                  {sheet.topics.length} topic{sheet.topics.length !== 1 ? 's' : ''} • {overallProgress.total}{" "}
-                  question{overallProgress.total !== 1 ? 's' : ''}
+                  {sheet.topics.length} topic
+                  {sheet.topics.length !== 1 ? "s" : ""} •{" "}
+                  {overallProgress.total} question
+                  {overallProgress.total !== 1 ? "s" : ""}
                 </p>
               </div>
             </div>
@@ -427,7 +431,8 @@ const SheetPage = () => {
 
                     {/* Question Count */}
                     <div className="text-xs sm:text-sm text-zinc-500 flex-shrink-0 ml-2">
-                      {filteredQuestions.length} question{filteredQuestions.length !== 1 ? "s" : ""}
+                      {filteredQuestions.length} question
+                      {filteredQuestions.length !== 1 ? "s" : ""}
                     </div>
                   </div>
 
@@ -439,8 +444,7 @@ const SheetPage = () => {
                           value={
                             topicProgress.total > 0
                               ? Math.round(
-                                  (topicProgress.solved /
-                                    topicProgress.total) *
+                                  (topicProgress.solved / topicProgress.total) *
                                     100
                                 )
                               : 0
@@ -470,16 +474,151 @@ const SheetPage = () => {
                             <div
                               key={question._id}
                               className={cn(
-                                "p-2 sm:p-4 transition-all duration-200 hover:bg-zinc-800/20"
+                                "transition-all duration-200 hover:bg-zinc-800/20",
+                                isMobile ? "p-2" : "p-2 sm:p-4"
                               )}
                             >
-                              <QuestionCard
-                                question={question}
-                                isAuthenticated={isAuthenticated}
-                                isSolved={isQuestionSolved(question._id)}
-                                onToggle={handleQuestionToggle}
-                                isMobile={isMobile}
-                              />
+                              {isMobile ? (
+                                // Mobile Layout with Horizontal Scrolling
+                                <div className="min-w-0">
+                                  <div className="flex overflow-x-auto scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-900 pb-2">
+                                    <div className="flex min-w-max space-x-3 px-2">
+                                      {/* Status Button */}
+                                      {isAuthenticated && (
+                                        <div className="flex-shrink-0">
+                                          <button
+                                            onClick={() =>
+                                              handleQuestionToggle(question._id)
+                                            }
+                                            className={cn(
+                                              "w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300",
+                                              isQuestionSolved(question._id)
+                                                ? "bg-green-500/20 border-green-500/50 text-green-400"
+                                                : "border-zinc-600 hover:border-zinc-500 text-zinc-500 hover:text-zinc-400"
+                                            )}
+                                          >
+                                            {isQuestionSolved(question._id) && (
+                                              <svg
+                                                className="w-4 h-4"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                              >
+                                                <path
+                                                  fillRule="evenodd"
+                                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                  clipRule="evenodd"
+                                                />
+                                              </svg>
+                                            )}
+                                          </button>
+                                        </div>
+                                      )}
+
+                                      {/* Difficulty Badge */}
+                                      <div
+                                        className={cn(
+                                          "flex-shrink-0 inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold",
+                                          question.difficulty === "Easy" &&
+                                            "bg-green-500/10 text-green-400 border-green-500/20",
+                                          question.difficulty === "Medium" &&
+                                            "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
+                                          question.difficulty === "Hard" &&
+                                            "bg-red-500/10 text-red-400 border-red-500/20"
+                                        )}
+                                      >
+                                        <div
+                                          className={cn(
+                                            "w-1.5 h-1.5 rounded-full mr-2",
+                                            question.difficulty === "Easy" &&
+                                              "bg-green-400",
+                                            question.difficulty === "Medium" &&
+                                              "bg-yellow-400",
+                                            question.difficulty === "Hard" &&
+                                              "bg-red-400"
+                                          )}
+                                        />
+                                        {question.difficulty}
+                                      </div>
+
+                                      {/* Question Title */}
+                                      <div className="flex-shrink-0 min-w-0 max-w-xs">
+                                        <a
+                                          href={question.link}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="flex items-center space-x-2 text-sm font-medium text-white hover:text-zinc-300 transition-colors duration-300"
+                                        >
+                                          <span className="truncate">
+                                            {question.title}
+                                          </span>
+                                          <ExternalLink className="h-3 w-3 text-zinc-500 flex-shrink-0" />
+                                        </a>
+                                      </div>
+
+                                      {/* Topics */}
+                                      {question.topics &&
+                                        question.topics.length > 0 && (
+                                          <div className="flex-shrink-0 flex space-x-1">
+                                            {question.topics.map(
+                                              (topic, index) => (
+                                                <span
+                                                  key={index}
+                                                  className="px-2 py-1 text-xs bg-zinc-800 text-zinc-300 rounded border border-zinc-700"
+                                                >
+                                                  {topic}
+                                                </span>
+                                              )
+                                            )}
+                                          </div>
+                                        )}
+
+                                      {/* Companies */}
+                                      {question.companies &&
+                                        question.companies.length > 0 && (
+                                          <div className="flex-shrink-0 flex space-x-1">
+                                            {question.companies.map(
+                                              (company, index) => (
+                                                <span
+                                                  key={index}
+                                                  className="px-2 py-1 text-xs bg-blue-500/10 text-blue-400 rounded border border-blue-500/20"
+                                                >
+                                                  {company}
+                                                </span>
+                                              )
+                                            )}
+                                          </div>
+                                        )}
+
+                                      {/* AI Bot Button */}
+                                      <div className="flex-shrink-0">
+                                        <button
+                                          onClick={() => {
+                                            const promptText = `Explain me how to approach this question "${question.title}"`;
+                                            navigate(
+                                              `/ai-doubt-solver?question=${encodeURIComponent(
+                                                promptText
+                                              )}`
+                                            );
+                                          }}
+                                          className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-600 transition-all duration-300 text-zinc-400 hover:text-white"
+                                          title="Ask approach of this question"
+                                        >
+                                          <Bot className="h-4 w-4" />
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : (
+                                // Desktop Layout (Original QuestionCard)
+                                <QuestionCard
+                                  question={question}
+                                  isAuthenticated={isAuthenticated}
+                                  isSolved={isQuestionSolved(question._id)}
+                                  onToggle={handleQuestionToggle}
+                                  isMobile={isMobile}
+                                />
+                              )}
                             </div>
                           ))}
                         </div>
@@ -542,6 +681,33 @@ const SheetPage = () => {
           </div>
         </div>
       )}
+
+      {/* Custom CSS for mobile horizontal scrolling */}
+      <style jsx>{`
+        .scrollbar-thin::-webkit-scrollbar {
+          height: 4px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+          background: #27272a;
+          border-radius: 2px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+          background: #52525b;
+          border-radius: 2px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+          background: #71717a;
+        }
+
+        /* Firefox */
+        .scrollbar-thin {
+          scrollbar-width: thin;
+          scrollbar-color: #52525b #27272a;
+        }
+      `}</style>
     </div>
   );
 };

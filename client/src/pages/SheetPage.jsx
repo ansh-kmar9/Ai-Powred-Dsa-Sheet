@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useProgress } from "../context/ProgressContext";
+import { useToast } from "../context/ToastContext";
 import { sheetsAPI } from "../utils/api";
 import QuestionCard from "../components/QuestionCard";
 import { Progress } from "../components/Progress";
@@ -27,6 +28,7 @@ const SheetPage = () => {
   const { sheetName } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { addToast } = useToast();
   const {
     sheetProgress,
     fetchSheetProgress,
@@ -100,8 +102,10 @@ const SheetPage = () => {
     try {
       await resetSheetProgress(sheetName);
       setShowResetModal(false);
+      addToast("Progress reset successfully!", "success");
     } catch (error) {
       console.error("Error resetting progress:", error);
+      addToast("Failed to reset progress. Please try again.", "error");
     }
   };
 
@@ -669,13 +673,13 @@ const SheetPage = () => {
               <Button
                 variant="outline"
                 onClick={() => setShowResetModal(false)}
-                className="w-full sm:w-auto border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                className="w-full sm:w-auto border-zinc-700 text-black-300 hover:bg-zinc-800"
               >
                 Cancel
               </Button>
               <Button
                 onClick={confirmResetProgress}
-                className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white"
+                className="w-full sm:w-auto bg-red-600 hover:bg-red-800 text-white"
               >
                 Reset Progress
               </Button>

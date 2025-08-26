@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext";
 import { ProgressProvider } from "./context/ProgressContext";
+import { ToastProvider } from "./context/ToastContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -25,89 +26,91 @@ function App() {
   return (
     <AuthProvider>
       <ProgressProvider>
-        <Router>
-          <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <main className="flex-1">
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/sheets" element={<SheetsPage />} />
-                <Route
-                  path="/computer-networks"
-                  element={<ComputerNetworks />}
-                />
-                <Route
-                  path="/operating-systems"
-                  element={<OperatingSystems />}
-                />
-                <Route
-                  path="/database-management-systems"
-                  element={<DatabaseManagementSystems />}
-                />
-                <Route path="/oops" element={<ObjectOrientedProgramming />} />
-                <Route path="/ai-doubt-solver" element={<AiDoubtSolver />} />
-                <Route path="/mock-test" element={<MockTests />} />
-                <Route path="/roadmap" element={<Roadmap />} />
-                <Route
-                  path="/mock-test/:testId/:setNumber"
-                  element={<MockTest />}
-                />
-                <Route
-                  path="/dashboard"
-                  element={
-                    <ProtectedRoute>
-                      <Dashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/sheet/:sheetName"
-                  element={
-                    <ProtectedRoute>
-                      <SheetPage />
-                    </ProtectedRoute>
-                  }
-                />
-                {/* 404 Catch-all route */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-            <Toaster
-              position="top-right"
-              reverseOrder={false}
-              gutter={8}
-              containerClassName=""
-              containerStyle={{
-                top: 80,
-                right: 16,
-              }}
-              toastOptions={{
-                duration: 4000,
-                style: {
-                  background: "#18181b",
-                  color: "#ffffff",
-                  border: "1px solid #3f3f46",
-                },
-                success: {
+        <ToastProvider>
+          <Router>
+            <div className="min-h-screen flex flex-col">
+              <Navbar />
+              <main className="flex-1">
+                <Routes>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/sheets" element={<SheetsPage />} />
+                  <Route
+                    path="/computer-networks"
+                    element={<ComputerNetworks />}
+                  />
+                  <Route
+                    path="/operating-systems"
+                    element={<OperatingSystems />}
+                  />
+                  <Route
+                    path="/database-management-systems"
+                    element={<DatabaseManagementSystems />}
+                  />
+                  <Route path="/oops" element={<ObjectOrientedProgramming />} />
+                  <Route path="/ai-doubt-solver" element={<AiDoubtSolver />} />
+                  <Route path="/mock-test" element={<MockTests />} />
+                  <Route path="/roadmap" element={<Roadmap />} />
+                  <Route
+                    path="/mock-test/:testId/:setNumber"
+                    element={<MockTest />}
+                  />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/sheet/:sheetName"
+                    element={
+                      <ProtectedRoute>
+                        <SheetPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  {/* 404 Catch-all route */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </main>
+              <Footer />
+              <Toaster
+                position="top-right"
+                reverseOrder={false}
+                gutter={8}
+                containerClassName=""
+                containerStyle={{
+                  top: 80,
+                  right: 16,
+                }}
+                toastOptions={{
+                  duration: 4000,
                   style: {
-                    background: "#16a34a",
+                    background: "#18181b",
                     color: "#ffffff",
-                    border: "1px solid #22c55e",
+                    border: "1px solid #3f3f46",
                   },
-                },
-                error: {
-                  style: {
-                    background: "#dc2626",
-                    color: "#ffffff",
-                    border: "1px solid #ef4444",
+                  success: {
+                    style: {
+                      background: "#16a34a",
+                      color: "#ffffff",
+                      border: "1px solid #22c55e",
+                    },
                   },
-                },
-              }}
-            />
-          </div>
-        </Router>
+                  error: {
+                    style: {
+                      background: "#dc2626",
+                      color: "#ffffff",
+                      border: "1px solid #ef4444",
+                    },
+                  },
+                }}
+              />
+            </div>
+          </Router>
+        </ToastProvider>
       </ProgressProvider>
     </AuthProvider>
   );

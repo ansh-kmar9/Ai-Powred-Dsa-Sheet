@@ -475,7 +475,9 @@ const SheetPage = () => {
                               key={question._id}
                               className={cn(
                                 "transition-all duration-200 hover:bg-zinc-800/20",
-                                isMobile ? "p-2" : "p-2 sm:p-4"
+                                isMobile
+                                  ? "px-2 py-1"
+                                  : "px-2 py-1 sm:px-4 sm:py-2"
                               )}
                             >
                               {isMobile ? (

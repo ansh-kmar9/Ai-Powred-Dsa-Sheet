@@ -279,14 +279,24 @@ const SheetPage = () => {
               </div>
               <div className="min-w-0 flex-1">
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight break-words">
-                  {sheet.name}
+                  {sheet.name === "Interview"
+                    ? "Interview - More company is adding"
+                    : sheet.name}
                 </h1>
+
                 <p className="text-zinc-400 mt-1 text-sm sm:text-base">
                   {sheet.topics.length} topic
                   {sheet.topics.length !== 1 ? "s" : ""} •{" "}
                   {overallProgress.total} question
                   {overallProgress.total !== 1 ? "s" : ""}
                 </p>
+
+                {sheet.name === "Interview" && (
+                  <p className="text-zinc-500 mt-2 text-sm">
+                    This question are taken from the company tags of the
+                    LeetCode
+                  </p>
+                )}
               </div>
             </div>
 

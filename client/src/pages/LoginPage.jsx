@@ -62,7 +62,7 @@ const LoginPage = () => {
               Sign in to your account
             </CardTitle>
           </CardHeader>
-          
+
           <CardContent className="space-y-4 sm:space-y-6">
             {/* Google Login Button */}
             <Button

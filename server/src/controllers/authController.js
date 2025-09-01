@@ -10,7 +10,7 @@ class AuthController {
     if (state) {
       req.session.returnUrl = state;
     }
-    
+
     passport.authenticate("google", {
       scope: ["profile", "email"],
     })(req, res, next);

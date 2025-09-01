@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import { Button } from "./Button";
 import { ExternalLink, Check, X, Loader2, Bot } from "lucide-react";
 import { cn } from "../utils/cn";
@@ -17,8 +18,10 @@ const QuestionCard = ({
 
   const handleToggle = async () => {
     if (!isAuthenticated) {
-      // Redirect to login page if user is not authenticated
-      navigate("/login");
+      // Show toast message and redirect to login page with return URL
+      toast.error("Please sign in to mark questions as solved");
+      const currentPath = window.location.pathname;
+      navigate(`/login?returnUrl=${encodeURIComponent(currentPath)}`);
       return;
     }
 

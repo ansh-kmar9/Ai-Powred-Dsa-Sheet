@@ -87,7 +87,9 @@ const SheetPage = () => {
 
   const handleQuestionToggle = async (questionId) => {
     if (!isAuthenticated) {
-      navigate("/login");
+      toast.error("Please sign in to mark questions as solved");
+      const currentPath = window.location.pathname;
+      navigate(`/login?returnUrl=${encodeURIComponent(currentPath)}`);
       return;
     }
 

@@ -61,14 +61,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-                <Route
-                  path="/sheet/:sheetName"
-                  element={
-                    <ProtectedRoute>
-                      <SheetPage />
-                    </ProtectedRoute>
-                  }
-                />
+                <Route path="/sheet/:sheetName" element={<SheetPage />} />
                 {/* 404 Catch-all route */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

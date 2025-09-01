@@ -86,7 +86,10 @@ const SheetPage = () => {
   };
 
   const handleQuestionToggle = async (questionId) => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
 
     setToggleLoading((prev) => ({ ...prev, [questionId]: true }));
 
@@ -510,44 +513,38 @@ const SheetPage = () => {
                                   <div className="flex overflow-x-auto scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-900 pb-2">
                                     <div className="flex min-w-max space-x-3 px-2">
                                       {/* Status Button */}
-                                      {isAuthenticated && (
-                                        <div className="flex-shrink-0">
-                                          <button
-                                            onClick={() =>
-                                              handleQuestionToggle(question._id)
-                                            }
-                                            disabled={
-                                              toggleLoading[question._id]
-                                            }
-                                            className={cn(
-                                              "w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300",
-                                              isQuestionSolved(question._id)
-                                                ? "bg-green-500/20 border-green-500/50 text-green-400"
-                                                : "border-zinc-600 hover:border-zinc-500 text-zinc-500 hover:text-zinc-400",
-                                              toggleLoading[question._id] &&
-                                                "opacity-75 cursor-not-allowed"
-                                            )}
-                                          >
-                                            {toggleLoading[question._id] ? (
-                                              <Loader2 className="w-4 h-4 animate-spin" />
-                                            ) : isQuestionSolved(
-                                                question._id
-                                              ) ? (
-                                              <svg
-                                                className="w-4 h-4"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                              >
-                                                <path
-                                                  fillRule="evenodd"
-                                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                  clipRule="evenodd"
-                                                />
-                                              </svg>
-                                            ) : null}
-                                          </button>
-                                        </div>
-                                      )}
+                                      <div className="flex-shrink-0">
+                                        <button
+                                          onClick={() =>
+                                            handleQuestionToggle(question._id)
+                                          }
+                                          disabled={toggleLoading[question._id]}
+                                          className={cn(
+                                            "w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300",
+                                            isQuestionSolved(question._id)
+                                              ? "bg-green-500/20 border-green-500/50 text-green-400"
+                                              : "border-zinc-600 hover:border-zinc-500 text-zinc-500 hover:text-zinc-400",
+                                            toggleLoading[question._id] &&
+                                              "opacity-75 cursor-not-allowed"
+                                          )}
+                                        >
+                                          {toggleLoading[question._id] ? (
+                                            <Loader2 className="w-4 h-4 animate-spin" />
+                                          ) : isQuestionSolved(question._id) ? (
+                                            <svg
+                                              className="w-4 h-4"
+                                              fill="currentColor"
+                                              viewBox="0 0 20 20"
+                                            >
+                                              <path
+                                                fillRule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                clipRule="evenodd"
+                                              />
+                                            </svg>
+                                          ) : null}
+                                        </button>
+                                      </div>
 
                                       {/* Difficulty Badge */}
                                       <div

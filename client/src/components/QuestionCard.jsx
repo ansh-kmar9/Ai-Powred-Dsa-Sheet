@@ -16,14 +16,14 @@ const QuestionCard = ({
   const navigate = useNavigate();
 
   const handleToggle = async () => {
-    if (!isAuthenticated || !onToggle) {
-      console.log(
-        "QuestionCard: Cannot toggle - not authenticated or no onToggle handler",
-        {
-          isAuthenticated,
-          hasOnToggle: !!onToggle,
-        }
-      );
+    if (!isAuthenticated) {
+      // Redirect to login page if user is not authenticated
+      navigate("/login");
+      return;
+    }
+
+    if (!onToggle) {
+      console.log("QuestionCard: No onToggle handler provided");
       return;
     }
 
@@ -129,37 +129,35 @@ const QuestionCard = ({
         </div>
 
         {/* Right Section - Action Button */}
-        {isAuthenticated && (
-          <div className="relative shrink-0">
-            <Button
-              onClick={handleToggle}
-              disabled={loading}
-              size="sm"
-              className={cn(
-                "transition-all duration-300 font-medium",
-                isSolved
-                  ? "bg-green-500/10 border border-green-500/30 text-green-400 hover:bg-green-500 hover:text-white"
-                  : "bg-white text-black hover:bg-zinc-200"
+        <div className="relative shrink-0">
+          <Button
+            onClick={handleToggle}
+            disabled={loading}
+            size="sm"
+            className={cn(
+              "transition-all duration-300 font-medium",
+              isSolved
+                ? "bg-green-500/10 border border-green-500/30 text-green-400 hover:bg-green-500 hover:text-white"
+                : "bg-white text-black hover:bg-zinc-200"
+            )}
+          >
+            <div className="flex items-center space-x-1.5">
+              {loading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : isSolved ? (
+                <>
+                  <X className="h-4 w-4" />
+                  <span>Unmark</span>
+                </>
+              ) : (
+                <>
+                  <Check className="h-4 w-4" />
+                  <span>Mark Solved</span>
+                </>
               )}
-            >
-              <div className="flex items-center space-x-1.5">
-                {loading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : isSolved ? (
-                  <>
-                    <X className="h-4 w-4" />
-                    <span>Unmark</span>
-                  </>
-                ) : (
-                  <>
-                    <Check className="h-4 w-4" />
-                    <span>Mark Solved</span>
-                  </>
-                )}
-              </div>
-            </Button>
-          </div>
-        )}
+            </div>
+          </Button>
+        </div>
       </div>
     </div>
   );

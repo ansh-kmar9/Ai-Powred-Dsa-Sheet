@@ -93,7 +93,7 @@ class ProgressController {
         // Set revision date if marking as solved
         if (!currentStatus) {
           const revisionDate = new Date();
-          revisionDate.setDate(revisionDate.getDate() + 7); // 7 days from now
+          revisionDate.setMinutes(revisionDate.getMinutes() + 5); // 5 minutes from now
           sheetProgress.questions[existingQuestionIndex].nextRevisionDate = revisionDate;
           sheetProgress.questions[existingQuestionIndex].needsRevision = false;
         } else {
@@ -113,7 +113,7 @@ class ProgressController {
       } else {
         // Add new question progress
         const revisionDate = new Date();
-        revisionDate.setDate(revisionDate.getDate() + 7); // 7 days from now
+        revisionDate.setMinutes(revisionDate.getMinutes() + 5); // 5 minutes from now
         
         sheetProgress.questions.push({
           questionId,
@@ -181,9 +181,9 @@ class ProgressController {
       if (existingQuestionIndex >= 0) {
         const question = sheetProgress.questions[existingQuestionIndex];
         
-        // Set next revision date (7 days from now)
+        // Set next revision date (5 minutes from now)
         const nextRevisionDate = new Date();
-        nextRevisionDate.setDate(nextRevisionDate.getDate() + 7);
+        nextRevisionDate.setMinutes(nextRevisionDate.getMinutes() + 5);
         
         question.needsRevision = false;
         question.nextRevisionDate = nextRevisionDate;

@@ -77,10 +77,10 @@ const SheetPage = () => {
       // Check immediately
       updateRevisionStatus().catch(console.error);
       
-      // Check every 5 minutes for revision updates
+      // Check every 30 seconds for revision updates
       const interval = setInterval(() => {
         updateRevisionStatus().catch(console.error);
-      }, 5 * 60 * 1000); // 5 minutes
+      }, 30 * 1000); // 30 seconds
 
       return () => clearInterval(interval);
     }

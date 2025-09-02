@@ -208,25 +208,42 @@ class ProgressController {
   // Update revision status for all questions (call this periodically)
   static updateRevisionStatus = async (req, res) => {
     try {
+      console.log("ProgressController: updateRevisionStatus called");
       const userId = req.user._id;
+      console.log("ProgressController: User ID:", userId);
+      
       const user = await User.findById(userId);
       
       if (!user) {
+        console.log("ProgressController: User not found");
         return res.status(404).json({ message: "User not found" });
       }
 
       let updatedQuestions = 0;
       const currentDate = new Date();
+      console.log("ProgressController: Current date:", currentDate);
 
       // Check all sheets and questions for revision status
       Object.keys(user.progress).forEach(sheetName => {
         const sheetProgress = user.progress[sheetName];
         if (sheetProgress && sheetProgress.questions) {
           sheetProgress.questions.forEach(question => {
+            console.log(`ProgressController: Checking question ${question.questionId}:`, {
+              isSolved: question.isSolved,
+              nextRevisionDate: question.nextRevisionDate,
+              needsRevision: question.needsRevision,
+              currentDate,
+              shouldUpdate: question.isSolved && 
+                question.nextRevisionDate && 
+                !question.needsRevision &&
+                currentDate >= question.nextRevisionDate
+            });
+            
             if (question.isSolved && 
                 question.nextRevisionDate && 
                 !question.needsRevision &&
                 currentDate >= question.nextRevisionDate) {
+              console.log(`ProgressController: Updating question ${question.questionId} to need revision`);
               question.needsRevision = true;
               updatedQuestions++;
             }
@@ -236,7 +253,13 @@ class ProgressController {
 
       if (updatedQuestions > 0) {
         await user.save();
+        console.log(`ProgressController: Saved ${updatedQuestions} updated questions`);
       }
+
+      console.log("ProgressController: Revision status update completed", {
+        updatedQuestions,
+        message: "Revision status updated"
+      });
 
       res.json({
         message: "Revision status updated",

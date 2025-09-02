@@ -12,6 +12,17 @@ const questionProgressSchema = new mongoose.Schema({
   solvedAt: {
     type: Date,
   },
+  needsRevision: {
+    type: Boolean,
+    default: false,
+  },
+  nextRevisionDate: {
+    type: Date,
+  },
+  revisionCount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const sheetProgressSchema = new mongoose.Schema({

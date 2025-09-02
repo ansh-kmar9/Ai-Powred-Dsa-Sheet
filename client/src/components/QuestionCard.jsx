@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import { Button } from "./Button";
-import { ExternalLink, Check, X, Loader2, Bot } from "lucide-react";
+import { ExternalLink, Check, X, Loader2, Bot, RotateCcw } from "lucide-react";
 import { cn } from "../utils/cn";
 
 const QuestionCard = ({
   question,
   isAuthenticated,
   isSolved = false,
+  needsRevision = false,
+  revisionCount = 0,
   onToggle,
+  onRevision,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [revisionLoading, setRevisionLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isBotHovered, setIsBotHovered] = useState(false);
   const navigate = useNavigate();
 
   const handleToggle = async () => {
     if (!isAuthenticated) {
-      // Show toast message and redirect to login page with return URL
-      toast.error("Please sign in to mark questions as solved");
-      const currentPath = window.location.pathname;
-      navigate(`/login?returnUrl=${encodeURIComponent(currentPath)}`);
+      // Redirect to login page if user is not authenticated
+      navigate("/login");
       return;
     }
 
@@ -50,6 +51,28 @@ const QuestionCard = ({
   const handleAskApproach = () => {
     const promptText = `Explain me how to approach this question "${question.title}"`;
     navigate(`/ai-doubt-solver?question=${encodeURIComponent(promptText)}`);
+  };
+
+  const handleRevision = async () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
+    if (!onRevision) {
+      console.log("QuestionCard: No onRevision handler provided");
+      return;
+    }
+
+    setRevisionLoading(true);
+    try {
+      await onRevision(question._id);
+      console.log("QuestionCard: Revision completed successfully");
+    } catch (error) {
+      console.error("QuestionCard: Error marking revision:", error);
+    } finally {
+      setRevisionLoading(false);
+    }
   };
 
   const getDifficultyStyles = (difficulty) => {
@@ -131,8 +154,31 @@ const QuestionCard = ({
           </div>
         </div>
 
-        {/* Right Section - Action Button */}
-        <div className="relative shrink-0">
+        {/* Right Section - Action Buttons */}
+        <div className="relative shrink-0 flex items-center space-x-2">
+          {/* Revision Button - Show if solved and needs revision */}
+          {isSolved && needsRevision && (
+            <Button
+              onClick={handleRevision}
+              disabled={revisionLoading}
+              size="sm"
+              className="bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 hover:bg-yellow-500 hover:text-white transition-all duration-300 font-medium"
+              title={`Revision needed${revisionCount > 0 ? ` (${revisionCount} times revised)` : ''}`}
+            >
+              <div className="flex items-center space-x-1.5">
+                {revisionLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <>
+                    <RotateCcw className="h-4 w-4" />
+                    <span>Revise</span>
+                  </>
+                )}
+              </div>
+            </Button>
+          )}
+
+          {/* Main Action Button */}
           <Button
             onClick={handleToggle}
             disabled={loading}

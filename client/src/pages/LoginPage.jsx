@@ -14,14 +14,6 @@ const LoginPage = () => {
   // Use the custom hook for auth toasts
   useAuthToasts();
 
-  // Get return URL from query params
-  const urlParams = new URLSearchParams(window.location.search);
-  const returnUrl = urlParams.get("returnUrl");
-
-  const handleLogin = () => {
-    login(returnUrl);
-  };
-
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const error = urlParams.get("error");
@@ -35,11 +27,7 @@ const LoginPage = () => {
   }
 
   if (isAuthenticated) {
-    // Check for return URL in query params
-    const urlParams = new URLSearchParams(window.location.search);
-    const returnUrl = urlParams.get("returnUrl");
-    const redirectTo = returnUrl || "/dashboard";
-    return <Navigate to={redirectTo} replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return (
@@ -62,11 +50,11 @@ const LoginPage = () => {
               Sign in to your account
             </CardTitle>
           </CardHeader>
-
+          
           <CardContent className="space-y-4 sm:space-y-6">
             {/* Google Login Button */}
             <Button
-              onClick={handleLogin}
+              onClick={login}
               disabled={loading}
               className="w-full h-11 sm:h-12 bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700 hover:border-zinc-600 transition-all duration-200 text-sm sm:text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >

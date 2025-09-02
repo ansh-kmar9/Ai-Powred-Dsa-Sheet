@@ -36,7 +36,7 @@ const LandingPage = () => {
             </div>
 
             {/* Main Heading */}
-            <h1 className="main-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
+            <h1 className="main-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 text-center text-white">
               Master DSA with
               <br />
               <span className="text-zinc-400">Smart Learning</span>

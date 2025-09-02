@@ -56,6 +56,9 @@ export const progressAPI = {
   toggleQuestionStatus: (sheetName, questionId) =>
     api.post(`/api/progress/${sheetName}/${questionId}`),
   resetSheetProgress: (sheetName) => api.delete(`/api/progress/${sheetName}`),
+  markQuestionRevision: (sheetName, questionId) =>
+    api.post("/api/progress/revision/mark", { sheetName, questionId }),
+  updateRevisionStatus: () => api.post("/api/progress/revision/update"),
 };
 
 export default api;

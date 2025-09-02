@@ -71,6 +71,30 @@ const progressReducer = (state, action) => {
           },
         },
       };
+    case "UPDATE_REVISION_STATUS":
+      const { sheetName: revSheetName, questionId: revQuestionId, needsRevision, nextRevisionDate, revisionCount } = action.payload;
+      
+      const currentRevSheetProgress = state.sheetProgress[revSheetName] || {
+        solvedCount: 0,
+        questions: [],
+      };
+
+      const updatedRevQuestions = currentRevSheetProgress.questions.map(q =>
+        q.questionId.toString() === revQuestionId.toString()
+          ? { ...q, needsRevision, nextRevisionDate, revisionCount }
+          : q
+      );
+
+      return {
+        ...state,
+        sheetProgress: {
+          ...state.sheetProgress,
+          [revSheetName]: {
+            ...currentRevSheetProgress,
+            questions: updatedRevQuestions,
+          },
+        },
+      };
     case "CLEAR_PROGRESS":
       return { overallProgress: {}, sheetProgress: {}, loading: false };
     default:
@@ -160,6 +184,42 @@ export const ProgressProvider = ({ children }) => {
     }
   };
 
+  const markQuestionRevision = async (sheetName, questionId) => {
+    try {
+      console.log("ProgressContext: Marking question revision", {
+        sheetName,
+        questionId,
+      });
+      const response = await progressAPI.markQuestionRevision(sheetName, questionId);
+      dispatch({
+        type: "UPDATE_REVISION_STATUS",
+        payload: {
+          sheetName,
+          questionId,
+          needsRevision: false,
+          nextRevisionDate: response.data.nextRevisionDate,
+          revisionCount: response.data.revisionCount,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("ProgressContext: Error marking question revision:", error);
+      throw error;
+    }
+  };
+
+  const updateRevisionStatus = async () => {
+    try {
+      const response = await progressAPI.updateRevisionStatus();
+      // Refresh all progress to get updated revision statuses
+      fetchOverallProgress();
+      return response.data;
+    } catch (error) {
+      console.error("ProgressContext: Error updating revision status:", error);
+      throw error;
+    }
+  };
+
   const clearProgress = () => {
     dispatch({ type: "CLEAR_PROGRESS" });
   };
@@ -170,6 +230,8 @@ export const ProgressProvider = ({ children }) => {
     fetchSheetProgress,
     toggleQuestionStatus,
     resetSheetProgress,
+    markQuestionRevision,
+    updateRevisionStatus,
     clearProgress,
   };
 

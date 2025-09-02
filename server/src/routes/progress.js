@@ -11,6 +11,8 @@ router.use(requireHybridAuth);
 router.get("/overview", ProgressController.getOverallProgress);
 router.get("/:sheetName", ProgressController.getSheetProgress);
 router.post("/:sheetName/:questionId", ProgressController.toggleQuestionStatus);
+router.post("/revision/mark", ProgressController.markQuestionRevision);
+router.post("/revision/update", ProgressController.updateRevisionStatus);
 router.delete("/:sheetName", ProgressController.resetSheetProgress);
 
 export default router;

@@ -165,16 +165,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = (returnUrl = null) => {
+  const login = () => {
     const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
-    let loginUrl = `${apiUrl}/auth/google`;
-
-    // Add return URL as state parameter if provided
-    if (returnUrl) {
-      loginUrl += `?state=${encodeURIComponent(returnUrl)}`;
-    }
-
-    window.location.href = loginUrl;
+    window.location.href = `${apiUrl}/auth/google`;
   };
 
   const logout = async () => {

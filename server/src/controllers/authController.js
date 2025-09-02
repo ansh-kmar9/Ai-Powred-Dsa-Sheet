@@ -4,17 +4,9 @@ import User from "../models/User.js";
 
 class AuthController {
   // Google OAuth login
-  static googleAuth = (req, res, next) => {
-    // Store the state (return URL) in the session
-    const state = req.query.state;
-    if (state) {
-      req.session.returnUrl = state;
-    }
-
-    passport.authenticate("google", {
-      scope: ["profile", "email"],
-    })(req, res, next);
-  };
+  static googleAuth = passport.authenticate("google", {
+    scope: ["profile", "email"],
+  });
 
   // Google OAuth callback
   static googleCallback = (req, res, next) => {
@@ -44,13 +36,9 @@ class AuthController {
           { expiresIn: "7d" }
         );
 
-        // Get return URL from session, default to dashboard
-        const returnUrl = req.session.returnUrl || "/dashboard";
-        delete req.session.returnUrl; // Clean up
-
-        // Redirect to frontend with token and return URL
+        // Redirect to frontend with token
         return res.redirect(
-          `${process.env.CLIENT_URL}${returnUrl}?token=${token}`
+          `${process.env.CLIENT_URL}/dashboard?token=${token}`
         );
       });
     })(req, res, next);

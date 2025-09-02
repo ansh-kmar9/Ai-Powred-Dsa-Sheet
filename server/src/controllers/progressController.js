@@ -89,19 +89,6 @@ class ProgressController {
         sheetProgress.questions[existingQuestionIndex].solvedAt = !currentStatus
           ? new Date()
           : null;
-        
-        // Set revision date if marking as solved
-        if (!currentStatus) {
-          const revisionDate = new Date();
-          revisionDate.setMinutes(revisionDate.getMinutes() + 5); // 5 minutes from now
-          sheetProgress.questions[existingQuestionIndex].nextRevisionDate = revisionDate;
-          sheetProgress.questions[existingQuestionIndex].needsRevision = false;
-        } else {
-          // If unmarking as solved, clear revision data
-          sheetProgress.questions[existingQuestionIndex].nextRevisionDate = null;
-          sheetProgress.questions[existingQuestionIndex].needsRevision = false;
-        }
-        
         isSolved = !currentStatus;
 
         // Update solved count
@@ -112,16 +99,10 @@ class ProgressController {
         }
       } else {
         // Add new question progress
-        const revisionDate = new Date();
-        revisionDate.setMinutes(revisionDate.getMinutes() + 5); // 5 minutes from now
-        
         sheetProgress.questions.push({
           questionId,
           isSolved: true,
           solvedAt: new Date(),
-          nextRevisionDate: revisionDate,
-          needsRevision: false,
-          revisionCount: 0,
         });
         sheetProgress.solvedCount++;
         isSolved = true;
@@ -148,125 +129,6 @@ class ProgressController {
         "ProgressController: Error toggling question status:",
         error
       );
-      res.status(500).json({ message: "Server error", error: error.message });
-    }
-  };
-
-  // Mark question for revision (completed revision)
-  static markQuestionRevision = async (req, res) => {
-    try {
-      const { sheetName, questionId } = req.body;
-      const userId = req.user._id;
-
-      console.log("ProgressController: Marking question revision", {
-        sheetName,
-        questionId,
-        userId,
-      });
-
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      if (!user.progress[sheetName]) {
-        user.progress[sheetName] = { solvedCount: 0, questions: [] };
-      }
-
-      const sheetProgress = user.progress[sheetName];
-      const existingQuestionIndex = sheetProgress.questions.findIndex(
-        (q) => q.questionId.toString() === questionId
-      );
-
-      if (existingQuestionIndex >= 0) {
-        const question = sheetProgress.questions[existingQuestionIndex];
-        
-        // Set next revision date (5 minutes from now)
-        const nextRevisionDate = new Date();
-        nextRevisionDate.setMinutes(nextRevisionDate.getMinutes() + 5);
-        
-        question.needsRevision = false;
-        question.nextRevisionDate = nextRevisionDate;
-        question.revisionCount = (question.revisionCount || 0) + 1;
-
-        await user.save();
-
-        res.json({
-          message: "Question revision completed successfully",
-          nextRevisionDate,
-          revisionCount: question.revisionCount,
-        });
-      } else {
-        res.status(404).json({ message: "Question progress not found" });
-      }
-    } catch (error) {
-      console.error("ProgressController: Error marking revision:", error);
-      res.status(500).json({ message: "Server error", error: error.message });
-    }
-  };
-
-  // Update revision status for all questions (call this periodically)
-  static updateRevisionStatus = async (req, res) => {
-    try {
-      console.log("ProgressController: updateRevisionStatus called");
-      const userId = req.user._id;
-      console.log("ProgressController: User ID:", userId);
-      
-      const user = await User.findById(userId);
-      
-      if (!user) {
-        console.log("ProgressController: User not found");
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      let updatedQuestions = 0;
-      const currentDate = new Date();
-      console.log("ProgressController: Current date:", currentDate);
-
-      // Check all sheets and questions for revision status
-      Object.keys(user.progress).forEach(sheetName => {
-        const sheetProgress = user.progress[sheetName];
-        if (sheetProgress && sheetProgress.questions) {
-          sheetProgress.questions.forEach(question => {
-            console.log(`ProgressController: Checking question ${question.questionId}:`, {
-              isSolved: question.isSolved,
-              nextRevisionDate: question.nextRevisionDate,
-              needsRevision: question.needsRevision,
-              currentDate,
-              shouldUpdate: question.isSolved && 
-                question.nextRevisionDate && 
-                !question.needsRevision &&
-                currentDate >= question.nextRevisionDate
-            });
-            
-            if (question.isSolved && 
-                question.nextRevisionDate && 
-                !question.needsRevision &&
-                currentDate >= question.nextRevisionDate) {
-              console.log(`ProgressController: Updating question ${question.questionId} to need revision`);
-              question.needsRevision = true;
-              updatedQuestions++;
-            }
-          });
-        }
-      });
-
-      if (updatedQuestions > 0) {
-        await user.save();
-        console.log(`ProgressController: Saved ${updatedQuestions} updated questions`);
-      }
-
-      console.log("ProgressController: Revision status update completed", {
-        updatedQuestions,
-        message: "Revision status updated"
-      });
-
-      res.json({
-        message: "Revision status updated",
-        updatedQuestions,
-      });
-    } catch (error) {
-      console.error("ProgressController: Error updating revision status:", error);
       res.status(500).json({ message: "Server error", error: error.message });
     }
   };

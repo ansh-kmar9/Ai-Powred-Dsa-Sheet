@@ -1,9 +1,9 @@
-"use client";;
+"use client";
 import React, { useId } from "react";
 import { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
-import { cn } from "../../utils/cn";
+import { cn } from "../../lib/utils";
 import { motion, useAnimation } from "motion/react";
 
 export const SparklesCore = (props) => {
@@ -414,7 +414,8 @@ export const SparklesCore = (props) => {
               },
             },
             detectRetina: true,
-          }} />
+          }}
+        />
       )}
     </motion.div>
   );

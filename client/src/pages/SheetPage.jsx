@@ -33,8 +33,6 @@ const SheetPage = () => {
     fetchSheetProgress,
     toggleQuestionStatus,
     resetSheetProgress,
-    markQuestionRevision,
-    updateRevisionStatus,
   } = useProgress();
 
   const [sheet, setSheet] = useState(null);
@@ -71,21 +69,6 @@ const SheetPage = () => {
     }
   }, [isAuthenticated, sheetName]);
 
-  // Check for revision status on page load and periodically
-  useEffect(() => {
-    if (isAuthenticated) {
-      // Check immediately
-      updateRevisionStatus().catch(console.error);
-      
-      // Check every 30 seconds for revision updates
-      const interval = setInterval(() => {
-        updateRevisionStatus().catch(console.error);
-      }, 30 * 1000); // 30 seconds
-
-      return () => clearInterval(interval);
-    }
-  }, [isAuthenticated, updateRevisionStatus]);
-
   const loadSheetData = async () => {
     try {
       setLoading(true);
@@ -104,7 +87,9 @@ const SheetPage = () => {
 
   const handleQuestionToggle = async (questionId) => {
     if (!isAuthenticated) {
-      navigate("/login");
+      toast.error("Please sign in to mark questions as solved");
+      const currentPath = window.location.pathname;
+      navigate(`/login?returnUrl=${encodeURIComponent(currentPath)}`);
       return;
     }
 
@@ -114,23 +99,6 @@ const SheetPage = () => {
       await toggleQuestionStatus(sheetName, questionId);
     } catch (error) {
       console.error("Error toggling question:", error);
-    } finally {
-      setToggleLoading((prev) => ({ ...prev, [questionId]: false }));
-    }
-  };
-
-  const handleQuestionRevision = async (questionId) => {
-    if (!isAuthenticated) {
-      navigate("/login");
-      return;
-    }
-
-    setToggleLoading((prev) => ({ ...prev, [questionId]: true }));
-
-    try {
-      await markQuestionRevision(sheetName, questionId);
-    } catch (error) {
-      console.error("Error marking question revision:", error);
     } finally {
       setToggleLoading((prev) => ({ ...prev, [questionId]: false }));
     }
@@ -194,22 +162,6 @@ const SheetPage = () => {
       (q) => q.questionId.toString() === questionId.toString()
     );
     return questionProgress?.isSolved || false;
-  };
-
-  const questionNeedsRevision = (questionId) => {
-    if (!isAuthenticated || !sheetProgress[sheetName]) return false;
-    const questionProgress = sheetProgress[sheetName].questions?.find(
-      (q) => q.questionId.toString() === questionId.toString()
-    );
-    return questionProgress?.needsRevision || false;
-  };
-
-  const getQuestionRevisionCount = (questionId) => {
-    if (!isAuthenticated || !sheetProgress[sheetName]) return 0;
-    const questionProgress = sheetProgress[sheetName].questions?.find(
-      (q) => q.questionId.toString() === questionId.toString()
-    );
-    return questionProgress?.revisionCount || 0;
   };
 
   const getFilteredQuestions = (questions) => {
@@ -697,10 +649,7 @@ const SheetPage = () => {
                                   question={question}
                                   isAuthenticated={isAuthenticated}
                                   isSolved={isQuestionSolved(question._id)}
-                                  needsRevision={questionNeedsRevision(question._id)}
-                                  revisionCount={getQuestionRevisionCount(question._id)}
                                   onToggle={handleQuestionToggle}
-                                  onRevision={handleQuestionRevision}
                                   isMobile={isMobile}
                                 />
                               )}

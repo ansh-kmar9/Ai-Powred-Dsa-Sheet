@@ -410,6 +410,836 @@ const LandingPage = () => {
           </div>
         </section>
 
+        {/* Testimonials Section */}
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 border-t border-zinc-800 overflow-hidden">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+                What Our Family Say
+              </h2>
+              <p className="text-zinc-400 text-base sm:text-lg px-4 sm:px-0">
+                Hear from developers who transformed their careers with our
+                platform
+              </p>
+            </div>
+
+            {/* First Row - Left to Right */}
+            <div className="relative mb-6 overflow-hidden testimonials-container">
+              {/* Left fog effect */}
+              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
+              {/* Right fog effect */}
+              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
+
+              <div className="flex animate-scroll-left-smooth">
+                {/* First set of testimonials */}
+                <div className="flex space-x-4 flex-shrink-0">
+                  {[
+                    {
+                      name: "Abhinay Yadav",
+                      occupation: "Student",
+                      content:
+                        "DSA Sheet has been a game changer for my preparation. The structured problems boosted my confidence.",
+                    },
+                    {
+                      name: "Abhishek Kumar",
+                      occupation: "Full Stack Developer",
+                      content:
+                        "Practicing daily from dsasheet.site improved my problem-solving speed drastically.",
+                    },
+                    {
+                      name: "Akash Kumar",
+                      occupation: "SDE at FarePortal",
+                      content:
+                        "I finally understood core DSA concepts clearly thanks to the organized approach here.",
+                    },
+                    {
+                      name: "Pawas Ranjan",
+                      occupation: "Student",
+                      content:
+                        "The step-by-step guidance made even tough topics simple to grasp.",
+                    },
+                    {
+                      name: "Rohan Singh",
+                      occupation: "Student",
+                      content:
+                        "This sheet helped me stay consistent and track my progress easily.",
+                    },
+                    {
+                      name: "Harsh Kumar",
+                      occupation: "Student",
+                      content:
+                        "One of the best resources for coding interview preparation. Totally worth it.",
+                    },
+                    {
+                      name: "Ashwani Day",
+                      occupation: "Backend Developer GoComet",
+                      content:
+                        "This platform gave me the discipline to practice regularly and crack tough interview questions.",
+                    },
+                    {
+                      name: "Abhishek Kumar",
+                      occupation: "Analyst at Play Simple Games",
+                      content:
+                        "With this sheet, I was able to complete a full revision before my placement drive.",
+                    },
+                    {
+                      name: "Ananya Sharma",
+                      occupation: "Student",
+                      content:
+                        "The practice problems and notes gave me clarity and speed in solving DSA questions.",
+                    },
+                    {
+                      name: "Priyanka Verma",
+                      occupation: "Student",
+                      content:
+                        "DSAsheet made my preparation smooth and systematic. Highly recommended!",
+                    },
+                    {
+                      name: "Neha Gupta",
+                      occupation: "Student",
+                      content:
+                        "I loved how the sheet covers all important patterns with detailed guidance.",
+                    },
+                    {
+                      name: "Kritika Singh",
+                      occupation: "Student",
+                      content:
+                        "A perfect companion for anyone starting with Data Structures and Algorithms.",
+                    },
+                    {
+                      name: "Sahbaz Alam",
+                      occupation: "Student",
+                      content:
+                        "The structured problem sets made it easier for me to build confidence and improve my coding consistency.",
+                    },
+                    {
+                      name: "Purushotam Jeswani",
+                      occupation: "Full Stack Developer",
+                      content:
+                        "This sheet refined my problem-solving skills and gave me clarity across different DSA concepts.",
+                    },
+                    {
+                      name: "Priya Jha",
+                      occupation:
+                        "Packaged App Development Analyst at Accenture",
+                      content:
+                        "Great place for tracking your progress and prep alongside.",
+                    },
+                  ].map((testimonial, index) => (
+                    <Card
+                      key={index}
+                      className="bg-zinc-900/80 border-zinc-800/60 backdrop-blur-sm flex-shrink-0 w-64"
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start space-x-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-zinc-600 to-zinc-700 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-medium text-sm">
+                              {testimonial.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </span>
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-medium text-white text-sm truncate">
+                              {testimonial.name}
+                            </h4>
+                            <p className="text-zinc-400 text-xs leading-tight">
+                              {testimonial.occupation}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="text-zinc-300 text-sm leading-relaxed mb-3">
+                          "{testimonial.content}"
+                        </p>
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className="h-3 w-3 text-yellow-400 fill-current mr-0.5"
+                            />
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+                {/* Multiple duplicates for truly seamless scroll */}
+                <div className="flex space-x-4 flex-shrink-0 ml-4">
+                  {[
+                    {
+                      name: "Abhinay Yadav",
+                      occupation: "Student",
+                      content:
+                        "DSA Sheet has been a game changer for my preparation. The structured problems boosted my confidence.",
+                    },
+                    {
+                      name: "Abhishek Kumar",
+                      occupation: "Student",
+                      content:
+                        "Practicing daily from dsasheet.site improved my problem-solving speed drastically.",
+                    },
+                    {
+                      name: "Akash Kumar",
+                      occupation: "SDE at FarePortal",
+                      content:
+                        "I finally understood core DSA concepts clearly thanks to the organized approach here.",
+                    },
+                    {
+                      name: "Pawas Ranjan",
+                      occupation: "Student",
+                      content:
+                        "The step-by-step guidance made even tough topics simple to grasp.",
+                    },
+                    {
+                      name: "Rohan Singh",
+                      occupation: "Student",
+                      content:
+                        "This sheet helped me stay consistent and track my progress easily.",
+                    },
+                    {
+                      name: "Harsh Kumar",
+                      occupation: "Student",
+                      content:
+                        "One of the best resources for coding interview preparation. Totally worth it.",
+                    },
+                    {
+                      name: "Ashwani Day",
+                      occupation: "Backend Developer GoComet",
+                      content:
+                        "This platform gave me the discipline to practice regularly and crack tough interview questions.",
+                    },
+                    {
+                      name: "Abhishek Kumar",
+                      occupation: "Analyst at Play Simple Games",
+                      content:
+                        "With this sheet, I was able to complete a full revision before my placement drive.",
+                    },
+                    {
+                      name: "Ananya Sharma",
+                      occupation: "Student",
+                      content:
+                        "The practice problems and notes gave me clarity and speed in solving DSA questions.",
+                    },
+                    {
+                      name: "Priyanka Verma",
+                      occupation: "Student",
+                      content:
+                        "DSAsheet made my preparation smooth and systematic. Highly recommended!",
+                    },
+                    {
+                      name: "Neha Gupta",
+                      occupation: "Student",
+                      content:
+                        "I loved how the sheet covers all important patterns with detailed guidance.",
+                    },
+                    {
+                      name: "Kritika Singh",
+                      occupation: "Student",
+                      content:
+                        "A perfect companion for anyone starting with Data Structures and Algorithms.",
+                    },
+                    {
+                      name: "Sahbaz Alam",
+                      occupation: "Student",
+                      content:
+                        "The structured problem sets made it easier for me to build confidence and improve my coding consistency.",
+                    },
+                    {
+                      name: "Purushotam Jeswani",
+                      occupation: "Full Stack Developer",
+                      content:
+                        "This sheet refined my problem-solving skills and gave me clarity across different DSA concepts.",
+                    },
+                    {
+                      name: "Priya Jha",
+                      occupation:
+                        "Packaged App Development Analyst at Accenture",
+                      content:
+                        "Great place for tracking your progress and prep alongside.",
+                    },
+                  ].map((testimonial, index) => (
+                    <Card
+                      key={`dup-${index}`}
+                      className="bg-zinc-900/80 border-zinc-800/60 backdrop-blur-sm flex-shrink-0 w-64"
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start space-x-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-zinc-600 to-zinc-700 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-medium text-sm">
+                              {testimonial.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </span>
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-medium text-white text-sm truncate">
+                              {testimonial.name}
+                            </h4>
+                            <p className="text-zinc-400 text-xs leading-tight">
+                              {testimonial.occupation}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="text-zinc-300 text-sm leading-relaxed mb-3">
+                          "{testimonial.content}"
+                        </p>
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className="h-3 w-3 text-yellow-400 fill-current mr-0.5"
+                            />
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+                <div className="flex space-x-4 flex-shrink-0 ml-4">
+                  {[
+                    {
+                      name: "Abhinay Yadav",
+                      occupation: "Student",
+                      content:
+                        "DSA Sheet has been a game changer for my preparation. The structured problems boosted my confidence.",
+                    },
+                    {
+                      name: "Abhishek Kumar",
+                      occupation: "Student",
+                      content:
+                        "Practicing daily from dsasheet.site improved my problem-solving speed drastically.",
+                    },
+                    {
+                      name: "Akash Kumar",
+                      occupation: "SDE at FarePortal",
+                      content:
+                        "I finally understood core DSA concepts clearly thanks to the organized approach here.",
+                    },
+                    {
+                      name: "Pawas Ranjan",
+                      occupation: "Student",
+                      content:
+                        "The step-by-step guidance made even tough topics simple to grasp.",
+                    },
+                    {
+                      name: "Rohan Singh",
+                      occupation: "Student",
+                      content:
+                        "This sheet helped me stay consistent and track my progress easily.",
+                    },
+                    {
+                      name: "Harsh Kumar",
+                      occupation: "Student",
+                      content:
+                        "One of the best resources for coding interview preparation. Totally worth it.",
+                    },
+                    {
+                      name: "Ashwani Day",
+                      occupation: "Backend Developer GoComet",
+                      content:
+                        "This platform gave me the discipline to practice regularly and crack tough interview questions.",
+                    },
+                    {
+                      name: "Abhishek Kumar",
+                      occupation: "Analyst at Play Simple Games",
+                      content:
+                        "With this sheet, I was able to complete a full revision before my placement drive.",
+                    },
+                    {
+                      name: "Ananya Sharma",
+                      occupation: "Student",
+                      content:
+                        "The practice problems and notes gave me clarity and speed in solving DSA questions.",
+                    },
+                    {
+                      name: "Priyanka Verma",
+                      occupation: "Student",
+                      content:
+                        "DSAsheet made my preparation smooth and systematic. Highly recommended!",
+                    },
+                    {
+                      name: "Neha Gupta",
+                      occupation: "Student",
+                      content:
+                        "I loved how the sheet covers all important patterns with detailed guidance.",
+                    },
+                    {
+                      name: "Kritika Singh",
+                      occupation: "Student",
+                      content:
+                        "A perfect companion for anyone starting with Data Structures and Algorithms.",
+                    },
+                    {
+                      name: "Sahbaz Alam",
+                      occupation: "Student",
+                      content:
+                        "The structured problem sets made it easier for me to build confidence and improve my coding consistency.",
+                    },
+                    {
+                      name: "Purushotam Jeswani",
+                      occupation: "Full Stack Developer",
+                      content:
+                        "This sheet refined my problem-solving skills and gave me clarity across different DSA concepts.",
+                    },
+                    {
+                      name: "Priya Jha",
+                      occupation:
+                        "Packaged App Development Analyst at Accenture",
+                      content:
+                        "Great place for tracking your progress and prep alongside.",
+                    },
+                  ].map((testimonial, index) => (
+                    <Card
+                      key={`dup2-${index}`}
+                      className="bg-zinc-900/80 border-zinc-800/60 backdrop-blur-sm flex-shrink-0 w-64"
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start space-x-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-zinc-600 to-zinc-700 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-medium text-sm">
+                              {testimonial.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </span>
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-medium text-white text-sm truncate">
+                              {testimonial.name}
+                            </h4>
+                            <p className="text-zinc-400 text-xs leading-tight">
+                              {testimonial.occupation}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="text-zinc-300 text-sm leading-relaxed mb-3">
+                          "{testimonial.content}"
+                        </p>
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className="h-3 w-3 text-yellow-400 fill-current mr-0.5"
+                            />
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Second Row - Right to Left */}
+            <div className="relative overflow-hidden testimonials-container">
+              {/* Left fog effect */}
+              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
+              {/* Right fog effect */}
+              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
+
+              <div className="flex animate-scroll-right-smooth">
+                {/* Second set of testimonials */}
+                <div className="flex space-x-4 flex-shrink-0">
+                  {[
+                    {
+                      name: "Rahul Mehta",
+                      occupation: "Software Engineer at TCS",
+                      content:
+                        "This sheet gave me the confidence to crack tough DSA rounds during my interviews.",
+                    },
+                    {
+                      name: "Sneha Patel",
+                      occupation: "Student",
+                      content:
+                        "Daily practice with dsasheet.site improved both my accuracy and speed in solving problems.",
+                    },
+                    {
+                      name: "Vikash Raj",
+                      occupation: "Student",
+                      content:
+                        "Earlier I was scared of DSA, but the structured plan here made it manageable and fun.",
+                    },
+                    {
+                      name: "Pooja Singh",
+                      occupation: "MERN Stack Developer",
+                      content:
+                        "The progressive problem sets helped me build a strong base.",
+                    },
+                    {
+                      name: "Aditya Sharma",
+                      occupation: "Student",
+                      content:
+                        "From arrays to dynamic programming, this sheet made concepts crystal clear.",
+                    },
+                    {
+                      name: "Saurabh Yadav",
+                      occupation: "Frontend Developer at Infosys",
+                      content:
+                        "Practicing here boosted my confidence in real-world technical interviews.",
+                    },
+                    {
+                      name: "Ishita Roy",
+                      occupation: "Student",
+                      content:
+                        "The roadmap helped me stay consistent and finish DSA preparation on time.",
+                    },
+                    {
+                      name: "Ravi Prakash",
+                      occupation: "Student",
+                      content:
+                        "I cracked my campus placement test thanks to this sheet's structured approach.",
+                    },
+                    {
+                      name: "Tanya Gupta",
+                      occupation: "Student",
+                      content:
+                        "The sheet kept me consistent and gave me the confidence to tackle coding challenges step by step.",
+                    },
+                    {
+                      name: "Deepak Kumar",
+                      occupation: "Software Engineer Intern",
+                      content:
+                        "This resource gave me the discipline I needed to stay on track daily.",
+                    },
+                    {
+                      name: "Ankit Verma",
+                      occupation: "Student",
+                      content:
+                        "I finally understood recursion and dynamic programming after following this sheet.",
+                    },
+                    {
+                      name: "Shivani Mishra",
+                      occupation: "Student",
+                      content:
+                        "The systematic topic coverage and well-chosen problems made learning DSA enjoyable.",
+                    },
+                    {
+                      name: "Ramesh Chauhan",
+                      occupation: "Student",
+                      content:
+                        "Solved over 300 problems with this sheet—my logic-building improved a lot.",
+                    },
+                    {
+                      name: "Manisha Kumari",
+                      occupation: "Data Analyst Intern",
+                      content:
+                        "DSA sheet gave me both practice and confidence before my technical rounds.",
+                    },
+                    {
+                      name: "Kunal Singh",
+                      occupation: "Student",
+                      content:
+                        "I could easily track my progress and fill gaps in my DSA preparation.",
+                    },
+                  ].map((testimonial, index) => (
+                    <Card
+                      key={index}
+                      className="bg-zinc-900/80 border-zinc-800/60 backdrop-blur-sm flex-shrink-0 w-64"
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start space-x-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-zinc-600 to-zinc-700 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-medium text-sm">
+                              {testimonial.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </span>
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-medium text-white text-sm truncate">
+                              {testimonial.name}
+                            </h4>
+                            <p className="text-zinc-400 text-xs leading-tight">
+                              {testimonial.occupation}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="text-zinc-300 text-sm leading-relaxed mb-3">
+                          "{testimonial.content}"
+                        </p>
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className="h-3 w-3 text-yellow-400 fill-current mr-0.5"
+                            />
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+                {/* Multiple duplicates for truly seamless scroll */}
+                <div className="flex space-x-4 flex-shrink-0 ml-4">
+                  {[
+                    {
+                      name: "Rahul Mehta",
+                      occupation: "Software Engineer at TCS",
+                      content:
+                        "This sheet gave me the confidence to crack tough DSA rounds during my interviews.",
+                    },
+                    {
+                      name: "Sneha Patel",
+                      occupation: "Student",
+                      content:
+                        "Daily practice with dsasheet.site improved both my accuracy and speed in solving problems.",
+                    },
+                    {
+                      name: "Vikash Raj",
+                      occupation: "Student",
+                      content:
+                        "Earlier I was scared of DSA, but the structured plan here made it manageable and fun.",
+                    },
+                    {
+                      name: "Pooja Singh",
+                      occupation: "MERN Stack Developer",
+                      content:
+                        "The clear explanations and progressive problem sets helped me build a strong base.",
+                    },
+                    {
+                      name: "Aditya Sharma",
+                      occupation: "Student",
+                      content:
+                        "From arrays to dynamic programming, this sheet made concepts crystal clear.",
+                    },
+                    {
+                      name: "Saurabh Yadav",
+                      occupation: "Frontend Developer at Infosys",
+                      content:
+                        "Practicing here boosted my confidence in real-world technical interviews.",
+                    },
+                    {
+                      name: "Ishita Roy",
+                      occupation: "Student",
+                      content:
+                        "The roadmap helped me stay consistent and finish DSA preparation on time.",
+                    },
+                    {
+                      name: "Ravi Prakash",
+                      occupation: "Student",
+                      content:
+                        "I cracked my campus placement test thanks to this sheet's structured approach.",
+                    },
+                    {
+                      name: "Tanya Gupta",
+                      occupation: "Student",
+                      content:
+                        "The sheet kept me consistent and gave me the confidence to tackle coding challenges step by step.",
+                    },
+                    {
+                      name: "Deepak Kumar",
+                      occupation: "Software Engineer Intern",
+                      content:
+                        "This resource gave me the discipline I needed to stay on track daily.",
+                    },
+                    {
+                      name: "Ankit Verma",
+                      occupation: "Student",
+                      content:
+                        "I finally understood recursion and dynamic programming after following this sheet.",
+                    },
+                    {
+                      name: "Shivani Mishra",
+                      occupation: "Student",
+                      content:
+                        "The systematic topic coverage and well-chosen problems made learning DSA enjoyable.",
+                    },
+                    {
+                      name: "Ramesh Chauhan",
+                      occupation: "Student",
+                      content:
+                        "Solved over 300 problems with this sheet—my logic-building improved a lot.",
+                    },
+                    {
+                      name: "Manisha Kumari",
+                      occupation: "Data Analyst Intern",
+                      content:
+                        "DSA sheet gave me both practice and confidence before my technical rounds.",
+                    },
+                    {
+                      name: "Kunal Singh",
+                      occupation: "Student",
+                      content:
+                        "I could easily track my progress and fill gaps in my DSA preparation.",
+                    },
+                  ].map((testimonial, index) => (
+                    <Card
+                      key={`dup-${index}`}
+                      className="bg-zinc-900/80 border-zinc-800/60 backdrop-blur-sm flex-shrink-0 w-64"
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start space-x-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-zinc-600 to-zinc-700 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-medium text-sm">
+                              {testimonial.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </span>
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-medium text-white text-sm truncate">
+                              {testimonial.name}
+                            </h4>
+                            <p className="text-zinc-400 text-xs leading-tight">
+                              {testimonial.occupation}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="text-zinc-300 text-sm leading-relaxed mb-3">
+                          "{testimonial.content}"
+                        </p>
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className="h-3 w-3 text-yellow-400 fill-current mr-0.5"
+                            />
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+                <div className="flex space-x-4 flex-shrink-0 ml-4">
+                  {[
+                    {
+                      name: "Rahul Mehta",
+                      occupation: "Software Engineer at TCS",
+                      content:
+                        "This sheet gave me the confidence to crack tough DSA rounds during my interviews.",
+                    },
+                    {
+                      name: "Sneha Patel",
+                      occupation: "Student",
+                      content:
+                        "Daily practice with dsasheet.site improved both my accuracy and speed in solving problems.",
+                    },
+                    {
+                      name: "Vikash Raj",
+                      occupation: "Student",
+                      content:
+                        "Earlier I was scared of DSA, but the structured plan here made it manageable and fun.",
+                    },
+                    {
+                      name: "Pooja Singh",
+                      occupation: "MERN Stack Developer",
+                      content:
+                        "The clear explanations and progressive problem sets helped me build a strong base.",
+                    },
+                    {
+                      name: "Aditya Sharma",
+                      occupation: "Student",
+                      content:
+                        "From arrays to dynamic programming, this sheet made concepts crystal clear.",
+                    },
+                    {
+                      name: "Saurabh Yadav",
+                      occupation: "Frontend Developer at Infosys",
+                      content:
+                        "Practicing here boosted my confidence in real-world technical interviews.",
+                    },
+                    {
+                      name: "Ishita Roy",
+                      occupation: "Student",
+                      content:
+                        "The roadmap helped me stay consistent and finish DSA preparation on time.",
+                    },
+                    {
+                      name: "Ravi Prakash",
+                      occupation: "Student",
+                      content:
+                        "I cracked my campus placement test thanks to this sheet's structured approach.",
+                    },
+                    {
+                      name: "Tanya Gupta",
+                      occupation: "Student",
+                      content:
+                        "The sheet kept me consistent and gave me the confidence to tackle coding challenges step by step.",
+                    },
+                    {
+                      name: "Deepak Kumar",
+                      occupation: "Software Engineer Intern",
+                      content:
+                        "This resource gave me the discipline I needed to stay on track daily.",
+                    },
+                    {
+                      name: "Ankit Verma",
+                      occupation: "Student",
+                      content:
+                        "I finally understood recursion and dynamic programming after following this sheet.",
+                    },
+                    {
+                      name: "Shivani Mishra",
+                      occupation: "Student",
+                      content:
+                        "The systematic topic coverage and well-chosen problems made learning DSA enjoyable.",
+                    },
+                    {
+                      name: "Ramesh Chauhan",
+                      occupation: "Student",
+                      content:
+                        "Solved over 300 problems with this sheet—my logic-building improved a lot.",
+                    },
+                    {
+                      name: "Manisha Kumari",
+                      occupation: "Data Analyst Intern",
+                      content:
+                        "DSA sheet gave me both practice and confidence before my technical rounds.",
+                    },
+                    {
+                      name: "Kunal Singh",
+                      occupation: "Student",
+                      content:
+                        "I could easily track my progress and fill gaps in my DSA preparation.",
+                    },
+                  ].map((testimonial, index) => (
+                    <Card
+                      key={`dup2-${index}`}
+                      className="bg-zinc-900/80 border-zinc-800/60 backdrop-blur-sm flex-shrink-0 w-64"
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start space-x-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-zinc-600 to-zinc-700 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-medium text-sm">
+                              {testimonial.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </span>
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-medium text-white text-sm truncate">
+                              {testimonial.name}
+                            </h4>
+                            <p className="text-zinc-400 text-xs leading-tight">
+                              {testimonial.occupation}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="text-zinc-300 text-sm leading-relaxed mb-3">
+                          "{testimonial.content}"
+                        </p>
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className="h-3 w-3 text-yellow-400 fill-current mr-0.5"
+                            />
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Final CTA */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 border-t border-zinc-800">
           <div className="max-w-2xl mx-auto text-center">
@@ -417,8 +1247,8 @@ const LandingPage = () => {
               Ready to Start Your Journey?
             </h2>
             <p className="text-zinc-400 text-base sm:text-lg mb-6 sm:mb-8 px-4 sm:px-0">
-              Join thousands of developers who are already mastering DSA with
-              our comprehensive platform.
+              Join Hundreds of developers who are already mastering DSA with our
+              comprehensive platform.
             </p>
 
             {!isAuthenticated && (
@@ -435,7 +1265,7 @@ const LandingPage = () => {
 
             <div className="mt-4 sm:mt-6">
               <p className="text-zinc-500 text-xs sm:text-sm px-4 sm:px-0">
-                Free forever • No credit card required • Start in seconds
+                Free forever • Start in seconds
               </p>
             </div>
           </div>
@@ -449,6 +1279,47 @@ const LandingPage = () => {
           .main-heading {
             font-size: 1.75rem;
           }
+        }
+
+        /* Ultra Smooth Infinite Scroll Animations */
+        @keyframes scroll-left-smooth {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(calc(-272px * 16));
+          }
+        }
+
+        @keyframes scroll-right-smooth {
+          0% {
+            transform: translateX(calc(-272px * 15));
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+
+        .animate-scroll-left-smooth {
+          animation: scroll-left-smooth 60s linear infinite;
+          will-change: transform;
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+
+        .animate-scroll-right-smooth {
+          animation: scroll-right-smooth 60s linear infinite;
+          will-change: transform;
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+
+        /* Enhanced performance optimizations */
+        .testimonials-container {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
         }
       `}</style>
     </div>

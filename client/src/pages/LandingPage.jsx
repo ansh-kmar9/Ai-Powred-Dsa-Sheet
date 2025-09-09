@@ -2,6 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
+import { HoverEffect } from "../components/ui/card-hover-effect";
+import {
+  TextRevealCard,
+  TextRevealCardTitle,
+  TextRevealCardDescription,
+} from "../components/ui/text-reveal-card";
 import { useAuth } from "../context/AuthContext";
 import {
   ArrowRight,
@@ -18,6 +24,46 @@ import {
   Star,
   Clock,
 } from "lucide-react";
+
+// Features data for HoverEffect component
+const features = [
+  {
+    title: "Curated Problem Sheets",
+    description:
+      "Access expertly curated problem collections including Blind 75, DSA 360, SDE, and more popular sheets.",
+    link: "/sheets",
+  },
+  {
+    title: "Progress Tracking",
+    description:
+      "Visual progress tracking with detailed analytics, completion percentages, and personalized insights.",
+    link: "/dashboard",
+  },
+  {
+    title: "AI Doubt Solver",
+    description:
+      "Get instant help with AI-powered explanations, approach suggestions, and step-by-step solutions.",
+    link: "/ai-doubt-solver",
+  },
+  {
+    title: "Mock Tests",
+    description:
+      "Practice with timed mock tests simulating real interview conditions and competitive programming.",
+    link: "/mock-tests",
+  },
+  {
+    title: "Performance Analytics",
+    description:
+      "Detailed performance metrics, difficulty-wise breakdowns, and improvement recommendations.",
+    link: "/dashboard",
+  },
+  {
+    title: "Community Features",
+    description:
+      "Connect with fellow learners, share progress, and learn from the community's collective knowledge.",
+    link: "/dashboard",
+  },
+];
 
 const LandingPage = () => {
   const { isAuthenticated } = useAuth();
@@ -133,110 +179,7 @@ const LandingPage = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-              {/* Feature Cards */}
-              <Card className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800/50 transition-colors">
-                <CardHeader>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-zinc-800 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-                    <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                  </div>
-                  <CardTitle className="text-base sm:text-lg text-white">
-                    Curated Problem Sheets
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-zinc-400 text-xs sm:text-sm">
-                    Access expertly curated problem collections including Blind
-                    75, DSA 360, SDE, and more popular sheets.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800/50 transition-colors">
-                <CardHeader>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-zinc-800 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-                    <Target className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                  </div>
-                  <CardTitle className="text-base sm:text-lg text-white">
-                    Progress Tracking
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-zinc-400 text-xs sm:text-sm">
-                    Visual progress tracking with detailed analytics, completion
-                    percentages, and personalized insights.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800/50 transition-colors">
-                <CardHeader>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-zinc-800 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-                    <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                  </div>
-                  <CardTitle className="text-base sm:text-lg text-white">
-                    AI Doubt Solver
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-zinc-400 text-xs sm:text-sm">
-                    Get instant help with AI-powered explanations, approach
-                    suggestions, and step-by-step solutions.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800/50 transition-colors">
-                <CardHeader>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-zinc-800 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-                    <Trophy className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                  </div>
-                  <CardTitle className="text-base sm:text-lg text-white">
-                    Mock Tests
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-zinc-400 text-xs sm:text-sm">
-                    Practice with timed mock tests simulating real interview
-                    conditions and competitive programming.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800/50 transition-colors">
-                <CardHeader>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-zinc-800 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-                    <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                  </div>
-                  <CardTitle className="text-base sm:text-lg text-white">
-                    Performance Analytics
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-zinc-400 text-xs sm:text-sm">
-                    Detailed performance metrics, difficulty-wise breakdowns,
-                    and improvement recommendations.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-zinc-900 border-zinc-800 hover:bg-zinc-800/50 transition-colors">
-                <CardHeader>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-zinc-800 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-                    <Users className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                  </div>
-                  <CardTitle className="text-base sm:text-lg text-white">
-                    Community Features
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-zinc-400 text-xs sm:text-sm">
-                    Connect with fellow learners, share progress, and learn from
-                    the community's collective knowledge.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+            <HoverEffect items={features} />
           </div>
         </section>
 
@@ -374,37 +317,20 @@ const LandingPage = () => {
               </div>
 
               <div className="order-1 lg:order-2 lg:pl-8 xl:pl-16">
-                <Card className="bg-zinc-900 border-zinc-800 p-6 sm:p-8">
-                  <div className="text-center">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-zinc-800 rounded-lg flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                      <TrendingUp className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">
+                <div className="flex items-center justify-center">
+                  <TextRevealCard
+                    text="You know the business"
+                    revealText="I know the chemistry"
+                  >
+                    <TextRevealCardTitle>
                       Join 100+ Developers
-                    </h3>
-                    <p className="text-zinc-400 text-sm sm:text-base mb-4 sm:mb-6">
-                      Already mastering DSA with our platform
-                    </p>
-                    <div className="grid grid-cols-2 gap-4 text-center">
-                      <div>
-                        <div className="text-xl sm:text-2xl font-bold text-white">
-                          95%
-                        </div>
-                        <div className="text-xs sm:text-sm text-zinc-500">
-                          Success Rate
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-xl sm:text-2xl font-bold text-white">
-                          4.9★
-                        </div>
-                        <div className="text-xs sm:text-sm text-zinc-500">
-                          User Rating
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
+                    </TextRevealCardTitle>
+                    <TextRevealCardDescription>
+                      Already mastering DSA with our platform. Hover over the
+                      card to reveal the magic.
+                    </TextRevealCardDescription>
+                  </TextRevealCard>
+                </div>
               </div>
             </div>
           </div>

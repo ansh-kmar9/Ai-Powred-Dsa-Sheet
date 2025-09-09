@@ -41,7 +41,6 @@ const Footer = () => {
                 />
                 <h3 className="text-lg font-bold text-white">DSA Sheet</h3>
               </div>
-              
             </div>
 
             {/* Right: Navigation Links */}
@@ -88,7 +87,6 @@ const Footer = () => {
                 <Heart className="h-3 w-3 text-red-500 mx-1" />
                 for learners.
               </p>
-              
             </div>
           </div>
         </div>

@@ -411,14 +411,14 @@ const LandingPage = () => {
         </section>
 
         {/* Testimonials Section */}
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 border-t border-zinc-800 overflow-hidden">
-          <div className="max-w-6xl mx-auto">
+        <section className="container mx-auto px-2 sm:px-3 lg:px-4 py-16 sm:py-20 md:py-24 border-t border-zinc-800 overflow-hidden">
+          <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
                 What Our Family Say
               </h2>
               <p className="text-zinc-400 text-base sm:text-lg px-4 sm:px-0">
-                Hear from developers who transformed their careers with our
+                Hear from our users who transformed their careers with our
                 platform
               </p>
             </div>
@@ -524,6 +524,12 @@ const LandingPage = () => {
                         "Packaged App Development Analyst at Accenture",
                       content:
                         "Great place for tracking your progress and prep alongside.",
+                    },
+                    {
+                      name: "Rishav Rao",
+                      occupation: "Data Analyst",
+                      content:
+                        "A very helpful resource that keeps preparation structured and motivates me to stay consistent.",
                     },
                   ].map((testimonial, index) => (
                     <Card
@@ -658,6 +664,12 @@ const LandingPage = () => {
                       content:
                         "Great place for tracking your progress and prep alongside.",
                     },
+                    {
+                      name: "Rishav Rao",
+                      occupation: "Data Analyst",
+                      content:
+                        "A very helpful resource that keeps preparation structured and motivates me to stay consistent.",
+                    },
                   ].map((testimonial, index) => (
                     <Card
                       key={`dup-${index}`}
@@ -789,6 +801,12 @@ const LandingPage = () => {
                         "Packaged App Development Analyst at Accenture",
                       content:
                         "Great place for tracking your progress and prep alongside.",
+                    },
+                    {
+                      name: "Rishav Rao",
+                      occupation: "Data Analyst",
+                      content:
+                        "A very helpful resource that keeps preparation structured and motivates me to stay consistent.",
                     },
                   ].map((testimonial, index) => (
                     <Card

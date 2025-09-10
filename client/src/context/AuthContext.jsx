@@ -61,15 +61,15 @@ export const AuthProvider = ({ children }) => {
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get("token");
 
-      console.log("AuthContext - URL token:", token);
-      console.log("AuthContext - Current URL:", window.location.href);
-      console.log(
-        "AuthContext - API Base URL:",
-        import.meta.env.VITE_API_URL || "http://localhost:5000"
-      );
+      // console.log("AuthContext - URL token:", token);
+      // console.log("AuthContext - Current URL:", window.location.href);
+      // console.log(
+      //   "AuthContext - API Base URL:",
+      //   import.meta.env.VITE_API_URL || "http://localhost:5000"
+      // );
 
       if (token) {
-        console.log("AuthContext - Setting token in localStorage:", token);
+        // console.log("AuthContext - Setting token in localStorage:", token);
         localStorage.setItem("token", token);
         // Clean up URL
         window.history.replaceState(
@@ -81,10 +81,10 @@ export const AuthProvider = ({ children }) => {
         // Immediately verify the token and set user
         try {
           const response = await authAPI.verifyToken();
-          console.log(
-            "AuthContext - Token verification response:",
-            response.data
-          );
+          // console.log(
+          //   "AuthContext - Token verification response:",
+          //   response.data
+          // );
           dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
 
           // Show login success toast after successful verification
@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }) => {
           }
           return; // Exit early since we're authenticated
         } catch (tokenError) {
-          console.error("AuthContext - Token verification failed:", tokenError);
+          // console.error("AuthContext - Token verification failed:", tokenError);
           localStorage.removeItem("token");
           // Continue to fallback authentication methods
         }
@@ -104,36 +104,36 @@ export const AuthProvider = ({ children }) => {
 
       // Check stored token or session
       const storedToken = localStorage.getItem("token");
-      console.log(
-        "AuthContext - Stored token:",
-        storedToken ? "exists" : "none"
-      );
+      // console.log(
+      //   "AuthContext - Stored token:",
+      //   storedToken ? "exists" : "none"
+      // );
 
       if (storedToken) {
-        console.log("AuthContext - Verifying stored token...");
+        // console.log("AuthContext - Verifying stored token...");
         try {
           const response = await authAPI.verifyToken();
-          console.log(
-            "AuthContext - Token verification response:",
-            response.data
-          );
+          // console.log(
+          //   "AuthContext - Token verification response:",
+          //   response.data
+          // );
           dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
           return; // Exit early on success
         } catch (tokenError) {
-          console.error("AuthContext - Token verification failed:", tokenError);
+          // console.error("AuthContext - Token verification failed:", tokenError);
           localStorage.removeItem("token");
           // Try session-based auth as fallback
         }
       }
 
       // Try session-based auth as fallback
-      console.log("AuthContext - Trying session-based auth...");
+      // console.log("AuthContext - Trying session-based auth...");
       try {
         const response = await authAPI.getCurrentUser();
-        console.log("AuthContext - Session auth response:", response.data);
+        // console.log("AuthContext - Session auth response:", response.data);
         dispatch({ type: "LOGIN_SUCCESS", payload: response.data.user });
       } catch (sessionError) {
-        console.error("AuthContext - Session auth failed:", sessionError);
+        // console.error("AuthContext - Session auth failed:", sessionError);
         // Only dispatch error if we're not on login page already
         if (!window.location.pathname.includes("/login")) {
           dispatch({
@@ -146,7 +146,7 @@ export const AuthProvider = ({ children }) => {
         }
       }
     } catch (error) {
-      console.error("AuthContext - Unexpected auth error:", error);
+      // console.error("AuthContext - Unexpected auth error:", error);
       if (!window.location.pathname.includes("/login")) {
         localStorage.removeItem("token");
         dispatch({
@@ -183,7 +183,7 @@ export const AuthProvider = ({ children }) => {
       // Reset login toast flag for next login
       loginToastShown.current = false;
     } catch (error) {
-      console.error("Logout error:", error);
+      // console.error("Logout error:", error);
       // Force logout even if API call fails
       localStorage.removeItem("token");
       dispatch({ type: "LOGOUT" });

@@ -134,7 +134,7 @@ const Navbar = () => {
                 title="AI Doubt Solver"
               >
                 <Bot className="h-4 w-4" />
-                <span className="hidden xl:inline">AI Solver</span>
+                <span className="hidden xl:inline">AI Doubt Solver</span>
               </Link>
 
               {/* Explore Dropdown */}

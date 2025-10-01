@@ -397,7 +397,7 @@ const LandingPage = () => {
                         "One of the best resources for coding interview preparation. Totally worth it.",
                     },
                     {
-                      name: "Ashwani Day",
+                      name: "Ashwani Dey",
                       occupation: "Backend Developer GoComet",
                       content:
                         "This platform gave me the discipline to practice regularly and crack tough interview questions.",
@@ -536,7 +536,7 @@ const LandingPage = () => {
                         "One of the best resources for coding interview preparation. Totally worth it.",
                     },
                     {
-                      name: "Ashwani Day",
+                      name: "Ashwani Dey",
                       occupation: "Backend Developer GoComet",
                       content:
                         "This platform gave me the discipline to practice regularly and crack tough interview questions.",
@@ -674,7 +674,7 @@ const LandingPage = () => {
                         "One of the best resources for coding interview preparation. Totally worth it.",
                     },
                     {
-                      name: "Ashwani Day",
+                      name: "Ashwani Dey",
                       occupation: "Backend Developer GoComet",
                       content:
                         "This platform gave me the discipline to practice regularly and crack tough interview questions.",

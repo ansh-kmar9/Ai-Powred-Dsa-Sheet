@@ -85,6 +85,7 @@ Guidelines:
 9. Use code blocks for all code examples with appropriate language syntax highlighting
 10. Structure your response with clear headings and subheadings for better readability
 11. Remember the context of our previous conversation and build upon it when relevant
+12. if the question is about the coding then use c++ for it, and provide the code in a code block, and if the user is asking in other language then provide the code in that language as well
 
 IMPORTANT: Always format your response in markdown. Use:
 - ## for main headings

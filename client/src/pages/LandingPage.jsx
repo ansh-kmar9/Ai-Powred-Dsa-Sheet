@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
@@ -23,6 +23,10 @@ import {
   Users,
   Star,
   Clock,
+  HelpCircle,
+  Plus,
+  Minus,
+  Mail,
 } from "lucide-react";
 
 // Features data for HoverEffect component
@@ -65,8 +69,77 @@ const features = [
   },
 ];
 
+// FAQ data
+const faqData = [
+  {
+    id: 1,
+    question: "What is DSA Sheet Tracker?",
+    answer:
+      "DSA Sheet Tracker is a comprehensive learning platform designed to help you master Data Structures and Algorithms. It provides curated problem sheets, progress tracking, AI-powered doubt solving, mock tests, and performance analytics—all in one place. Whether you're preparing for coding interviews or competitive programming, our platform guides you every step of the way.",
+  },
+  {
+    id: 2,
+    question: "Is the platform completely free to use?",
+    answer:
+      "Yes! DSA Sheet Tracker is completely free to use. You can access all problem sheets, track your progress, take mock tests, and use the AI Doubt Solver without any charges. We believe quality education should be accessible to everyone.",
+  },
+  {
+    id: 3,
+    question: "How does the AI Doubt Solver work?",
+    answer:
+      "Our AI Doubt Solver uses advanced AI technology to provide instant help when you're stuck on a problem. Simply describe your doubt or paste your code, and the AI will provide step-by-step explanations, approach suggestions, optimization tips, and alternative solutions. It's like having a personal coding mentor available 24/7.",
+  },
+  {
+    id: 4,
+    question: "Can I track my progress across different problem sheets?",
+    answer:
+      "Absolutely! Our platform provides detailed progress tracking with visual analytics. You can see your completion percentage for each sheet, difficulty-wise breakdowns, topic-wise performance, and improvement trends over time. The dashboard gives you a comprehensive view of your learning journey.",
+  },
+  {
+    id: 5,
+    question: "What problem sheets are available?",
+    answer:
+      "We offer popular curated sheets including Blind 75, DSA 360, SDE Sheet, Striver's Sheet, and many more. Each sheet is carefully organized by topics like Arrays, Strings, Trees, Graphs, Dynamic Programming, and more. You can choose sheets based on your preparation goals and timeline.",
+  },
+  {
+    id: 6,
+    question: "How do mock tests help in interview preparation?",
+    answer:
+      "Mock tests simulate real interview conditions with timed problems across various difficulty levels. They help you practice under pressure, identify weak areas, improve time management, and build confidence. After each test, you get detailed performance analytics and recommendations for improvement.",
+  },
+  {
+    id: 7,
+    question: "Can I add personal notes for problems?",
+    answer:
+      "Yes! You can add personal notes, approaches, and key learnings for each problem. This helps you create your own study material and makes revision easier. Your notes are saved automatically and accessible anytime from your dashboard.",
+  },
+  {
+    id: 8,
+    question: "Is this platform suitable for beginners?",
+    answer:
+      "Definitely! Our platform is designed for learners at all levels. We have problems ranging from easy to hard, with detailed explanations and hints. Beginners can start with easier sheets and gradually progress to advanced topics. The AI Doubt Solver is especially helpful for beginners who need extra guidance.",
+  },
+  {
+    id: 9,
+    question: "How often is the content updated?",
+    answer:
+      "We regularly update our problem sheets with new questions, add fresh mock tests, and improve existing features based on user feedback. Our team ensures the content stays relevant to current interview patterns and competitive programming trends.",
+  },
+  {
+    id: 10,
+    question: "Is my data and progress secure?",
+    answer:
+      "Yes, we take security seriously. Your data is encrypted and stored securely. We use Google OAuth for authentication, ensuring your account is protected. Your progress, notes, and personal information are private and never shared with third parties.",
+  },
+];
+
 const LandingPage = () => {
   const { isAuthenticated } = useAuth();
+  const [openFaqId, setOpenFaqId] = useState(null);
+
+  const toggleFaq = (id) => {
+    setOpenFaqId(openFaqId === id ? null : id);
+  };
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
@@ -1116,6 +1189,156 @@ const LandingPage = () => {
                       content:
                         "I finally understood recursion and dynamic programming after following this sheet.",
                     },
+                    {
+                      name: "Shivani Mishra",
+                      occupation: "Student",
+                      content:
+                        "The systematic topic coverage and well-chosen problems made learning DSA enjoyable.",
+                    },
+                    {
+                      name: "Ramesh Chauhan",
+                      occupation: "Student",
+                      content:
+                        "Solved over 300 problems with this sheet—my logic-building improved a lot.",
+                    },
+                    {
+                      name: "Manisha Kumari",
+                      occupation: "Data Analyst Intern",
+                      content:
+                        "DSA sheet gave me both practice and confidence before my technical rounds.",
+                    },
+                    {
+                      name: "Kunal Singh",
+                      occupation: "Student",
+                      content:
+                        "I could easily track my progress and fill gaps in my DSA preparation.",
+                    },
+                  ].map((testimonial, index) => (
+                    <Card
+                      key={`dup2-${index}`}
+                      className="bg-zinc-900/80 border-zinc-800/60 backdrop-blur-sm flex-shrink-0 w-64"
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start space-x-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-zinc-600 to-zinc-700 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-medium text-sm">
+                              {testimonial.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </span>
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-medium text-white text-sm truncate">
+                              {testimonial.name}
+                            </h4>
+                            <p className="text-zinc-400 text-xs leading-tight">
+                              {testimonial.occupation}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="text-zinc-300 text-sm leading-relaxed mb-3">
+                          "{testimonial.content}"
+                        </p>
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className="h-3 w-3 text-yellow-400 fill-current mr-0.5"
+                            />
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 border-t border-zinc-800">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12 sm:mb-16">
+              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-zinc-900/50 backdrop-blur-xl border border-zinc-800/50 rounded-2xl mb-4 sm:mb-6">
+                <HelpCircle className="h-6 w-6 sm:h-8 sm:w-8 text-zinc-300" />
+              </div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-zinc-400 text-base sm:text-lg px-4 sm:px-0">
+                Everything you need to know about our platform
+              </p>
+            </div>
+
+            <div className="space-y-3 sm:space-y-4">
+              {faqData.map((faq) => (
+                <div
+                  key={faq.id}
+                  className="bg-zinc-900/50 backdrop-blur-xl border border-zinc-800/50 rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 hover:border-zinc-700/50"
+                >
+                  <button
+                    onClick={() => toggleFaq(faq.id)}
+                    className="w-full px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left group"
+                  >
+                    <span className="text-sm sm:text-base md:text-lg font-semibold text-white pr-4 group-hover:text-zinc-200 transition-colors">
+                      {faq.question}
+                    </span>
+                    <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-zinc-800/50 rounded-lg flex items-center justify-center group-hover:bg-zinc-700/50 transition-all duration-300">
+                      {openFaqId === faq.id ? (
+                        <Minus className="h-3 w-3 sm:h-4 sm:w-4 text-zinc-300" />
+                      ) : (
+                        <Plus className="h-3 w-3 sm:h-4 sm:w-4 text-zinc-300" />
+                      )}
+                    </div>
+                  </button>
+                  <div
+                    className={`transition-all duration-300 ease-in-out ${
+                      openFaqId === faq.id
+                        ? "max-h-96 opacity-100"
+                        : "max-h-0 opacity-0"
+                    } overflow-hidden`}
+                  >
+                    <div className="px-4 sm:px-6 pb-4 sm:pb-5">
+                      <p className="text-xs sm:text-sm md:text-base text-zinc-400 leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Contact Support Card */}
+            <div className="mt-8 sm:mt-12 bg-gradient-to-br from-zinc-900/80 to-zinc-900/50 backdrop-blur-xl border border-zinc-800/50 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-zinc-800/50 rounded-xl mb-4">
+                <Mail className="h-6 w-6 text-zinc-300" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                Still have questions?
+              </h3>
+              <p className="text-zinc-400 text-sm sm:text-base mb-4 sm:mb-6">
+                Can't find the answer you're looking for? Feel free to reach out
+                to our support team.
+              </p>
+              <a
+                href="mailto:abhinayyadav3@gmail.com"
+                className="inline-block"
+              >
+                <Button
+                  variant="outline"
+                  className="border-zinc-700 hover:bg-zinc-800 hover:text-white text-sm sm:text-base"
+                >
+                  <Mail className="mr-2 h-4 w-4" />
+                  Contact Support
+                </Button>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* F       },
                     {
                       name: "Shivani Mishra",
                       occupation: "Student",

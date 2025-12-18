@@ -3,7 +3,7 @@
 ## Deployed URLs
 
 - **Frontend (Vercel)**: https://www.dsasheet.site/
-- **Backend (Render)**: https://dsasheet-koey.onrender.com
+- **Backend (Render)**: https://register.dsasheet.site/
 
 ## Environment Variables Configuration
 

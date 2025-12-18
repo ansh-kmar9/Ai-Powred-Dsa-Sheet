@@ -1322,10 +1322,7 @@ const LandingPage = () => {
                 Can't find the answer you're looking for? Feel free to reach out
                 to our support team.
               </p>
-              <a
-                href="mailto:abhinayyadav3@gmail.com"
-                className="inline-block"
-              >
+              <a href="mailto:anshkmr991@gmail.com" className="inline-block">
                 <Button
                   variant="outline"
                   className="border-zinc-700 hover:bg-zinc-800 hover:text-white text-sm sm:text-base"

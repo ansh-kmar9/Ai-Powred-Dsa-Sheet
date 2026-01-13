@@ -35,37 +35,31 @@ const features = [
     title: "Curated Problem Sheets",
     description:
       "Access expertly curated problem collections including Blind 75, DSA 360, SDE, and more popular sheets.",
-    link: "/sheets",
   },
   {
     title: "Progress Tracking",
     description:
       "Visual progress tracking with detailed analytics, completion percentages, and personalized insights.",
-    link: "/dashboard",
   },
   {
     title: "AI Doubt Solver",
     description:
       "Get instant help with AI-powered explanations, approach suggestions, and step-by-step solutions.",
-    link: "/ai-doubt-solver",
   },
   {
     title: "Mock Tests",
     description:
       "Practice with timed mock tests simulating real interview conditions and competitive programming.",
-    link: "/mock-tests",
   },
   {
     title: "Performance Analytics",
     description:
       "Detailed performance metrics, difficulty-wise breakdowns, and improvement recommendations.",
-    link: "/dashboard",
   },
   {
     title: "Community Features",
     description:
       "Connect with fellow learners, share progress, and learn from the community's collective knowledge.",
-    link: "/dashboard",
   },
 ];
 

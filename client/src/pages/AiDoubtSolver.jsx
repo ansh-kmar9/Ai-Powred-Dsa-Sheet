@@ -107,6 +107,13 @@ Please provide a helpful and educational response using proper markdown formatti
     const userMessage = questionText.trim();
     if (!userMessage || isLoading) return;
 
+    // Check if API key is configured
+    const apiKey = import.meta.env.VITE_GOOGLE_AI_API_KEY;
+    if (!apiKey) {
+      setError("Google AI API key is not configured. Please add VITE_GOOGLE_AI_API_KEY to your .env file.");
+      return;
+    }
+
     setError("");
     setIsLoading(true);
 
@@ -122,7 +129,8 @@ Please provide a helpful and educational response using proper markdown formatti
     setMessages((prev) => [...prev, newUserMsg]);
 
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+      // Use gemini-1.5-flash as it's more widely available
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const contextPrompt = buildConversationContext(userMessage);
 
       const result = await model.generateContent(contextPrompt);
@@ -138,7 +146,22 @@ Please provide a helpful and educational response using proper markdown formatti
       setMessages((prev) => [...prev, newAiMsg]);
     } catch (err) {
       console.error("Error generating response:", err);
-      setError("Failed to get response. Please try again.");
+      
+      // Provide more specific error messages
+      let errorMessage = "Failed to get response. Please try again.";
+      if (err.message?.includes("API_KEY_INVALID")) {
+        errorMessage = "Invalid API key. Please check your Google AI API key.";
+      } else if (err.message?.includes("QUOTA_EXCEEDED")) {
+        errorMessage = "API quota exceeded. Please try again later.";
+      } else if (err.message?.includes("PERMISSION_DENIED")) {
+        errorMessage = "Permission denied. Please verify your API key has access to Gemini API.";
+      } else if (err.message?.includes("fetch")) {
+        errorMessage = "Network error. Please check your internet connection.";
+      } else if (err.message) {
+        errorMessage = `Error: ${err.message}`;
+      }
+      
+      setError(errorMessage);
       // Remove the last user message on error
       setMessages((prev) => prev.slice(0, -1));
     } finally {
